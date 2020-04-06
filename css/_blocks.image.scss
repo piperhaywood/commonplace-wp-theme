@@ -1,0 +1,114 @@
+.wp-block-image {
+  @include container;
+  &.is-resized {
+    @include container;
+  }
+  figcaption {
+    color: $grey; // WP override
+    font-size: inherit; // WP override
+    text-align: left;
+  }
+
+  > img {
+    display: block;
+  }
+
+  &.alignfull img {
+    padding: 0;
+  }
+
+  .aligncenter,
+  .alignleft,
+  .alignright &.is-resized {
+    display: block;
+    > figcaption {
+      display: block; // WP override
+    }
+  }
+
+  .aligncenter {
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    figcaption {
+      @include container;
+      text-align: center;
+    }
+  }
+
+  .alignleft,
+  .alignright {
+    float: none;
+    margin: 0;
+    width: 100%;
+    figcaption {
+      text-align: left;
+    }
+    img {
+      min-width: $max-aligned-width;
+    }
+  }
+
+  .alignleft {
+    margin-right: var(--gutter);
+  }
+
+  .alignright {
+    @media (min-width: 640px) {
+      margin-left: var(--gutter);
+    }
+  }
+
+  &.alignwide {
+    max-width: none;
+  }
+
+  &.alignfull {
+    max-width: none;
+    padding: 0;
+  }
+}
+
+@media (min-width: 640px) {
+  .wp-block-image .alignleft,
+  .wp-block-image .alignright {
+    max-width: $max-aligned-width;
+    width: auto;
+  }
+  .wp-block-image .alignleft {
+    float: left;
+  }
+  .wp-block-image .alignright {
+    float: right;
+  }
+}
+@media (min-width: 940px) {
+  .wp-block-image .alignleft {
+    margin-left: calc(((#{$max-aligned-width} / 2) + var(--gutter)) * -1);
+  }
+  .wp-block-image .alignright {
+    margin-right: calc(((#{$max-aligned-width} / 2) + var(--gutter)) * -1);
+  }
+}
+@media (min-width: 1200px) {
+  .wp-block-image .alignleft,
+  .wp-block-image .alignright {
+    img {
+      padding: 0;
+    }
+  }
+  .wp-block-image .alignleft {
+    margin-left: calc((#{$max-aligned-width} + var(--gutter)) * -1);
+    figcaption {
+      padding: 0;
+    }
+  }
+  .wp-block-image .alignright {
+    margin-right: calc((#{$max-aligned-width} + var(--gutter)) * -1);
+    figcaption {
+      padding: 0;
+    }
+  }
+}

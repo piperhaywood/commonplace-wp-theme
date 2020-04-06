@@ -1,0 +1,47 @@
+.post__footer,
+.post__header {
+  @include container;
+}
+
+.post__header a:hover,
+.post__header a:active {
+  text-decoration: underline;
+}
+
+.post__time {
+  display: inline-block;
+  margin-bottom: 2em;
+}
+
+.post__title {
+  @include style-h1;
+  margin-bottom: 1.5em;
+}
+
+.post__footer {
+  clear: both;
+  margin-top: 1.5em;
+}
+
+.post-nav-links {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  > *:first-child {
+    margin-left: 1ch;
+  }
+}
+
+.post-page-numbers {
+  background-color: $black;
+  color: $white;
+  display: inline-block;
+  padding: 0.75rem;
+  &.current,
+  &:hover,
+  &:focus {
+    background-color: $white !important;
+    color: $black;
+  }
+}

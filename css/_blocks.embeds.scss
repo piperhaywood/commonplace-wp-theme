@@ -1,0 +1,13 @@
+.wp-block-embed {
+  @include container;
+  figcaption {
+    color: $grey;
+    font-size: inherit;
+    text-align: left;
+  }
+  &.alignfull {
+    iframe {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.header nav {
+  margin-top: 1rem;
+}
+.header nav ul {
+  list-style-type: none;
+}
+.header nav > ul {
+  display: flex;
+  padding-left: 0;
+}
+nav a {
+  display: inline-block;
+  padding-bottom: calc(var(--gutter) / 2);
+  padding-right: calc(var(--gutter) / 2);
+}
+nav a:hover,
+nav a:focus,
+nav a:active {
+  text-decoration: underline;
+}
+
+.current-menu-item a {
+  text-decoration: underline; // TODO Add ancestor
+}

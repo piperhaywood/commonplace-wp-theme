@@ -1,0 +1,160 @@
+.comments {
+  margin-bottom: 2rem;
+  margin-top: 1.5rem;
+  summary {
+    @include style-h4;
+  }
+  details {
+    color: $grey;
+  }
+  details[open] {
+    color: $black;
+    margin-bottom: 3rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+  input[type="checkbox"] ~ label {
+    display: inline;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  textarea,
+  input[type="text"],
+  input[type="url"] {
+    @include input-text;
+  }
+  input[type="text"] {
+    padding: $container-padding 0 $container-padding $container-padding;
+  }
+  input[type="submit"] {
+    @include input-submit;
+  }
+}
+
+.comment-reply-title {
+  display: none;
+}
+
+.comment-respond label {
+  @include style-h4;
+}
+
+.comments__count {
+  color: $grey;
+}
+
+.comment-form-cookies-consent {
+  display: flex;
+  input[type="checkbox"] {
+    margin-top: 0.25rem;
+  }
+}
+
+.comments--has-comments {
+  margin-top: 3rem;
+  details {
+    color: $black;
+  }
+}
+
+.comment-list {
+  list-style-type: none;
+  padding-left: 0;
+  ol.children {
+    list-style-type: none;
+    padding-left: 0;
+  }
+}
+
+.comment-author {
+  @include style-h4;
+  margin-bottom: 1.5rem;
+  a:hover,
+  a:focus {
+    text-decoration: underline;
+  }
+  cite {
+    font-style: normal;
+  }
+}
+
+.comment-avatar {
+  display: none;
+  img {
+    display: block;
+    margin-bottom: 0.5rem;
+    max-width: 3rem;
+  }
+}
+
+.comment,
+.pingback {
+  border: 1px solid $black;
+  margin-top: 1rem;
+  padding: $container-padding;
+}
+
+.comment-content {
+  > h1,
+  > h2,
+  > h3,
+  > h4,
+  > h5,
+  > h6,
+  > p,
+  > table {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  img {
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  > blockquote,
+  > ul {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  > ul {
+    padding-left: 1rem;
+  }
+}
+
+.comment-body .prose pre {
+  max-width: 100%;
+  /* stylelint-disable */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* stylelint-enable */
+}
+
+.comment-reply-link {
+  margin-top: 1.5rem;
+  @include input-submit;
+}
+
+.comment-respond p,
+#webmention-form p,
+.link_description > * {
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
+}

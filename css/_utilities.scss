@@ -1,0 +1,58 @@
+.container {
+  @include container;
+}
+
+.container--large {
+  max-width: 900px;
+}
+
+.container--full {
+  max-width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.visuallyhidden {
+  @include visuallyhidden;
+}
+
+.visuallyhidden.button:focus,
+.visuallyhidden.button:active {
+  background-color: var(--color);
+  color: $white;
+  display: inline-block;
+  height: auto;
+  left: auto;
+  margin: 1rem auto 0 auto;
+  overflow: auto;
+  padding: 0.5rem;
+  position: static;
+  text-align: center;
+  top: auto;
+  white-space: nowrap;
+  width: auto;
+  z-index: auto;
+}
+
+.visuallyhidden.button:hover {
+  background-color: $white;
+  color: $black;
+}
+
+.has-bg {
+  background-color: $black;
+  color: $white;
+  padding: 0.25em;
+}
+
+.has-bg a {
+  text-decoration: none;
+}
+
+a.has-bg:hover {
+  background-color: transparent;
+  color: inherit;
+  text-decoration: none;
+}

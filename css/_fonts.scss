@@ -1,0 +1,39 @@
+@font-face {
+  font-display: swap;
+  font-family: "IBMPlexMono";
+  font-weight: 400;
+  src: url("fonts/IBMPlexMono-Regular.eot"); /* IE9 Compat Modes */
+  src: url("fonts/IBMPlexMono-Regular.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("fonts/IBMPlexMono-Regular.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("fonts/IBMPlexMono-Regular.woff")
+      format("woff"),
+    /* Pretty Modern Browsers */ url("fonts/IBMPlexMono-Regular.ttf")
+      format("truetype"); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "IBMPlexMono";
+  font-weight: 700;
+  src: url("fonts/IBMPlexMono-Bold.eot"); /* IE9 Compat Modes */
+  src: url("fonts/IBMPlexMono-Bold.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("fonts/IBMPlexMono-Bold.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("fonts/IBMPlexMono-Bold.woff")
+      format("woff"),
+    /* Pretty Modern Browsers */ url("fonts/IBMPlexMono-Bold.ttf")
+      format("truetype"); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "IBMPlexMono";
+  font-style: italic;
+  font-weight: 400;
+  src: url("fonts/IBMPlexMono-Italic.eot"); /* IE9 Compat Modes */
+  src: url("fonts/IBMPlexMono-Italic.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("fonts/IBMPlexMono-Italic.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("fonts/IBMPlexMono-Italic.woff")
+      format("woff"),
+    /* Pretty Modern Browsers */ url("fonts/IBMPlexMono-Italic.ttf")
+      format("truetype"); /* Safari, Android, iOS */
+}

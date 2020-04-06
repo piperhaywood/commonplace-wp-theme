@@ -1,0 +1,42 @@
+.wp-block-audio {
+  @include container;
+}
+
+.wp-block-video {
+  @include container;
+  figcaption {
+    color: $grey;
+    font-size: inherit;
+    text-align: left;
+  }
+}
+
+.wp-block-file {
+  @include container;
+  a.wp-block-file__button {
+    font-size: inherit;
+    &:hover,
+    &:focus {
+      color: $black;
+    }
+  }
+}
+
+.wp-block-archives {
+  @include container;
+}
+
+.wp-block-separator {
+  &.is-style-wide {
+    max-width: none;
+  }
+}
+
+.wp-block-table {
+  &.is-style-stripes {
+    td {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+}

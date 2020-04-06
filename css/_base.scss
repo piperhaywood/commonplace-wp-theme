@@ -1,0 +1,122 @@
+:root {
+  --tag-color: $black;
+  --color: $black;
+  --gutter: $container-padding-mobile;
+  @media (min-width: 500px) {
+    --gutter: $container-padding;
+  }
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 87.5%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: $black;
+  font-size: 1em;
+}
+
+main {
+  @include style-body;
+}
+
+button,
+select,
+textarea,
+input {
+  font-family: inherit;
+  font-size: 16px;
+}
+
+@media (min-width: 500px) {
+  html {
+    font-size: 100%;
+  }
+
+  button,
+  select,
+  textarea,
+  input {
+    font-size: 100%;
+  }
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: inline-block;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+button,
+[type="submit"] {
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+svg {
+  display: inline-block;
+  height: auto;
+  vertical-align: middle;
+}
+
+summary {
+  cursor: pointer;
+}
+
+body:not(.is-tabbing) button:focus,
+body:not(.is-tabbing) input:focus,
+body:not(.is-tabbing) select:focus,
+body:not(.is-tabbing) textarea:focus,
+body:not(.is-tabbing) summary:focus {
+  outline: none;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+hr {
+  background-color: $black;
+  border: none;
+  color: $black;
+  height: 1px;
+}
+
+label {
+  a {
+    text-decoration: underline;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}

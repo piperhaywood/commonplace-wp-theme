@@ -1,0 +1,77 @@
+.pagination {
+  margin-bottom: 2em;
+  padding-top: 10vh;
+}
+
+.pagination__label,
+.rpbt_shortcode h3 {
+  @include container;
+  margin-bottom: 0.5rem;
+  max-width: 900px;
+}
+
+.pagination__link {
+  @include style-h1;
+}
+
+.pagination--post .pagination__link a {
+  display: inline-block;
+  width: 100%;
+}
+
+.post-index {
+  list-style-type: none;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 10vw;
+  padding-left: 0;
+  width: 100%;
+}
+
+.post-item__link {
+  align-items: center;
+  background-color: $black;
+  color: $white;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 40px;
+  padding: 4px;
+  text-decoration: none !important;
+}
+
+.post-item__link:hover {
+  background-color: $white;
+  color: $black;
+}
+
+.post-item__link > * {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.post-item__image {
+  height: 32px;
+  mix-blend-mode: multiply;
+  mix-blend-mode: color-burn;
+  width: auto;
+}
+
+.post-item__link:hover .post-item__image {
+  mix-blend-mode: unset;
+}
+
+.post-item__time,
+.post-item__text {
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+.post-item__time {
+  white-space: nowrap;
+}
+
+.post-item__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

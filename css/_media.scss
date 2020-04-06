@@ -1,0 +1,261 @@
+.prose {
+  /* stylelint-disable */
+  > twitter-widget {
+    @include container;
+    width: 40rem !important;
+  }
+  /* stylelint-enable */
+
+  > iframe.instagram-media {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: calc(100vw - (var(--gutter) * 2)) !important;
+  }
+  > p {
+    img {
+      display: block;
+      &.alignleft {
+        margin-bottom: var(--gutter);
+        width: $max-aligned-width;
+        @media (min-width: 540px) {
+          float: left;
+          margin-right: var(--gutter);
+        }
+        @media (min-width: 930px) {
+          margin-left: calc(((#{$max-aligned-width} / 2) + var(--gutter)) * -1);
+        }
+        @media (min-width: 1180px) {
+          margin-left: calc((#{$max-aligned-width} + var(--gutter)) * -1);
+          margin-right: 0;
+        }
+      }
+      &.alignright {
+        margin-bottom: var(--gutter);
+        width: $max-aligned-width;
+        @media (min-width: 540px) {
+          float: right;
+          margin-left: var(--gutter);
+        }
+        @media (min-width: 930px) {
+          margin-right: calc(
+            ((#{$max-aligned-width} / 2) + var(--gutter)) * -1
+          );
+        }
+        @media (min-width: 1180px) {
+          margin-left: 0;
+          margin-right: calc((#{$max-aligned-width} + var(--gutter)) * -1);
+        }
+      }
+    }
+  }
+  > div:not(.wp-block-image) {
+    margin-top: 0;
+    &.alignleft,
+    &.alignright {
+      &:not(.wp-block-cover):not(.wp-block-button) {
+        max-width: 100%;
+        padding: 0 var(--gutter);
+        width: $max-aligned-width !important; // Override WP inline styles
+      }
+      img {
+        width: 100%;
+      }
+    }
+    &.alignleft:not(.wp-block-cover):not(.wp-block-button) {
+      @media (min-width: 540px) {
+        float: left;
+      }
+      @media (min-width: 640px) {
+        margin-left: calc(((100vw - #{$container-width}) / 2));
+      }
+      @media (min-width: 900px) {
+        margin-left: calc(
+          ((100vw - #{$container-width}) / 2) - (#{$max-aligned-width} / 2) +
+            var(--gutter)
+        );
+      }
+      @media (min-width: 1120px) {
+        margin-left: calc(
+          ((100vw - #{$container-width}) / 2) - #{$max-aligned-width} + var(--gutter)
+        );
+      }
+    }
+    &.alignright:not(.wp-block-cover):not(.wp-block-button) {
+      @media (min-width: 540px) {
+        float: right;
+      }
+      @media (min-width: 640px) {
+        margin-right: calc(((100vw - #{$container-width}) / 2));
+      }
+      @media (min-width: 900px) {
+        margin-right: calc(
+          ((100vw - #{$container-width}) / 2) - (#{$max-aligned-width} / 2) +
+            var(--gutter)
+        );
+      }
+      @media (min-width: 1120px) {
+        margin-right: calc(
+          ((100vw - #{$container-width}) / 2) - #{$max-aligned-width} + var(--gutter)
+        );
+      }
+    }
+    &.alignnone {
+      @include container;
+      width: 100% !important;
+    }
+    &.aligncenter {
+      padding: 0 var(--gutter);
+      width: 100% !important;
+      img {
+        width: 100%;
+      }
+      .wp-caption-text {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 40rem;
+        text-align: center;
+      }
+    }
+    .aligncenter {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 var(--gutter);
+    }
+  }
+
+  .wp-caption-text {
+    color: $grey;
+    margin-top: 0.5rem;
+  }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+    padding-left: calc(var(--gutter) / 2);
+    padding-right: calc(var(--gutter) / 2);
+  }
+
+  .gallery br {
+    display: none;
+  }
+
+  .gallery-columns-1 {
+    display: block;
+  }
+
+  .gallery dd {
+    padding-left: 0;
+  }
+
+  .gallery-item {
+    margin-bottom: var(--gutter);
+    padding-left: calc(var(--gutter) / 2);
+    padding-right: calc(var(--gutter) / 2);
+  }
+
+  .gallery-columns-2 .gallery-item {
+    @media (min-width: 410px) {
+      width: calc((100vw - var(--gutter)) / 2);
+    }
+  }
+
+  .gallery-columns-3 .gallery-item {
+    @media (min-width: 500px) {
+      width: calc((100vw - var(--gutter)) / 3);
+    }
+  }
+
+  .gallery-columns-4 .gallery-item {
+    @media (min-width: 410px) {
+      width: calc((100vw - var(--gutter)) / 2);
+    }
+
+    @media (min-width: 766px) {
+      width: calc((100vw - var(--gutter)) / 4);
+    }
+  }
+
+  .gallery-columns-5 .gallery-item {
+    @media (min-width: 410px) {
+      width: calc((100vw - var(--gutter)) / 3);
+    }
+
+    @media (min-width: 900px) {
+      width: calc((100vw - var(--gutter)) / 5);
+    }
+  }
+
+  .gallery-columns-6 .gallery-item {
+    @media (min-width: 410px) {
+      width: calc((100vw - var(--gutter)) / 2);
+    }
+
+    @media (min-width: 500px) {
+      width: calc((100vw - var(--gutter)) / 3);
+    }
+
+    @media (min-width: 1200px) {
+      width: calc((100vw - var(--gutter)) / 6);
+    }
+  }
+
+  .gallery-columns-7 .gallery-item {
+    @media (min-width: 410px) {
+      width: calc((100vw - var(--gutter)) / 2);
+    }
+
+    @media (min-width: 500px) {
+      width: calc((100vw - var(--gutter)) / 3);
+    }
+
+    @media (min-width: 1200px) {
+      width: calc((100vw - var(--gutter)) / 7);
+    }
+  }
+
+  .gallery-columns-8 .gallery-item {
+    @media (min-width: 410px) {
+      width: calc((100vw - var(--gutter)) / 2);
+    }
+
+    @media (min-width: 766px) {
+      width: calc((100vw - var(--gutter)) / 4);
+    }
+
+    @media (min-width: 1200px) {
+      width: calc((100vw - var(--gutter)) / 8);
+    }
+  }
+
+  .gallery-columns-9 .gallery-item {
+    @media (min-width: 410px) {
+      width: calc((100vw - var(--gutter)) / 2);
+    }
+
+    @media (min-width: 500px) {
+      width: calc((100vw - var(--gutter)) / 3);
+    }
+
+    @media (min-width: 1200px) {
+      width: calc((100vw - var(--gutter)) / 6);
+    }
+
+    @media (min-width: 1600px) {
+      width: calc((100vw - var(--gutter)) / 9);
+    }
+  }
+
+  .thumbs {
+    @include container;
+  }
+}
+
+.wp-audio-shortcode {
+  @include container;
+  display: block;
+  max-width: 100%;
+  width: 40rem !important;
+}

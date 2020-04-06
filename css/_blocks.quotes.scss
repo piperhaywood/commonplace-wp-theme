@@ -1,0 +1,27 @@
+.wp-block-quote {
+  // padding: var(--gutter);
+  &.is-large,
+  &.is-style-large {
+    padding: var(--gutter);
+    p {
+      font-style: normal;
+    }
+    footer,
+    cite {
+      font-size: inherit;
+    }
+  }
+}
+
+.wp-block-pullquote {
+  blockquote {
+    border: none !important;
+    text-align: center !important;
+  }
+  p {
+    margin-bottom: 1rem !important;
+  }
+  cite {
+    font-style: italic !important;
+  }
+}

@@ -1,0 +1,68 @@
+@mixin columns($cols) {
+  &.has-#{$cols}-columns {
+    max-width: calc(#{$container-width} * #{$cols});
+  }
+}
+
+// See typography file for text styles
+
+.wp-block-columns {
+  margin-bottom: 0 !important;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0 !important;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+  &.alignwide {
+    @include columns(2);
+    @include columns(3);
+    @include columns(4);
+    @include columns(5);
+    @include columns(6);
+  }
+  &.alignfull {
+    max-width: none;
+  }
+
+  .wp-block-image {
+    padding: 0;
+  }
+
+  ~ p,
+  ~ ul,
+  ~ ol {
+    margin-top: 0 !important;
+  }
+}
+
+.wp-block-column {
+  margin-bottom: 1.5rem;
+}
+
+.wp-block-media-text {
+  align-items: start;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $container-width;
+  &.small {
+    grid-template-columns: 8rem auto;
+    .wp-block-media-text__media {
+      padding-right: calc(var(--gutter) / 2);
+    }
+    .wp-block-media-text__content {
+      padding-left: calc(var(--gutter) / 2);
+    }
+  }
+  &.alignfull {
+    max-width: none;
+  }
+  .wp-block-media-text__content {
+    padding: var(--gutter);
+    > *:first-child {
+      margin-top: 0;
+    }
+  }
+  .wp-block-media-text__media {
+    padding: var(--gutter);
+  }
+}

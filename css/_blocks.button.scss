@@ -1,0 +1,29 @@
+.wp-block-button {
+  @include container;
+}
+
+.wp-block-button__link,
+.wp-block-file .wp-block-file__button {
+  background-color: $black;
+  border: 1px solid $black;
+  font-size: inherit;
+  padding: 0.5rem 1.25rem;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    background-color: $white !important;
+    color: $black;
+  }
+}
+
+.is-style-outline {
+  .wp-block-button__link {
+    background-color: $white !important;
+    border: 1px solid $black;
+    &:hover,
+    &:focus {
+      background-color: $black !important;
+      color: $white;
+    }
+  }
+}

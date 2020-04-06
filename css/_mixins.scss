@@ -1,0 +1,105 @@
+@mixin style-body($weight: 400) {
+  font-family: $font-body;
+  font-size: $size-body;
+  font-weight: $weight;
+  line-height: 1.5;
+}
+
+@mixin style-small($weight: 400) {
+  font-family: $font-small;
+  font-size: $size-small;
+  font-weight: $weight;
+  line-height: 1.5;
+}
+
+@mixin style-h1($weight: 300) {
+  font-family: $font-heading;
+  font-size: $size-h1;
+  font-weight: $weight;
+  line-height: 1.5;
+}
+
+@mixin style-h2($weight: 300) {
+  font-family: $font-heading;
+  font-size: $size-h2;
+  font-weight: $weight;
+  line-height: 1.5;
+}
+
+@mixin style-h3($weight: 300) {
+  font-family: $font-heading;
+  font-size: $size-h3;
+  font-weight: $weight;
+  line-height: 1.5;
+}
+
+@mixin style-h4($weight: false) {
+  font-family: $font-heading;
+  font-size: $size-h4;
+  letter-spacing: 0.0275em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  @if $weight {
+    font-weight: $weight;
+  }
+}
+
+@mixin container {
+  // NOTE consider using a custom property if padding
+  // needs to change across breakpoints
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $container-width;
+  padding-left: $container-padding-mobile;
+  padding-right: $container-padding-mobile;
+  @media (min-width: 500px) {
+    padding-left: $container-padding;
+    padding-right: $container-padding;
+  }
+}
+
+@mixin visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@mixin code {
+  background-color: #eeeeee;
+  font-family: $font-mono;
+  font-size: inherit;
+  padding: 0 0.25em;
+}
+
+@mixin input-text {
+  border: 1px solid $black;
+  display: block;
+  max-width: 100%;
+  padding: $container-padding 0 $container-padding $container-padding;
+  width: 100%;
+  /* stylelint-disable */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* stylelint-enable */
+}
+
+@mixin input-submit {
+  background-color: $black;
+  border: 1px solid $black;
+  color: $white;
+  display: inline-block;
+  padding: 0.5rem;
+  @include style-h4;
+  &:hover,
+  &:focus {
+    background-color: $white !important;
+    color: $black;
+  }
+}

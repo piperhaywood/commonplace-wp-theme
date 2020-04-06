@@ -1,0 +1,33 @@
+html {
+  height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.articles,
+.article {
+  padding-top: 3rem;
+}
+
+.articles,
+.article,
+.header {
+  overflow-wrap: break-word;
+}
+
+.header__inner,
+.post__footer {
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 800px) {
+  .article {
+    padding-top: 6vw;
+  }
+  .header__inner,
+  .post__footer {
+    padding-bottom: 6vw;
+  }
+}

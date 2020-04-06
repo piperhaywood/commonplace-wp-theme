@@ -1,0 +1,61 @@
+.wp-block-cover,
+.wp-block-cover-image {
+  clear: both;
+  .wp-block-cover-image-text,
+  .wp-block-cover-text,
+  h2 {
+    font-size: inherit;
+  }
+  &.aligncenter {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: calc(40rem - (var(--gutter) * 2));
+  }
+  &.alignleft,
+  &.alignright {
+    margin-left: var(--gutter);
+    margin-right: var(--gutter);
+    max-width: calc(100vw - (var(--gutter) * 2));
+    width: 100%;
+  }
+  &.alignleft {
+    @media (min-width: 540px) {
+      float: left;
+      max-width: $max-aligned-width;
+    }
+    @media (min-width: 640px) {
+      margin-left: calc(((100vw - #{$container-width}) / 2) + var(--gutter));
+    }
+    @media (min-width: 900px) {
+      margin-left: calc(
+        ((100vw - #{$container-width}) / 2) - (#{$max-aligned-width} / 2) +
+          var(--gutter)
+      );
+    }
+    @media (min-width: 1180px) {
+      margin-left: calc(
+        ((100vw - #{$container-width}) / 2) - #{$max-aligned-width}
+      );
+    }
+  }
+  &.alignright {
+    @media (min-width: 540px) {
+      float: right;
+      max-width: $max-aligned-width;
+    }
+    @media (min-width: 640px) {
+      margin-right: calc(((100vw - #{$container-width}) / 2) + var(--gutter));
+    }
+    @media (min-width: 900px) {
+      margin-right: calc(
+        ((100vw - #{$container-width}) / 2) - (#{$max-aligned-width} / 2) +
+          var(--gutter)
+      );
+    }
+    @media (min-width: 1180px) {
+      margin-right: calc(
+        ((100vw - #{$container-width}) / 2) - #{$max-aligned-width}
+      );
+    }
+  }
+}
