@@ -1,0 +1,39 @@
+{
+  "name": "commonplace-theme",
+  "title": "Commonplace Theme",
+  "version": "0.1.0",
+  "description": "A simple WordPress theme akin to a Commonplace Book.",
+  "author": {
+    "name": "Piper Haywood",
+    "email": "contact@piperhaywood.com",
+    "url": "https://piperhaywood.com"
+  },
+  "license": "GPL-3.0",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/piperhaywood/commonplace-theme.git"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-add-src": "^1.0.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "infinite-scroll": "^3.0.6",
+    "prismjs": "^1.16.0",
+    "stylelint": "^10.1.0",
+    "stylelint-config-recommended": "^2.2.0",
+    "stylelint-config-recommended-scss": "^3.3.0",
+    "stylelint-order": "^3.0.1",
+    "stylelint-scss": "^3.9.2"
+  },
+  "dependencies": {
+    "gulp-header": "^1.7.1",
+    "gulp-util": "^3.0.7"
+  }
+}
