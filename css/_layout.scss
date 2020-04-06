@@ -6,9 +6,8 @@ body {
   overflow-x: hidden;
 }
 
-.articles,
 .article {
-  padding-top: 3rem;
+  padding-top: 7rem;
 }
 
 .articles,
@@ -19,15 +18,15 @@ body {
 
 .header__inner,
 .post__footer {
-  padding-bottom: 3rem;
+  padding-bottom: 7rem;
 }
 
 @media (min-width: 800px) {
   .article {
-    padding-top: 6vw;
+    padding-top: 14vw;
   }
   .header__inner,
   .post__footer {
-    padding-bottom: 6vw;
+    padding-bottom: 14vw;
   }
 }

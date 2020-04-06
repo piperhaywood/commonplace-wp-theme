@@ -11,19 +11,15 @@
               <?php echo cp_title(false); ?>
             </h1>
             <?php if (get_post_type() == 'post') : ?>
-              <time class="dt-published post__time" datetime="<?php echo cp_date(true, false); ?>">
-                <a class="u-url" href="<?php the_permalink(); ?>" aria-label="<?php printf(esc_html__('View post published %s', 'commonplace'), get_the_date('l, j F Y')); ?>">
-                  <?php echo get_the_date('l, j F Y'); ?>
-                </a>
-              </time>
-              <?php if (!is_single() && is_sticky()) : ?><span aria-label="<?php _e('Pinned', 'commonplace'); ?>">📌</span><?php endif; ?>
-              <span class="post__author"><?php printf(_x('by %s', 'authorship', 'commonplace'), sprintf(
-                '<a class="p-author h-card" href="%1$s" title="%2$s" rel="author">%3$s</a>',
-                esc_url( get_author_posts_url( get_the_author_meta('ID'), get_the_author_meta('user_nicename') ) ),
-                esc_attr( sprintf( __( 'Posts by %s', 'commonplace' ), get_the_author() ) ),
-                get_the_author()
-              )); ?></span>
-            <?php endif; ?>
+              <p class="post__meta meta">
+                <time class="dt-published post__time" datetime="<?php echo cp_date(true, false); ?>"><a class="u-url" href="<?php the_permalink(); ?>" aria-label="<?php printf(esc_html__('View post published %s', 'commonplace'), get_the_date('l, j F Y')); ?>"><?php echo get_the_date('l, j F Y'); ?></a></time> <span class="post__author"><?php printf(_x('by %s', 'authorship', 'commonplace'), sprintf(
+                  '<a class="p-author h-card" href="%1$s" title="%2$s" rel="author">%3$s</a>',
+                  esc_url( get_author_posts_url( get_the_author_meta('ID'), get_the_author_meta('user_nicename') ) ),
+                  esc_attr( sprintf( __( 'Posts by %s', 'commonplace' ), get_the_author() ) ),
+                  get_the_author()
+                )); ?></span><?php if (!is_single() && is_sticky()) : ?><span aria-label="<?php _e('Pinned', 'commonplace'); ?>"> 📌</span><?php endif; ?>
+              <?php endif; ?>
+            </p>
           </header>
           
           <section class="prose e-content">
@@ -33,12 +29,12 @@
           <footer class="post__footer">
             <?php wp_link_pages(); ?>
             <?php if (!is_page()) : ?>
-              <div class="post__meta">
+              <div class="post__meta meta">
                 <ul class="post__tags">
                   <?php $format = get_post_format(); ?>
                   <?php if ($format != false) : ?>
                     <li class="post__tag">
-                      <a aria-label="<?php printf(esc_html__('Format: %s', 'commonplace'), $format); ?>" href="<?php echo get_post_format_link($format); ?>"><span class="term term--post_format"><?php echo $format; ?></span></a><span class="separator">, </span>
+                      <a aria-label="<?php printf(esc_html__('Format: %s', 'commonplace'), $format); ?>" href="<?php echo get_post_format_link($format); ?>"><span class="term term--post_format"><?php echo $format; ?></span></a>
                     </li>
                   <?php endif; ?>
                   <?php $cats = wp_get_post_categories($post->ID, array(
@@ -55,7 +51,7 @@
                     <?php foreach($terms as $term) : ?>
                       <?php $tax = get_taxonomy($term->taxonomy); ?>
                       <li class="post__tag">
-                        <a aria-label="<?php printf(esc_html__('%s: %s', 'commonplace'), $tax->labels->singular_name, $term->name); ?>" href="<?php echo get_tag_link($term->term_id); ?>"><span class="term term--<?php echo $term->taxonomy; ?>"><?php echo $term->name; ?></span></a><span class="separator" aria-hidden="true">, </span>
+                        <a aria-label="<?php printf(esc_html__('%s: %s', 'commonplace'), $tax->labels->singular_name, $term->name); ?>" href="<?php echo get_tag_link($term->term_id); ?>"><span class="term term--<?php echo $term->taxonomy; ?>"><?php echo $term->name; ?></span></a>
                       </li>
                     <?php endforeach; ?>
                   <?php endif; ?>

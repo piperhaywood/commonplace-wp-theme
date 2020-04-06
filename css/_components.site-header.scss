@@ -8,10 +8,13 @@
   display: flex;
   padding-left: 0;
 }
-nav a {
+.header nav a {
   display: inline-block;
   padding-bottom: calc(var(--gutter) / 2);
   padding-right: calc(var(--gutter) / 2);
+}
+nav a {
+  text-decoration: none;
 }
 nav a:hover,
 nav a:focus,

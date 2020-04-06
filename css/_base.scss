@@ -75,7 +75,6 @@ img {
 button,
 [type="submit"] {
   appearance: none;
-  background-color: transparent;
   border: 0;
   border-radius: 0;
   cursor: pointer;
@@ -119,4 +118,23 @@ label {
   a:hover {
     text-decoration: underline;
   }
+}
+
+abbr,
+acronym {
+  text-decoration: none;
+}
+
+address {
+  font-style: normal;
+}
+
+tt,
+code,
+kbd {
+  @include code;
+}
+
+small {
+  @include style-small;
 }

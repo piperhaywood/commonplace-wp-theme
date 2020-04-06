@@ -5,6 +5,13 @@
   line-height: 1.5;
 }
 
+@mixin style-large($weight: 400) {
+  font-family: $font-large;
+  font-size: $size-large;
+  font-weight: $weight;
+  line-height: 1.35;
+}
+
 @mixin style-small($weight: 400) {
   font-family: $font-small;
   font-size: $size-small;
@@ -12,36 +19,53 @@
   line-height: 1.5;
 }
 
-@mixin style-h1($weight: 300) {
-  font-family: $font-heading;
+@mixin style-caption($weight: 400) {
+  font-family: $font-sans;
+  font-size: $size-small;
+  font-weight: $weight;
+  line-height: 1.5;
+}
+
+@mixin style-h1($weight: 400) {
+  font-family: $font-sans;
   font-size: $size-h1;
   font-weight: $weight;
   line-height: 1.5;
 }
 
-@mixin style-h2($weight: 300) {
-  font-family: $font-heading;
-  font-size: $size-h2;
+@mixin style-h2($weight: 400) {
+  font-family: $font-serif;
+  font-size: $size-large;
   font-weight: $weight;
-  line-height: 1.5;
+  line-height: 1.35;
 }
 
-@mixin style-h3($weight: 300) {
-  font-family: $font-heading;
+@mixin style-h3($weight: 400) {
+  font-family: $font-sans;
   font-size: $size-h3;
   font-weight: $weight;
   line-height: 1.5;
 }
 
-@mixin style-h4($weight: false) {
-  font-family: $font-heading;
+@mixin style-h4($weight: 400) {
+  font-family: $font-serif;
   font-size: $size-h4;
-  letter-spacing: 0.0275em;
+  font-weight: $weight;
   line-height: 1.5;
-  text-transform: uppercase;
-  @if $weight {
-    font-weight: $weight;
-  }
+}
+
+@mixin style-h5($weight: 400) {
+  font-family: $font-sans;
+  font-size: $size-small;
+  font-weight: $weight;
+  line-height: 1.5;
+}
+
+@mixin style-h6($weight: 400) {
+  font-family: $font-serif;
+  font-size: $size-small;
+  font-weight: $weight;
+  line-height: 1.5;
 }
 
 @mixin container {

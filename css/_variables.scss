@@ -4,10 +4,11 @@ $white: #ffffff;
 
 $font-mono: monospace;
 $font-serif: serif;
-$font-sans: "Verdana", sans-serif;
+$font-sans: "Arial", sans-serif;
 
-$font-body: $font-serif;
+$font-body: $font-sans;
 $font-small: $font-serif;
+$font-large: $font-serif;
 $font-heading: $font-sans;
 
 $container-width: 40rem;
@@ -21,10 +22,11 @@ $transition-duration: 250ms;
 $border-width: 1px;
 
 $size-body: 1.25rem;
-$size-h1: 1.5rem;
+$size-h1: 2rem;
 $size-h2: $size-body;
 $size-h3: $size-body;
 $size-h4: $size-body;
+$size-large: $size-h1;
 $size-small: 1rem;
 
 $max-aligned-width: 16em;
