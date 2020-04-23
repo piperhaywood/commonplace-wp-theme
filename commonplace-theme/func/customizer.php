@@ -6,8 +6,25 @@ function cp_customize_register($wp_customize) {
   $wp_customize->add_section(
     'cp_display_options',
     array(
-      'title'     => __('Options', 'commonplace'),
+      'title'     => __('Theme options', 'commonplace'),
       'priority'  => 200
+    )
+  );
+
+  $wp_customize->add_setting(
+    'cp_blog_intro',
+    array(
+      'default'    =>  '',
+      'sanitize_callback' => 'wp_kses_post'
+    )
+  );
+
+  $wp_customize->add_control(
+    'cp_blog_intro',
+    array(
+      'section'   => 'cp_display_options',
+      'label'     => __('Blog introduction', 'notebook-ph'),
+      'type'      => 'textarea'
     )
   );
 
@@ -35,7 +52,7 @@ function cp_customizer_css() {
   ?>
   <style type="text/css">
     <?php if (false === get_theme_mod('cp_display_authors')) { ?>
-        .post__author { display: none; }
+        .post-author { display: none; }
     <?php } ?>
   </style>
   <?php

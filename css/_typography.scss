@@ -1,20 +1,8 @@
-$my: 1.5rem;
-$my-lg: 4rem;
-
-$width-md: 55rem;
-
-$width-lg: 100rem;
-
 .prose > * {
-  @media (min-width: 500px) {
+  hyphens: manual;
+  @media (min-width: $md) {
     hanging-punctuation: first;
   }
-}
-
-p {
-  margin: $my auto;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
 }
 
 p.has-background {
@@ -22,64 +10,35 @@ p.has-background {
   padding-top: var(--gutter);
 }
 
+.notes {
+  @include style-small;
+}
+
+.notes strong {
+  @include style-caption;
+}
+
 ol {
   margin: $my auto;
   max-width: $container-width;
   padding: 0 2.25rem;
-  @media (min-width: 44em) {
-    padding: 0 var(--gutter);
-  }
 }
 
-ul:not(.blocks-gallery-grid) {
-  margin: $my auto;
-  max-width: $container-width;
-  padding: 0 2.25rem;
-  @media (min-width: 44em) {
-    padding: 0 var(--gutter);
-  }
-}
-
-h1 {
-  @include style-h1(400);
+.prose ul:not(.blocks-gallery-grid) {
+  list-style: none !important;
   margin: $my auto;
   max-width: $container-width;
   padding: 0 var(--gutter);
 }
 
-h2 {
-  @include style-h2(400);
-  margin: 3.5rem auto 1.5em;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
+.prose ul li:not(.blocks-gallery-item) {
+  padding-left: 1rem;
+  text-indent: -1rem;
 }
 
-h3 {
-  @include style-h3;
-  margin: 3.5rem auto 1.5em;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
-}
-
-h4 {
-  @include style-h4;
-  margin: 3.5rem auto 1.5em;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
-}
-
-h5 {
-  @include style-h5;
-  margin: 3.5rem auto 1.5em;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
-}
-
-h6 {
-  @include style-h6;
-  margin: 3.5rem auto 1.5em;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
+.prose ul li:not(.blocks-gallery-item):before {
+  content: "–";
+  margin-right: 0.3125rem;
 }
 
 .prose > a {
@@ -90,7 +49,7 @@ h6 {
 }
 
 blockquote {
-  @include style-small;
+  @include style-h4;
   margin: $my-lg auto;
   max-width: $container-width;
   padding: 0 var(--gutter);
@@ -98,14 +57,14 @@ blockquote {
 
 blockquote > * {
   margin: 0 auto $container-padding;
-  max-width: 23rem;
-  padding-left: 0;
+  padding-left: 5rem;
   padding-right: 0;
 }
 
 blockquote.is-style-large,
 blockquote.is-style-large > * {
-  max-width: $width-md;
+  max-width: $container-width-md;
+  padding-left: 0;
 }
 
 blockquote *:last-child {
@@ -114,6 +73,7 @@ blockquote *:last-child {
 
 cite {
   display: block;
+  font-size: inherit !important;
 }
 
 cite:before {
@@ -183,7 +143,7 @@ figure.wp-block-gallery {
 }
 
 figure.wp-block-gallery.aligncenter {
-  max-width: $width-lg;
+  max-width: $container-width-xl;
 }
 
 figure.wp-block-gallery.alignleft {
@@ -202,7 +162,7 @@ figure.wp-block-gallery.columns-1 figure {
   display: block;
   height: auto;
   margin: $my auto;
-  max-width: $width-lg;
+  max-width: $container-width-xl;
 }
 
 figure.wp-block-gallery.columns-1 li:first-child figure {
@@ -239,7 +199,7 @@ figure.wp-block-video video {
 }
 
 figure.wp-block-video.aligncenter {
-  max-width: $width-lg;
+  max-width: $container-width-xl;
 }
 
 figure.wp-block-video.alignleft {
@@ -298,7 +258,7 @@ pre {
   overflow: scroll;
   overflow-wrap: normal;
   padding: var(--gutter);
-  width: $container-width;
+  width: $container-width-lg;
 }
 
 pre h1,
@@ -393,38 +353,6 @@ input[id*="pwbox"] {
   margin-top: 0.25rem;
 }
 
-.termindex {
-  columns: 11rem auto;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
-  h2 {
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    margin: 0;
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-  ol {
-    list-style: none;
-    margin-bottom: 1.5rem;
-    padding-left: 0;
-  }
-  li {
-    margin-left: 1rem;
-    text-indent: -1rem;
-  }
-  a {
-    text-decoration: none;
-  }
-  a:hover,
-  a:focus,
-  a:active {
-    text-decoration: underline;
-  }
-}
-
 .wp-block-file {
   margin: $my auto;
   max-width: $container-width;
@@ -440,7 +368,7 @@ input[id*="pwbox"] {
   @include style-large;
   margin-bottom: $my-lg;
   margin-top: $my-lg;
-  max-width: $width-md;
+  max-width: $container-width-md;
 }
 
 [class*="wp-audio"],
@@ -501,13 +429,15 @@ input[id*="pwbox"] {
 }
 
 .wp-block-quote.is-style-large {
-  @include style-large;
+  @include style-h2;
   margin: $my auto;
   padding: 0 var(--gutter);
 }
 
 .wp-block-quote.is-style-large p {
+  font-size: inherit;
   font-style: normal;
+  line-height: inherit;
 }
 
 .wp-block-quote.is-large cite,

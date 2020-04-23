@@ -2,12 +2,8 @@
   @include container;
 }
 
-.container--large {
-  max-width: 900px;
-}
-
-.container--full {
-  max-width: 100%;
+.container--xl {
+  @include container($container-width-xl);
 }
 
 .hidden {
@@ -39,6 +35,34 @@
 .visuallyhidden.button:hover {
   background-color: $white;
   color: $black;
+}
+
+.screenshot {
+  -webkit-box-shadow: 0px 8px 19px -3px rgba(170, 170, 170, 1);
+  -moz-box-shadow: 0px 8px 19px -3px rgba(170, 170, 170, 1);
+  box-shadow: 0px 8px 19px -3px rgba(170, 170, 170, 1);
+}
+
+img.pixels {
+  image-rendering: crisp-edges;
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 80px);
+  grid-column-gap: calc(var(--gutter) / 2);
+  grid-row-gap: calc(var(--gutter) / 2);
+}
+.thumbs img {
+  border: 1px solid rgb(230, 230, 230);
+  float: none !important;
+  margin-bottom: 0 !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.prose .thumbs img {
+  width: auto !important;
 }
 
 .has-bg {

@@ -5,8 +5,10 @@ require_once('func/customizer.php');
 require_once('func/enqueue.php');
 require_once('func/navigation.php');
 require_once('func/theme-support.php');
+require_once('func/widgets.php');
 
 add_shortcode('notebooksearch', 'get_search_form');
+
 
 add_shortcode('notebookindex', 'notebook_index');
 function notebook_index($attr) {
@@ -19,6 +21,11 @@ function notebook_index($attr) {
   $showYears = ($a['years'] === 'true');
   $count = intval($a['count']);
   return get_notebook_index($taxonomy, $showYears, $count);
+}
+
+add_shortcode('notebooklist', 'notebook_list');
+function notebook_list() {
+  return cp_get_list();
 }
 
 function get_notebook_index($taxonomy, $showYears, $count) {
@@ -41,7 +48,7 @@ function get_notebook_index($taxonomy, $showYears, $count) {
           'count' => $term->count,
           'slug' => $slug,
           'type' => $term->taxonomy,
-          'aria' => sprintf(esc_html__('%s: %s, %s posts', 'commonplace'), $tax->labels->singular_name, $term->name, $term->count)
+          'aria' => sprintf(esc_html__('%s: %s, %s posts', 'notebook-ph'), $tax->labels->singular_name, $term->name, $term->count)
         ));
       }
     }
@@ -69,7 +76,7 @@ function get_notebook_index($taxonomy, $showYears, $count) {
             'count' => $yearCount,
             'slug' => $year,
             'type' => 'year',
-            'aria' => sprintf(esc_html__('Year: %s, %s posts', 'commonplace'), $year, $yearCount)
+            'aria' => sprintf(esc_html__('Year: %s, %s posts', 'notebook-ph'), $year, $yearCount)
           ));
         }
       }
@@ -78,12 +85,11 @@ function get_notebook_index($taxonomy, $showYears, $count) {
 
   ob_start(); ?>
     <?php if (!empty($groups)) : ?>
-    <div class="container container--full">
       <div class="termindex">
         <?php foreach ($groups as $char => $terms) : ?>
           <?php ksort($terms); ?>
-          <?php $label = $char == '#' ? esc_attr__('a number', 'commonplace') : $char; ?>
-          <?php $label = sprintf(esc_attr__('Terms beginning with %s', 'commonplace'), $label); ?>
+          <?php $label = $char == '#' ? esc_attr__('a number', 'notebook-ph') : $char; ?>
+          <?php $label = sprintf(esc_attr__('Terms beginning with %s', 'notebook-ph'), $label); ?>
           <h2 aria-label="<?php echo $label; ?>"><?php echo apply_filters( 'the_title', $char ); ?></h2>
           <ol>
           <?php foreach ($terms as $slug => $term) : ?>
@@ -94,10 +100,10 @@ function get_notebook_index($taxonomy, $showYears, $count) {
           </ol>
         <?php endforeach; ?>
       </div>
-    </div>
     <?php endif; ?>
   <?php return ob_get_clean();
 }
+
 
 function cp_pagetype($echo = true) {
   $class = is_singular() ? 'permalink' : '';
@@ -170,34 +176,34 @@ function cp_title($echo = true) {
   }
 }
 
-function cp_categories($echo = true) {
-  $return = '';
-  $cat_arr = array();
+// function cp_categories($echo = true) {
+//   $return = '';
+//   $cat_arr = array();
 
-  $cats = get_the_category();
-  if (empty($cats)) {
-    return;
-  }
+//   $cats = get_the_category();
+//   if (empty($cats)) {
+//     return;
+//   }
 
-  foreach($cats as $cat) {
-    $cat_arr[$cat->term_id] = '<a href="' . get_category_link($cat->term_id) . '">' . strtolower($cat->name) . '</a>';
-  }
+//   foreach($cats as $cat) {
+//     $cat_arr[$cat->term_id] = '<a href="' . get_category_link($cat->term_id) . '">' . strtolower($cat->name) . '</a>';
+//   }
 
-  $default = get_option('default_category');
-  unset($cat_arr[$default]);
+//   $default = get_option('default_category');
+//   unset($cat_arr[$default]);
 
-  if (!empty($cat_arr)) {
-    $last = array_pop($cat_arr);
-    $return .= !empty($cat_arr) ? implode($cat_arr, ', ') . ' ' . __('and', 'commonplace') . ' ' : '';
-    $return .= $last;
-  }
+//   if (!empty($cat_arr)) {
+//     $last = array_pop($cat_arr);
+//     $return .= !empty($cat_arr) ? implode($cat_arr, ', ') . ' ' . __('and', 'commonplace') . ' ' : '';
+//     $return .= $last;
+//   }
 
-  if ($echo === true) {
-    echo $return;
-  } else {
-    return $return;
-  }
-}
+//   if ($echo === true) {
+//     echo $return;
+//   } else {
+//     return $return;
+//   }
+// }
 
 function cp_author($echo = true) {
   $return = '';
@@ -216,20 +222,20 @@ function cp_author($echo = true) {
   }
 }
 
-function cp_postformat($echo = true) {
-  $return = '';
+// function cp_postformat($echo = true) {
+//   $return = '';
 
-  $format = get_post_format();
-  if ($format != false) {
-    $return = '<a href="' . get_post_format_link($format) . '">' . ucfirst($format) . '</a>';
-  }
+//   $format = get_post_format();
+//   if ($format != false) {
+//     $return = '<a href="' . get_post_format_link($format) . '">' . ucfirst($format) . '</a>';
+//   }
 
-  if ($echo === true) {
-    echo $return;
-  } else {
-    return $return;
-  }
-}
+//   if ($echo === true) {
+//     echo $return;
+//   } else {
+//     return $return;
+//   }
+// }
 
 function cp_archivedesc($echo = true, $prefix = '', $suffix = '') {
   global $wp_query;
@@ -269,6 +275,10 @@ function cp_get_theme_version() {
 
 function cp_archive_str() {
   global $wp_query;
+  $paged = get_query_var('paged');
+  if (is_page() || (is_front_page() && $paged == 0)) {
+    return false;
+  }
   if (is_singular()) {
     return get_the_title();
   }
@@ -276,26 +286,24 @@ function cp_archive_str() {
     return __('Page not found [404 error]', 'commonplace');
   }
   $paged = get_query_var('paged');
-  $page = $paged > 0 ? ', ' . _x('p.', 'paged', 'commonplace') . $paged : '';
+  $page = $paged > 0 ? _x('page ', 'paged', 'commonplace') . $paged : false;
+  $page = $page && !is_front_page() ? ', ' . $page : $page;
   $text = '';
-  if (is_front_page()) {
-    $text = get_bloginfo('name');
-    $label = $text;
-  } elseif (is_tax('post_format')) {
+  if (is_tax('post_format')) {
     $var = get_post_format();
-    $text = '<span class="term term--post_format">' . $var . '</span>';
+    $text = __('format', 'commonplace') . ' / ' . $var;
   } elseif (is_tag()) {
     $var = single_tag_title('', false );
-    $text = '<span class="term term--post_tag">' . $var . '</span>';
+    $text = __('tag', 'commonplace') . ' / ' . $var;
   } elseif (is_category()) {
     $var = single_cat_title('', false);
-    $text = '<span class="term term--category">' . $var . '</span>';
+    $text = __('category', 'commonplace') . ' / ' . $var;
   } elseif (is_search()) {
     $query = get_query_var('s');
-    $text = sprintf(__('&ldquo;%s&rdquo;', 'commonplace'), $query);
+    $text = sprintf(__('results / &ldquo;%s&rdquo;', 'commonplace'), $query);
   } elseif (is_author()) {
     $var = get_the_author_meta('display_name', get_query_var('author'));
-    $text = sprintf(__('by %s', 'commonplace'), $var);
+    $text = __('author', 'commonplace') . ' / ' . $var;
   } elseif (is_month()) {
     $var = get_the_date('F Y');
     $text = $var;
@@ -304,7 +312,7 @@ function cp_archive_str() {
     $text = $var;
   }
 
-  $title = $text . $page . '&nbsp;<span class="term__count">' . $wp_query->found_posts . '</span>';
+  $title = $text . $page;
 
   return $title;
 }
@@ -471,4 +479,133 @@ function cp_add_to_index($groups, $args) {
   }
   $groups[$first_char][$args['slug']] = $args;
   return $groups;
+}
+
+function cp_get_list($posts = false) {
+  global $post;
+  if (!$posts) {
+    $posts = get_posts(array(
+      'posts_per_page' => -1
+    ));
+  }
+  if ($posts) {
+    ob_start(); ?>
+    <ul class="post-index">
+      <?php foreach ($posts as $post) : ?>
+        <?php setup_postdata($post); ?>
+        <?php $format = get_post_format(); ?>
+        <?php $hsl = cp_get_hsl($post); ?>
+        <?php $images = get_attached_media( 'image' ); ?>
+        <li class="post-index__post-item" style="--color:<?php echo $hsl; ?>;">
+          <?php if (has_post_thumbnail($post)) : ?>
+            <?php echo cp_list_thumb($post, 'thumbnail'); ?>
+          <?php endif; ?>
+          <div class="post-item">
+            <a class="post-item__link" href="<?php the_permalink(); ?>">
+              <time class="post-item__time" datetime="<?php echo cp_date(true, false); ?>"><?php echo get_the_date('d F Y'); ?></time>
+            </a>
+            <a class="post-item__link" href="<?php the_permalink(); ?>">
+              <span class="post-item__text"><?php the_title(); ?></span>
+            </a>
+            <?php $terms = get_terms(array(
+              'taxonomy' => array('post_tag'),
+              'object_ids' => get_the_id()
+            )); ?>
+            <?php if ($terms) : ?>
+              <ul class="post-item__terms">
+                <?php foreach ($terms as $slug => $term) : ?>
+                  <?php if ($term->term_id != get_option('default_category')) : ?>
+                    <li class="term term--<?php echo $term->taxonomy; ?>">
+                      <a class="term-link" aria-label="<?php printf(_n('%s, %s post', '%s, %s posts', $term->count, 'commonplace'), $term->name, $term->count); ?>" href="<?php echo get_tag_link($term->term_id); ?>"><?php echo $term->name; ?></a><span class="separator" aria-hidden="true">,</span>
+                    </li>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              </ul>
+            <?php endif; ?>
+          </div>
+        </li>
+        <?php wp_reset_postdata(); ?>
+      <?php endforeach; ?>
+    </ul>
+    <?php return ob_get_clean();
+  }
+}
+
+function max_img_width($img_width, $img_height, $ideal_area) {
+  $max_width = round($img_width * sqrt($ideal_area / ($img_width * $img_height)));
+  return $max_width;
+}
+
+function cp_list_thumb($post, $size = 'thumbnail') {
+  add_filter('wp_calculate_image_srcset_meta', '__return_null');
+  $rotations = array(rand(10, 20), rand(-20, -10));
+  $yOffset = array(rand(4, 6), rand(-6, -4));
+  $data = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $size);
+  $style = '--pos-right:' . rand(5, 95) . '%;--trans-y:' . $yOffset[array_rand($yOffset)] . 'rem;--rotate:' . $rotations[array_rand($rotations)] . 'deg;--max-width:' . max_img_width($data[1], $data[2], 8000) / 16 . 'rem;';
+  $html = get_the_post_thumbnail($post, $size, array(
+    'loading' => 'lazy',
+    'style' => $style,
+    'class' => 'post-item__image',
+    'aria-hidden' => 'true',
+    'role' => 'decoration'
+  ));
+  remove_filter('wp_calculate_image_srcset_meta', '__return_null');
+  return $html;
+}
+
+function cp_comment($comment, $args, $depth) {
+  if ( 'div' === $args['style'] ) {
+    $tag       = 'div';
+    $add_below = 'comment';
+  } else {
+    $tag       = 'li';
+    $add_below = 'div-comment';
+  }?>
+  <<?php echo $tag; ?> <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ); ?> id="comment-<?php comment_ID() ?>"><?php 
+  if ( 'div' != $args['style'] ) { ?>
+    <div id="div-comment-<?php comment_ID() ?>" class="comment-body"><?php
+  } ?>
+    <div class="comment-avatar">
+      <?php
+        if ( $args['avatar_size'] != 0 ) {
+          echo get_avatar( $comment, $args['avatar_size'] ); 
+        }
+      ?>
+    </div>
+    <div class="comment-author vcard">
+        <?php printf( __( '<cite class="fn">%s</cite>' ), get_comment_author_link() ); ?>, 
+      <span class="comment-meta commentmetadata">
+        <a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>"><?php
+          /* translators: 1: date, 2: time */
+          printf( 
+            __('%1$s at %2$s'),
+            get_comment_date(),
+            get_comment_time()
+          ); ?>
+        </a>
+      </span><?php edit_comment_link( __( 'Edit' ), ' / ', '' ); ?>
+    </div>
+
+    <div class="comment-content prose">
+      <?php if ( $comment->comment_approved == '0' ) : ?>
+        <p><em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em></p>
+      <?php endif; ?>
+      <?php comment_text(); ?>
+    </div>
+
+    <div class="reply"><?php
+      comment_reply_link(
+        array_merge(
+          $args,
+          array(
+            'add_below' => $add_below,
+            'depth'     => $depth,
+            'max_depth' => $args['max_depth']
+          )
+        )
+      ); ?>
+    </div><?php
+  if ( 'div' != $args['style'] ) : ?>
+    </div><?php
+  endif;
 }

@@ -2,45 +2,38 @@
   --tag-color: $black;
   --color: $black;
   --gutter: $container-padding-mobile;
-  @media (min-width: 500px) {
+  --site-margin-y: 14rem;
+  @media (min-width: $sm) {
     --gutter: $container-padding;
+    --site-margin-y: 34vw;
+  }
+  @media (min-width: $lg) {
+    --site-margin-y: 17rem;
   }
 }
 
 html {
   box-sizing: border-box;
   font-size: 87.5%;
+  height: 100%;
   -webkit-text-size-adjust: 100%;
+  @media (min-width: $sm) {
+    font-size: 100%;
+  }
 }
 
 body {
   color: $black;
   font-size: 1em;
+  overflow-x: hidden;
 }
 
-main {
-  @include style-body;
+* {
+  font-variation-settings: "slnt" 0deg;
 }
 
-button,
-select,
-textarea,
-input {
-  font-family: inherit;
-  font-size: 16px;
-}
-
-@media (min-width: 500px) {
-  html {
-    font-size: 100%;
-  }
-
-  button,
-  select,
-  textarea,
-  input {
-    font-size: 100%;
-  }
+em {
+  font-variation-settings: "slnt" 10deg;
 }
 
 *,
@@ -50,24 +43,123 @@ input {
   margin: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+main {
+  @include style-body;
+}
+
+header,
+footer {
+  @include style-h4;
+  overflow-wrap: break-word;
+}
+
+article {
+  margin-bottom: var(--site-margin-y);
+  margin-top: var(--site-margin-y);
+  overflow-wrap: break-word;
+}
+
+button,
+select,
+textarea,
+input {
+  font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
+}
+
+h1 {
+  @include style-h1;
+  margin: $my auto;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+}
+
+h2 {
+  @include style-h2;
+  margin: 3.5rem auto $my;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+}
+
+h3 {
+  @include style-h3;
+  margin: 3.5rem auto $my;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+}
+
+h4 {
+  @include style-h4;
+  margin: 3.5rem auto $my;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+}
+
+h5 {
+  @include style-h5;
+  margin: 3.5rem auto $my;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+}
+
+h6 {
+  @include style-h6;
+  margin: 3.5rem auto $my;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+}
+
+ul,
+ol,
+p,
+details,
+dl {
+  margin: $my auto;
+  max-width: $container-width;
+  padding: 0 var(--gutter);
+  strong {
+    @include style-h4;
+  }
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1 strong {
+  @include style-h2;
+}
+
+h2 strong {
+  @include style-h1;
+}
+
+h3 strong {
+  @include style-h4;
+}
+
+h4 strong {
+  @include style-h3;
+}
+
+h5 strong {
+  @include style-h6;
+}
+
+h6 strong {
+  @include style-h5;
 }
 
 img {
   display: inline-block;
   height: auto;
+  margin-bottom: $my;
+  margin-top: $my;
   max-width: 100%;
   vertical-align: middle;
 }
@@ -105,6 +197,7 @@ iframe {
 }
 
 hr {
+  @include container($container-width-md);
   background-color: $black;
   border: none;
   color: $black;
@@ -118,6 +211,10 @@ label {
   a:hover {
     text-decoration: underline;
   }
+}
+
+mark {
+  background-color: rgba(255, 251, 32, 0.473);
 }
 
 abbr,

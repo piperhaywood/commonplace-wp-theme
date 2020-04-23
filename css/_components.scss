@@ -1,0 +1,347 @@
+// NOTE Some of the strange selectors are due to WordPress default behaviour. Proceed with caution if modifying.
+
+// Header
+
+.nav {
+  @include container($container-width-xl);
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+  margin-top: $my;
+}
+
+.widget-contact {
+  @include style-h5;
+  * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.menu {
+  @include style-h4;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  margin-right: 2rem;
+  padding: 0;
+}
+
+.menu li {
+  padding-bottom: calc(var(--gutter) / 2);
+  padding-right: calc(var(--gutter) / 2);
+}
+
+.menu li:after {
+  content: ", ";
+}
+
+.menu li:last-child:after {
+  content: "";
+}
+
+.current-menu-item a,
+.current_page_item a {
+  text-decoration: underline; // TODO Add ancestor
+}
+
+.breadcrumb {
+  @include style-body;
+  margin: 0;
+  padding: 0;
+}
+
+.page-description {
+  @include style-body;
+  margin-bottom: 0;
+}
+
+// Footer
+
+.pagination {
+  margin-bottom: var(--site-margin-y);
+}
+
+.pagination__label,
+.page-numbers {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.pagination .screen-reader-text {
+  @include visuallyhidden;
+}
+
+ul.page-numbers {
+  @include container;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+a.page-numbers,
+span.page-numbers {
+  padding: $my / 2;
+}
+
+.page-numbers[aria-current="page"] {
+  text-decoration: underline;
+}
+
+.footer-widgets {
+  @include container($container-width);
+}
+
+.widget-title {
+  @include style-h5;
+  margin: 0;
+}
+
+.widget p,
+.widget ul,
+.widget ol,
+.widget h3 {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.widget {
+  @include style-body;
+  margin-bottom: $my * 2;
+}
+
+.widget_text,
+.widget_custom_html {
+  a {
+    text-decoration: underline;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.cp-widget--small .widget {
+  @include style-h5;
+}
+
+.widget_recent_entries ul {
+  margin: 0;
+}
+
+.widget_recent_entries a:after {
+  content: " –";
+}
+
+.searchform {
+  position: relative;
+}
+
+.searchform label {
+  @include visuallyhidden;
+}
+
+.searchform input[type="text"] {
+  border: 1px solid $black;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(100vw - (var(--gutter) * 2));
+  padding: $container-padding 7rem $container-padding $container-padding;
+  width: 100%;
+}
+
+.searchform input[type="submit"] {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: $black;
+  cursor: pointer;
+  padding: 1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.searchform input[type="submit"]:hover,
+.searchform input[type="submit"]:focus {
+  background-color: $black !important;
+  border: 1px solid $black;
+  color: $white;
+}
+
+.searchform__group {
+  border: 1px solid black;
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+// Post
+
+.post-title {
+  @include style-h1;
+  margin-top: 0;
+}
+
+.post-footer {
+  clear: both;
+}
+
+.meta {
+  @include style-h5;
+}
+
+.post-meta-title {
+  font-style: italic;
+}
+
+.term {
+  display: inline;
+}
+
+.term:last-child .separator {
+  display: none;
+}
+
+.rpbt_shortcode {
+  margin-bottom: var(--site-margin-y);
+}
+
+.rpbt_shortcode h3 {
+  @include style-h4;
+  margin-top: 0;
+}
+
+.post-index {
+  @include style-h5;
+  @include container($container-width-xl);
+}
+
+.post-index__post-item {
+  list-style-type: none;
+  position: relative;
+}
+
+.post-item {
+  align-items: baseline;
+  border-top: 1px solid $black;
+  display: grid;
+  grid-column-gap: 1rem;
+  grid-template-columns: repeat(12, 1fr);
+  padding-bottom: 1.125rem;
+  padding-top: 1rem;
+  text-shadow: white 0 0 10px;
+}
+
+.post-index__post-item:last-child .post-item {
+  border-bottom: 1px solid $black;
+}
+
+.post-item > * {
+  z-index: 100;
+}
+
+.post-item > *:nth-child(1) {
+  grid-column: 1 / span 12;
+  @media (min-width: $lg) {
+    grid-column: 1 / span 3;
+  }
+  @media (min-width: $xl) {
+    grid-column: 1 / span 2;
+  }
+}
+
+.post-item > *:nth-child(2) {
+  grid-column: 1 / span 12;
+  @media (min-width: $lg) {
+    grid-column: 4 / span 4;
+  }
+  @media (min-width: $xl) {
+    grid-column: 3 / span 5;
+  }
+}
+
+.post-item > *:nth-child(3) {
+  grid-column: 1 / span 12;
+  @media (min-width: $lg) {
+    grid-column: 8 / span 5;
+  }
+  @media (min-width: $xl) {
+    grid-column: 8 / span 5;
+  }
+}
+
+.post-item__text {
+  @include style-body;
+}
+
+.post-item__image {
+  display: block;
+  margin: 0;
+  max-width: var(--max-width);
+  opacity: 0.4;
+  position: absolute;
+  right: var(--pos-right);
+  top: 50%;
+  transform: translate(50%, calc(-50% + calc(var(--trans-y) / 3)))
+    rotate(var(--rotate));
+  transition: opacity 500ms;
+  z-index: -10;
+}
+
+.post-item__terms {
+  margin: 0;
+  padding: 0;
+}
+
+@media not all and (hover: none) {
+  .post-item__image {
+    opacity: 1;
+  }
+  .post-index__post-item:hover .post-item__image {
+    opacity: 0.4;
+  }
+}
+
+// Index
+
+.termindex {
+  @include container($container-width-xl);
+  columns: 11rem auto;
+}
+
+.termindex h2 {
+  @include style-body;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  max-width: none;
+  padding: 0;
+}
+
+.termindex ol {
+  list-style-type: none;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  max-width: none;
+  padding: 0;
+}
+
+.termindex a {
+  text-decoration: none;
+}
+.termindex a:hover {
+  text-decoration: underline;
+}
+
+.term__count {
+  @include style-h5;
+}

@@ -26,7 +26,7 @@ if ( post_password_required() ) {
               'avatar_size' => 100,
               'style'       => 'ol',
               'short_ping'  => true,
-              'callback'    => 'nph_comment',
+              'callback'    => 'cp_comment',
               'reply_text'  => __( 'Reply', 'notebook-ph' ),
             ) );
           ?>

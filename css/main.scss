@@ -2,8 +2,10 @@
 @import "mixins";
 @import "fonts";
 @import "base";
-@import "layout";
-@import "typography";
+@import "components";
+
+// @import "typography";
+
 // @import "components.pagination";
 // @import "components.tags";
 // @import "blocks";
@@ -15,9 +17,9 @@
 // @import "blocks.quotes";
 // @import "blocks.embeds";
 // @import "blocks.widgets";
-@import "components.site-header";
-@import "components.site-footer";
-@import "post";
-@import "media";
-@import "components.comments";
+
+// @import "components.site-footer";
+// @import "media";
+// @import "components.comments";
 @import "utilities";
+@import "print";

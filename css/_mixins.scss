@@ -1,79 +1,90 @@
-@mixin style-body($weight: 400) {
-  font-family: $font-body;
+// @mixin font-sans {
+//   font-family: "WorkSans", "Helvetica", sans-serif;
+//   @supports (font-variation-settings: normal) {
+//     font-family: "WorkSansVariable", "Helvetica", sans-serif;
+//   }
+// }
+
+@mixin style-body($weight: 290) {
+  font-family: $font-sans;
   font-size: $size-body;
   font-weight: $weight;
-  line-height: 1.5;
+  line-height: 1.6;
+  a {
+    text-decoration-thickness: 0.0625rem !important;
+  }
 }
 
-@mixin style-large($weight: 400) {
-  font-family: $font-large;
-  font-size: $size-large;
+@mixin style-h1($weight: 310) {
+  font-family: $font-serif;
+  font-size: $size-h2;
   font-weight: $weight;
-  line-height: 1.35;
+  line-height: 1.2;
+  a {
+    text-decoration-thickness: 0.125rem !important;
+  }
 }
 
-@mixin style-small($weight: 400) {
-  font-family: $font-small;
-  font-size: $size-small;
-  font-weight: $weight;
-  line-height: 1.5;
-}
-
-@mixin style-caption($weight: 400) {
-  font-family: $font-sans;
-  font-size: $size-small;
-  font-weight: $weight;
-  line-height: 1.5;
-}
-
-@mixin style-h1($weight: 400) {
+@mixin style-h2($weight: 200) {
   font-family: $font-sans;
   font-size: $size-h1;
   font-weight: $weight;
-  line-height: 1.5;
+  line-height: 1.2;
+  a {
+    text-decoration-thickness: 0.125rem !important;
+  }
 }
 
-@mixin style-h2($weight: 400) {
-  font-family: $font-serif;
-  font-size: $size-large;
-  font-weight: $weight;
-  line-height: 1.35;
+@mixin style-h3 {
+  @include style-body;
 }
 
-@mixin style-h3($weight: 400) {
-  font-family: $font-sans;
-  font-size: $size-h3;
-  font-weight: $weight;
-  line-height: 1.5;
-}
-
-@mixin style-h4($weight: 400) {
+@mixin style-h4($weight: 200) {
   font-family: $font-serif;
   font-size: $size-h4;
   font-weight: $weight;
-  line-height: 1.5;
+  line-height: 1.25;
+  a {
+    text-decoration-thickness: 0.0625rem !important;
+  }
 }
 
-@mixin style-h5($weight: 400) {
+@mixin style-h5($weight: 380) {
   font-family: $font-sans;
-  font-size: $size-small;
+  font-size: $size-h5;
   font-weight: $weight;
   line-height: 1.5;
+  a {
+    text-decoration-thickness: 0.0625rem !important;
+  }
 }
 
-@mixin style-h6($weight: 400) {
+@mixin style-h6($weight: 270) {
   font-family: $font-serif;
-  font-size: $size-small;
+  font-size: $size-h6;
   font-weight: $weight;
-  line-height: 1.5;
+  line-height: 1.3;
+  a {
+    text-decoration-thickness: 0.0625rem !important;
+  }
 }
 
-@mixin container {
-  // NOTE consider using a custom property if padding
-  // needs to change across breakpoints
+@mixin style-caption {
+  @include style-h5;
+}
+
+@mixin style-large($weight: 310) {
+  @include style-h1;
+}
+
+@mixin style-small {
+  @include style-h6;
+}
+
+@mixin container($width: $container-width) {
   margin-left: auto;
   margin-right: auto;
-  max-width: $container-width;
+  max-width: $width;
   padding-left: $container-padding-mobile;
   padding-right: $container-padding-mobile;
   @media (min-width: 500px) {

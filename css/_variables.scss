@@ -2,31 +2,34 @@ $black: #000000;
 $grey: #949494;
 $white: #ffffff;
 
-$font-mono: monospace;
-$font-serif: serif;
-$font-sans: "Arial", sans-serif;
+$font-mono: "Menlo", monospace;
+$font-serif: "CrimsonPro", "Hoefler Text", "Georgia", "Times New Roman", serif;
+$font-sans: "Inter", "Helvetica", sans-serif;
 
-$font-body: $font-sans;
-$font-small: $font-serif;
-$font-large: $font-serif;
-$font-heading: $font-sans;
-
-$container-width: 40rem;
+$container-width: 41rem;
+$container-width-md: 50rem;
+$container-width-lg: 60rem;
+$container-width-xl: 100rem;
 $container-padding: 1rem;
 $container-padding-mobile: 0.5rem;
-$header-height: 3.5rem;
 
-$sm: 42em;
+$sm: 31.25em;
+$md: 42em;
+$lg: 50em;
+$xl: 60em;
 
 $transition-duration: 250ms;
-$border-width: 1px;
+$border-width: 0.0625rem;
 
-$size-body: 1.25rem;
+$size-body: 1.125rem;
 $size-h1: 2rem;
-$size-h2: $size-body;
+$size-h2: 2.375rem;
 $size-h3: $size-body;
-$size-h4: $size-body;
-$size-large: $size-h1;
-$size-small: 1rem;
+$size-h4: 1.5rem;
+$size-h5: 0.875rem;
+$size-h6: 1.125rem;
 
 $max-aligned-width: 16em;
+
+$my: 1.5rem;
+$my-lg: 4rem;
