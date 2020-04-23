@@ -68,7 +68,7 @@ gulp.task("sass", function () {
 
 gulp.task("js", function () {
   return gulp
-    .src(["js/scripts.js"])
+    .src(["node_modules/prismjs/prism.js", "js/scripts.js"])
     .pipe(sourcemaps.init())
     .pipe(concat("scripts.js"))
     .pipe(uglify())

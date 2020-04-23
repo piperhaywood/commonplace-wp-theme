@@ -222,21 +222,6 @@ function cp_author($echo = true) {
   }
 }
 
-// function cp_postformat($echo = true) {
-//   $return = '';
-
-//   $format = get_post_format();
-//   if ($format != false) {
-//     $return = '<a href="' . get_post_format_link($format) . '">' . ucfirst($format) . '</a>';
-//   }
-
-//   if ($echo === true) {
-//     echo $return;
-//   } else {
-//     return $return;
-//   }
-// }
-
 function cp_archivedesc($echo = true, $prefix = '', $suffix = '') {
   global $wp_query;
   $total = $wp_query->found_posts;
@@ -247,7 +232,7 @@ function cp_archivedesc($echo = true, $prefix = '', $suffix = '') {
     $return .= category_description();
   } elseif (is_author()) {
     $return .= '<p>' . get_the_author_meta('description') . '</p>';
-  } elseif (is_home()) {
+  } elseif (is_home() && !is_paged()) {
     $intro = get_theme_mod('cp_blog_intro');
     if ($intro) {
       $return .= '<p>' . strip_tags($intro, '<em><a><img><br>') . '</p>';
@@ -502,7 +487,7 @@ function cp_get_list($posts = false) {
           <?php endif; ?>
           <div class="post-item">
             <a class="post-item__link" href="<?php the_permalink(); ?>">
-              <time class="post-item__time" datetime="<?php echo cp_date(true, false); ?>"><?php echo get_the_date('d F Y'); ?></time>
+              <time class="post-item__time" datetime="<?php echo cp_date(true, false); ?>"><?php echo get_the_date('d.m.Y'); ?></time>
             </a>
             <a class="post-item__link" href="<?php the_permalink(); ?>">
               <span class="post-item__text"><?php the_title(); ?></span>

@@ -1,0 +1,205 @@
+/* stylelint-disable */
+.prose > twitter-widget {
+  @include container;
+  width: 40rem !important;
+}
+/* stylelint-enable */
+
+.prose > iframe.instagram-media {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: calc(100vw - (var(--gutter) * 2)) !important;
+}
+
+.prose > p img {
+  display: block;
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
+  &.alignleft {
+    margin-bottom: $my;
+    margin-top: $my;
+    width: $aside-width * 1.5;
+    @media (min-width: $mqAside) {
+      float: left;
+      margin-left: calc((#{$aside-width} + #{$mx}) * -1);
+      margin-right: 0;
+      margin-top: 0;
+      width: $aside-width;
+    }
+  }
+  &.alignright {
+    margin-bottom: $my;
+    margin-top: $my;
+    width: $aside-width * 1.5;
+    @media (min-width: $mqAside) {
+      float: right;
+      margin-left: 0;
+      margin-right: calc((#{$aside-width} + #{$mx}) * -1);
+      margin-top: 0;
+      width: $aside-width;
+    }
+  }
+}
+
+.prose > div {
+  &.alignnone {
+    @include container;
+    margin-bottom: $my-lg;
+    margin-top: $my-lg;
+    width: 100% !important;
+  }
+  .aligncenter {
+    display: block;
+    margin-bottom: $my-lg;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: $my-lg;
+    padding: 0 var(--gutter);
+  }
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  padding-left: calc(var(--gutter) / 2);
+  padding-right: calc(var(--gutter) / 2);
+}
+
+.gallery img {
+  border: none !important;
+}
+
+.gallery br {
+  display: none;
+}
+
+.gallery-columns-1 {
+  display: block;
+}
+
+.gallery dd {
+  padding-left: 0;
+}
+
+.gallery-item {
+  margin-bottom: var(--gutter);
+  padding-left: calc(var(--gutter) / 2);
+  padding-right: calc(var(--gutter) / 2);
+}
+
+.gallery-columns-2 .gallery-item {
+  @media (min-width: 410px) {
+    width: calc((100vw - var(--gutter)) / 2);
+  }
+}
+
+.gallery-columns-3 .gallery-item {
+  @media (min-width: 500px) {
+    width: calc((100vw - var(--gutter)) / 3);
+  }
+}
+
+.gallery-columns-4 .gallery-item {
+  @media (min-width: 410px) {
+    width: calc((100vw - var(--gutter)) / 2);
+  }
+
+  @media (min-width: 766px) {
+    width: calc((100vw - var(--gutter)) / 4);
+  }
+}
+
+.gallery-columns-5 .gallery-item {
+  @media (min-width: 410px) {
+    width: calc((100vw - var(--gutter)) / 3);
+  }
+
+  @media (min-width: 900px) {
+    width: calc((100vw - var(--gutter)) / 5);
+  }
+}
+
+.gallery-columns-6 .gallery-item {
+  @media (min-width: 410px) {
+    width: calc((100vw - var(--gutter)) / 2);
+  }
+
+  @media (min-width: 500px) {
+    width: calc((100vw - var(--gutter)) / 3);
+  }
+
+  @media (min-width: 1200px) {
+    width: calc((100vw - var(--gutter)) / 6);
+  }
+}
+
+.gallery-columns-7 .gallery-item {
+  @media (min-width: 410px) {
+    width: calc((100vw - var(--gutter)) / 2);
+  }
+
+  @media (min-width: 500px) {
+    width: calc((100vw - var(--gutter)) / 3);
+  }
+
+  @media (min-width: 1200px) {
+    width: calc((100vw - var(--gutter)) / 7);
+  }
+}
+
+.gallery-columns-8 .gallery-item {
+  @media (min-width: 410px) {
+    width: calc((100vw - var(--gutter)) / 2);
+  }
+
+  @media (min-width: 766px) {
+    width: calc((100vw - var(--gutter)) / 4);
+  }
+
+  @media (min-width: 1200px) {
+    width: calc((100vw - var(--gutter)) / 8);
+  }
+}
+
+.gallery-columns-9 .gallery-item {
+  @media (min-width: 410px) {
+    width: calc((100vw - var(--gutter)) / 2);
+  }
+
+  @media (min-width: 500px) {
+    width: calc((100vw - var(--gutter)) / 3);
+  }
+
+  @media (min-width: 1200px) {
+    width: calc((100vw - var(--gutter)) / 6);
+  }
+
+  @media (min-width: 1600px) {
+    width: calc((100vw - var(--gutter)) / 9);
+  }
+}
+
+.wp-audio-shortcode {
+  @include container;
+  display: block;
+  margin-bottom: $my;
+  max-width: $container-width !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.wp-caption-text {
+  @include style-small;
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.wp-video {
+  @include container;
+  margin-bottom: $my;
+  max-width: $container-width !important;
+  width: auto !important;
+}

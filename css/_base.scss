@@ -1,15 +1,6 @@
 :root {
-  --tag-color: $black;
-  --color: $black;
   --gutter: $container-padding-mobile;
-  --site-margin-y: 14rem;
-  @media (min-width: $sm) {
-    --gutter: $container-padding;
-    --site-margin-y: 34vw;
-  }
-  @media (min-width: $lg) {
-    --site-margin-y: 17rem;
-  }
+  --site-margin-y: 12rem;
 }
 
 html {
@@ -28,19 +19,18 @@ body {
   overflow-x: hidden;
 }
 
-* {
-  font-variation-settings: "slnt" 0deg;
-}
-
-em {
-  font-variation-settings: "slnt" 10deg;
-}
-
 *,
 *::after,
 *::before {
   box-sizing: inherit;
   margin: 0;
+}
+
+* {
+  text-underline-offset: 0.1em;
+  @media (min-width: $sm) {
+    hanging-punctuation: first;
+  }
 }
 
 main {
@@ -49,7 +39,7 @@ main {
 
 header,
 footer {
-  @include style-h4;
+  @include style-body;
   overflow-wrap: break-word;
 }
 
@@ -70,30 +60,26 @@ input {
 
 h1 {
   @include style-h1;
+  @include container;
   margin: $my auto;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
 }
 
 h2 {
   @include style-h2;
+  @include container;
   margin: 3.5rem auto $my;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
 }
 
 h3 {
   @include style-h3;
+  @include container;
   margin: 3.5rem auto $my;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
 }
 
 h4 {
   @include style-h4;
+  @include container;
   margin: 3.5rem auto $my;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
 }
 
 h5 {
@@ -110,62 +96,60 @@ h6 {
   padding: 0 var(--gutter);
 }
 
-ul,
-ol,
 p,
 details,
 dl {
-  margin: $my auto;
-  max-width: $container-width;
-  padding: 0 var(--gutter);
-  strong {
-    @include style-h4;
+  @include container;
+  margin: 0 auto $my auto;
+}
+
+ul {
+  @include container;
+  margin: 0 auto $my auto;
+  padding-left: 2.5rem;
+  @media (min-width: $sm) {
+    padding-left: 2.5rem;
   }
+  @media (min-width: $md) {
+    padding-left: $container-padding;
+  }
+}
+
+ol {
+  @include container;
+  margin: $my-lg auto $my-lg auto;
+  padding-left: 2.5rem;
+  @media (min-width: $sm) {
+    padding-left: 2.5rem;
+  }
+  @media (min-width: $md) {
+    padding-left: $container-padding;
+  }
+}
+
+ol li {
+  margin-bottom: 0.75rem;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration-line: none;
   &:hover {
-    text-decoration: underline;
+    text-decoration-line: underline;
   }
-}
-
-h1 strong {
-  @include style-h2;
-}
-
-h2 strong {
-  @include style-h1;
-}
-
-h3 strong {
-  @include style-h4;
-}
-
-h4 strong {
-  @include style-h3;
-}
-
-h5 strong {
-  @include style-h6;
-}
-
-h6 strong {
-  @include style-h5;
 }
 
 img {
   display: inline-block;
   height: auto;
   margin-bottom: $my;
-  margin-top: $my;
   max-width: 100%;
   vertical-align: middle;
 }
 
 button,
 [type="submit"] {
+  @include style-h5;
   appearance: none;
   border: 0;
   border-radius: 0;
@@ -182,6 +166,7 @@ svg {
 
 summary {
   cursor: pointer;
+  margin-bottom: $my;
 }
 
 body:not(.is-tabbing) button:focus,
@@ -197,19 +182,21 @@ iframe {
 }
 
 hr {
-  @include container($container-width-md);
+  @include container($container-width);
   background-color: $black;
   border: none;
   color: $black;
   height: 1px;
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
 }
 
 label {
   a {
-    text-decoration: underline;
+    text-decoration-line: underline;
   }
   a:hover {
-    text-decoration: underline;
+    text-decoration-line: underline;
   }
 }
 
@@ -219,7 +206,7 @@ mark {
 
 abbr,
 acronym {
-  text-decoration: none;
+  text-decoration-line: none;
 }
 
 address {
@@ -228,10 +215,49 @@ address {
 
 tt,
 code,
-kbd {
+kbd,
+pre {
   @include code;
 }
 
 small {
   @include style-small;
+}
+
+pre {
+  @include container;
+  background-color: #eeeeee;
+  margin: $my-lg auto;
+  overflow: scroll;
+  overflow-wrap: normal;
+  padding-bottom: 1rem;
+  padding-top: 1.25rem;
+}
+
+pre code {
+  background-color: transparent;
+}
+
+abbr {
+  @include style-h5;
+}
+
+details p {
+  padding: 0;
+}
+
+blockquote {
+  border-left: 0.0625rem solid $black;
+  margin-bottom: $my-md;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: $my-md;
+  max-width: $container-width - ($container-padding-mobile * 2);
+  @media (min-width: $sm) {
+    max-width: $container-width - ($container-padding * 2);
+  }
+}
+
+blockquote > * {
+  padding-left: $my;
 }

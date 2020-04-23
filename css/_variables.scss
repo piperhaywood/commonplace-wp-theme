@@ -2,11 +2,8 @@ $black: #000000;
 $grey: #949494;
 $white: #ffffff;
 
-$font-mono: "Menlo", monospace;
-$font-serif: "CrimsonPro", "Hoefler Text", "Georgia", "Times New Roman", serif;
-$font-sans: "Inter", "Helvetica", sans-serif;
-
-$container-width: 41rem;
+$container-width: 42rem;
+$container-width-em: 42em;
 $container-width-md: 50rem;
 $container-width-lg: 60rem;
 $container-width-xl: 100rem;
@@ -18,18 +15,13 @@ $md: 42em;
 $lg: 50em;
 $xl: 60em;
 
-$transition-duration: 250ms;
-$border-width: 0.0625rem;
+$aside-width: 16rem;
+$aside-width-em: 16em;
 
-$size-body: 1.125rem;
-$size-h1: 2rem;
-$size-h2: 2.375rem;
-$size-h3: $size-body;
-$size-h4: 1.5rem;
-$size-h5: 0.875rem;
-$size-h6: 1.125rem;
+$my: 1.25rem;
+$my-md: 2rem;
+$my-lg: 3.25rem;
 
-$max-aligned-width: 16em;
-
-$my: 1.5rem;
-$my-lg: 4rem;
+$mx: 2rem;
+$mx-em: 2em;
+$mqAside: ((($mx-em * 2) + $aside-width-em) * 2) + $container-width-em;

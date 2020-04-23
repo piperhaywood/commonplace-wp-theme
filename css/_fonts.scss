@@ -1,13 +1,5 @@
 @font-face {
   font-display: swap;
-  font-family: "Inter";
-  font-style: oblique 0deg 10deg;
-  font-weight: 100 900;
-  src: url("fonts/inter/inter.var.woff2?v=3.13") format("woff2");
-}
-
-@font-face {
-  font-display: swap;
   font-family: "CrimsonPro";
   font-named-instance: "Regular";
   font-style: normal;
@@ -21,4 +13,57 @@
   font-style: italic;
   font-weight: 200 900;
   src: url("fonts/crimsonpro/crimsonpro-italic-vf.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "WorkSansVariable";
+  font-named-instance: "Regular";
+  font-style: normal;
+  font-weight: 100 900;
+  src: url("fonts/worksans/worksans-variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "WorkSans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/worksans/worksans-regular.woff2") format("woff2"),
+    url("fonts/worksans/worksans-regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "WorkSansVariable";
+  font-named-instance: "Italic";
+  font-style: italic;
+  font-weight: 100 900;
+  src: url("fonts/worksans/worksans-italic-variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "WorkSans";
+  font-style: italic;
+  font-weight: 400;
+  src: url("fonts/worksans/worksans-italic.woff2") format("woff2"),
+    url("fonts/worksans/worksans-italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SourceCodeVariable";
+  font-named-instance: "Regular";
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: 200 900;
+  src: url("fonts/source-code-pro/sourcecodevariable-roman.woff2")
+      format("woff2"),
+    url("fonts/source-code-pro/sourcecodevariable-roman.woff") format("woff"),
+    url("fonts/source-code-pro/sourcecodevariable-roman.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceCode";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/source-code-pro/sourcecodepro-regular.woff2") format("woff2"),
+    url("fonts/source-code-pro/sourcecodepro-regular.woff") format("woff"),
+    url("fonts/source-code-pro/sourcecodepro-regular.ttf") format("truetype");
 }

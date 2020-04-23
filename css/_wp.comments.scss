@@ -1,11 +1,8 @@
 .comments {
   margin-bottom: 2rem;
   margin-top: 1.5rem;
-  summary {
-    @include style-h4;
-  }
   details {
-    color: $grey;
+    color: $black;
   }
   details[open] {
     color: $black;
@@ -41,7 +38,7 @@
 }
 
 .comment-respond label {
-  @include style-h4;
+  @include style-h5;
 }
 
 .comments__count {
@@ -55,6 +52,10 @@
   }
 }
 
+.comment-form-cookies-consent label {
+  @include style-body;
+}
+
 .comments--has-comments {
   margin-top: 3rem;
   details {
@@ -64,15 +65,22 @@
 
 .comment-list {
   list-style-type: none;
+  margin-top: 0;
   padding-left: 0;
   ol.children {
     list-style-type: none;
+    margin-bottom: 0;
+    margin-top: 0;
     padding-left: 0;
   }
 }
 
+.comment-list > li {
+  margin-bottom: $my-lg;
+}
+
 .comment-author {
-  @include style-h4;
+  @include style-body;
   margin-bottom: 1.5rem;
   a:hover,
   a:focus {
@@ -92,8 +100,9 @@
   }
 }
 
-.comment,
-.pingback {
+.comment-list.comment,
+.pingback,
+.webmention {
   border: 1px solid $black;
   margin-top: 1rem;
   padding: $container-padding;
@@ -148,7 +157,6 @@
 }
 
 .comment-reply-link {
-  margin-top: 1.5rem;
   @include input-submit;
 }
 

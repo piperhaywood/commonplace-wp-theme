@@ -1,0 +1,192 @@
+/* http://prismjs.com/download.html?themes=prism-okaidia&languages=markup+css+clike+javascript+php+scss */
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+/**
+ * Theme customised heavily by Piper Haywood
+ */
+
+$prism-pink: #e08;
+$prism-grey: #75715e;
+$prism-white: #f8f8f2;
+$prism-orange: #d70;
+$prism-yellow: #e6db74;
+$prism-green: #0a2;
+$prism-blue: #07d;
+$prism-purple: #98d;
+$prism-black: #282828;
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: $prism-black;
+  direction: ltr;
+  hyphens: none;
+  line-height: 1.5;
+  tab-size: 4;
+  text-align: left;
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  overflow: auto;
+  padding: 1em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background-color: #eeeeee;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: $prism-grey;
+}
+
+.token.punctuation {
+  color: $prism-black;
+}
+
+.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: $prism-pink;
+}
+
+.token.boolean,
+.token.number {
+  color: $prism-purple;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: $prism-green;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: $prism-black;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function {
+  color: $prism-orange;
+}
+
+.token.keyword {
+  color: $prism-blue;
+}
+
+.token.regex,
+.token.important {
+  color: $prism-orange;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+pre.line-numbers {
+  counter-reset: linenumber;
+  padding-left: 3.8em;
+  position: relative;
+}
+
+pre.line-numbers > code {
+  position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+  border-right: 1px solid #999;
+  font-size: 100%;
+  left: -3.8em;
+  letter-spacing: -1px;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 3em; /* works for line-numbers below 1000 lines */
+  /* stylelint-disable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* stylelint-enable */
+}
+
+.line-numbers-rows > span {
+  counter-increment: linenumber;
+  display: block;
+  pointer-events: none;
+}
+
+.line-numbers-rows > span:before {
+  color: #999;
+  content: counter(linenumber);
+  display: block;
+  padding-right: 0.8em;
+  text-align: right;
+}
+
+.token a {
+  color: inherit;
+}
+
+code {
+  &.language-javascript {
+    .token {
+      &.keyword {
+        color: $prism-pink;
+        &.keyword-function {
+          color: $prism-blue;
+          font-style: italic;
+        }
+        &.keyword-false,
+        &.keyword-true {
+          color: $prism-purple;
+        }
+      }
+      &.operator {
+        color: $prism-pink;
+      }
+      &.class-name {
+        color: $prism-blue;
+      }
+    }
+  }
+}

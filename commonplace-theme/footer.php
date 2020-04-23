@@ -18,7 +18,7 @@
       <nav class="pagination pagination--post">
         <p class="pagination__label">
           <?php if ($prev && $next) : ?>
-            <a href="<?php echo get_permalink($prev->ID); ?>"><?php _e('Previous', 'commonplace'); ?></a> / <a href="<?php echo get_permalink($next->ID); ?>"><?php _e('Next', 'commonplace'); ?></a>
+            <a href="<?php echo get_permalink($next->ID); ?>"><?php _e('Next', 'commonplace'); ?></a> / <a href="<?php echo get_permalink($prev->ID); ?>"><?php _e('Previous', 'commonplace'); ?></a>
           <?php elseif ($prev) : ?>
             <a href="<?php echo get_permalink($prev->ID); ?>"><?php _e('Previous', 'commonplace'); ?></a>
           <?php else : ?>

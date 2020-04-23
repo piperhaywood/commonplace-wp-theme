@@ -4,8 +4,6 @@
 @import "base";
 @import "components";
 
-// @import "typography";
-
 // @import "components.pagination";
 // @import "components.tags";
 // @import "blocks";
@@ -19,7 +17,9 @@
 // @import "blocks.widgets";
 
 // @import "components.site-footer";
-// @import "media";
-// @import "components.comments";
+@import "wp.media";
+@import "wp.comments";
+@import "wp.content";
+@import "prism";
 @import "utilities";
 @import "print";

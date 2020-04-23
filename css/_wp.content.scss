@@ -1,0 +1,64 @@
+// Some CSS to deal with all the WP craziness. Here be dragons, etc.
+
+.prose a:not([class]),
+.prose a.more-link {
+  text-decoration-line: underline;
+}
+
+.prose a:not([class]):hover,
+.prose a.more-link:hover {
+  text-decoration-line: none;
+}
+
+.prose h1 a:not([class]),
+.prose h2 a:not([class]),
+.prose h3 a:not([class]),
+.prose h4 a:not([class]),
+.prose h5 a:not([class]),
+.prose h6 a:not([class]) {
+  text-decoration-line: none;
+  &:hover {
+    text-decoration-line: underline;
+  }
+}
+
+.prose > p:last-child {
+  margin-bottom: calc(#{$my} + 0.5rem);
+}
+
+.wp-block-latest-posts.wp-block-latest-posts__list {
+  list-style: disc;
+}
+
+.prose .wp-block-button {
+  @include container;
+  margin-bottom: $my;
+  margin-top: $my;
+}
+
+.wp-block-button__link {
+  background-color: $black;
+  border: 0.0625rem solid $black;
+  color: $white;
+  text-decoration-line: none;
+}
+
+.wp-block-button__link:hover {
+  background-color: $white;
+  color: $black;
+  text-decoration-line: none;
+}
+
+.is-style-outline .wp-block-button__link {
+  border: 0.0625rem solid $black;
+  color: $black;
+}
+
+.is-style-outline .wp-block-button__link:hover {
+  background-color: $black;
+  color: $white;
+}
+
+hr.is-style-wide {
+  @include container($container-width-md);
+}

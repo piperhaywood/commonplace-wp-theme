@@ -16,7 +16,7 @@
 
 .visuallyhidden.button:focus,
 .visuallyhidden.button:active {
-  background-color: var(--color);
+  background-color: $black;
   color: $white;
   display: inline-block;
   height: auto;
@@ -48,21 +48,29 @@ img.pixels {
 }
 
 .thumbs {
+  @include container;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 80px);
   grid-column-gap: calc(var(--gutter) / 2);
   grid-row-gap: calc(var(--gutter) / 2);
+  grid-template-columns: repeat(auto-fill, 80px);
+  margin-bottom: $my;
 }
+
 .thumbs img {
   border: 1px solid rgb(230, 230, 230);
   float: none !important;
   margin-bottom: 0 !important;
   margin-right: 0 !important;
-  padding-right: 0 !important;
   padding-left: 0 !important;
+  padding-right: 0 !important;
 }
+
 .prose .thumbs img {
   width: auto !important;
+}
+
+.shitpost {
+  font-feature-settings: "aalt";
 }
 
 .has-bg {
@@ -72,11 +80,15 @@ img.pixels {
 }
 
 .has-bg a {
-  text-decoration: none;
+  text-decoration-line: none;
 }
 
 a.has-bg:hover {
   background-color: transparent;
   color: inherit;
-  text-decoration: none;
+  text-decoration-line: none;
+}
+
+.page-id-4734 h3 {
+  @include style-h5;
 }

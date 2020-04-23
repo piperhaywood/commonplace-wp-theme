@@ -13,7 +13,7 @@
 }
 
 .widget-contact {
-  @include style-h5;
+  @include style-small;
   * {
     margin: 0;
     padding: 0;
@@ -21,7 +21,7 @@
 }
 
 .menu {
-  @include style-h4;
+  @include style-body;
   display: flex;
   flex-shrink: 0;
   flex-wrap: wrap;
@@ -32,8 +32,8 @@
 }
 
 .menu li {
-  padding-bottom: calc(var(--gutter) / 2);
-  padding-right: calc(var(--gutter) / 2);
+  margin-bottom: 0;
+  padding-right: 0.25em;
 }
 
 .menu li:after {
@@ -46,17 +46,22 @@
 
 .current-menu-item a,
 .current_page_item a {
-  text-decoration: underline; // TODO Add ancestor
+  text-decoration-line: underline; // TODO Add ancestor
 }
 
 .breadcrumb {
-  @include style-body;
+  @include style-small;
   margin: 0;
   padding: 0;
 }
 
+.breadcrumb p {
+  margin-bottom: 0.5rem;
+}
+
 .page-description {
   @include style-body;
+  font-style: italic;
   margin-bottom: 0;
 }
 
@@ -91,7 +96,7 @@ span.page-numbers {
 }
 
 .page-numbers[aria-current="page"] {
-  text-decoration: underline;
+  text-decoration-line: underline;
 }
 
 .footer-widgets {
@@ -121,15 +126,15 @@ span.page-numbers {
 .widget_text,
 .widget_custom_html {
   a {
-    text-decoration: underline;
+    text-decoration-line: underline;
   }
   a:hover {
-    text-decoration: none;
+    text-decoration-line: none;
   }
 }
 
 .cp-widget--small .widget {
-  @include style-h5;
+  @include style-small;
 }
 
 .widget_recent_entries ul {
@@ -160,7 +165,6 @@ span.page-numbers {
 
 .searchform input[type="submit"] {
   background-color: transparent;
-  border: 1px solid transparent;
   color: $black;
   cursor: pointer;
   padding: 1rem;
@@ -172,7 +176,6 @@ span.page-numbers {
 .searchform input[type="submit"]:hover,
 .searchform input[type="submit"]:focus {
   background-color: $black !important;
-  border: 1px solid $black;
   color: $white;
 }
 
@@ -194,7 +197,7 @@ span.page-numbers {
 }
 
 .meta {
-  @include style-h5;
+  @include style-small;
 }
 
 .post-meta-title {
@@ -214,12 +217,13 @@ span.page-numbers {
 }
 
 .rpbt_shortcode h3 {
-  @include style-h4;
+  @include style-h5;
+  @include container($container-width-xl);
   margin-top: 0;
 }
 
 .post-index {
-  @include style-h5;
+  @include style-small;
   @include container($container-width-xl);
 }
 
@@ -232,7 +236,7 @@ span.page-numbers {
   align-items: baseline;
   border-top: 1px solid $black;
   display: grid;
-  grid-column-gap: 1rem;
+  grid-column-gap: 2rem;
   grid-template-columns: repeat(12, 1fr);
   padding-bottom: 1.125rem;
   padding-top: 1rem;
@@ -250,9 +254,6 @@ span.page-numbers {
 .post-item > *:nth-child(1) {
   grid-column: 1 / span 12;
   @media (min-width: $lg) {
-    grid-column: 1 / span 3;
-  }
-  @media (min-width: $xl) {
     grid-column: 1 / span 2;
   }
 }
@@ -260,9 +261,6 @@ span.page-numbers {
 .post-item > *:nth-child(2) {
   grid-column: 1 / span 12;
   @media (min-width: $lg) {
-    grid-column: 4 / span 4;
-  }
-  @media (min-width: $xl) {
     grid-column: 3 / span 5;
   }
 }
@@ -270,9 +268,6 @@ span.page-numbers {
 .post-item > *:nth-child(3) {
   grid-column: 1 / span 12;
   @media (min-width: $lg) {
-    grid-column: 8 / span 5;
-  }
-  @media (min-width: $xl) {
     grid-column: 8 / span 5;
   }
 }
@@ -291,7 +286,7 @@ span.page-numbers {
   top: 50%;
   transform: translate(50%, calc(-50% + calc(var(--trans-y) / 3)))
     rotate(var(--rotate));
-  transition: opacity 500ms;
+  transition: opacity 300ms;
   z-index: -10;
 }
 
@@ -306,6 +301,7 @@ span.page-numbers {
   }
   .post-index__post-item:hover .post-item__image {
     opacity: 0.4;
+    transition: opacity 100ms;
   }
 }
 
@@ -328,6 +324,7 @@ span.page-numbers {
 
 .termindex ol {
   list-style-type: none;
+  margin-bottom: $my-lg;
   margin-left: 0;
   margin-right: 0;
   margin-top: 0;
@@ -335,13 +332,45 @@ span.page-numbers {
   padding: 0;
 }
 
+.termindex li {
+  margin-bottom: 0;
+  margin-left: 1rem;
+  text-indent: -1rem;
+}
+
 .termindex a {
-  text-decoration: none;
+  text-decoration-line: none;
 }
 .termindex a:hover {
-  text-decoration: underline;
+  text-decoration-line: underline;
 }
 
 .term__count {
-  @include style-h5;
+  @include style-small;
 }
+
+.post-item__time {
+  font-variant-caps: normal;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+
+article.page {
+  margin-top: 8rem;
+}
+
+// Improve search input – make it a bit friendlier
+// "prev / next" – opportunity for small caps
+// consider keyline next to search button
+// Something to demarcate the beginning of an article? long rule?
+// scroll margin for anchor links
+// consider grey for list hover
+// ..post-index__post-item display contents + .post-item__image pos sticky
+// not ok, but interesting idea; piles of images
+// in list, title probably needs a bit more space on small screens
+// in list, reduce space around items
+
+// consider equal spacing between menu and breadcrumb and article
+// more vertical space around contact block on medium screens
+// tighten up footer items
+// list -> archive? get rid of Index in menu?
