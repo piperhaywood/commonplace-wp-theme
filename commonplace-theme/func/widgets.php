@@ -56,3 +56,26 @@ function cp_unregister_default_widgets() {
   unregister_widget('WP_Widget_Tag_Cloud');
 }
 add_action('widgets_init', 'cp_unregister_default_widgets', 11);
+
+function cp_footer_widgets() {
+  ob_start(); ?>
+  <div class="footer-widgets">
+    <?php if (is_active_sidebar('footer-area-1')) : ?>
+      <div class="footer__widget cp-widget cp-widget--1">
+        <?php dynamic_sidebar('footer-area-1'); ?>
+      </div>
+    <?php endif; ?>
+    <?php if (is_active_sidebar('footer-area-2')) : ?>
+      <div class="footer__widget cp-widget--2 cp-widget">
+        <?php dynamic_sidebar('footer-area-2'); ?>
+      </div>
+    <?php endif; ?>
+    <?php if (is_active_sidebar('footer-area-3')) : ?>
+      <div class="footer__widget cp-widget cp-widget--3 cp-widget--small">
+        <?php dynamic_sidebar('footer-area-3'); ?>
+      </div>
+    <?php endif; ?>
+  </div>
+<?php echo ob_get_clean();
+}
+add_action('wp_footer', 'cp_footer_widgets', 11);
