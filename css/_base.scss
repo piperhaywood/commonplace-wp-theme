@@ -1,8 +1,8 @@
 :root {
-  --gutter: $container-padding-mobile;
+  --gutter: #{$container-padding-mobile};
   --vertical-space: 8rem;
   @media (min-width: $sm) {
-    --gutter: $container-padding;
+    --gutter: #{$container-padding};
   }
 }
 
