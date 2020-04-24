@@ -57,7 +57,6 @@ img.pixels {
 }
 
 .thumbs img {
-  border: 1px solid rgb(230, 230, 230);
   float: none !important;
   margin-bottom: 0 !important;
   margin-right: 0 !important;
@@ -65,30 +64,14 @@ img.pixels {
   padding-right: 0 !important;
 }
 
+.thumbs--with-borders img {
+  border: 1px solid rgb(230, 230, 230);
+}
+
 .prose .thumbs img {
   width: auto !important;
 }
 
-.shitpost {
+.mocking {
   font-feature-settings: "aalt";
-}
-
-.has-bg {
-  background-color: $black;
-  color: $white;
-  padding: 0.25em;
-}
-
-.has-bg a {
-  text-decoration-line: none;
-}
-
-a.has-bg:hover {
-  background-color: transparent;
-  color: inherit;
-  text-decoration-line: none;
-}
-
-.page-id-4734 h3 {
-  @include style-h5;
 }

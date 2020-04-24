@@ -4,22 +4,14 @@
 @import "base";
 @import "components";
 
-// @import "components.pagination";
-// @import "components.tags";
-// @import "blocks";
-// @import "blocks.image";
-// @import "blocks.cover";
-// @import "blocks.button";
-// @import "blocks.gallery";
-// @import "blocks.columns";
-// @import "blocks.quotes";
-// @import "blocks.embeds";
-// @import "blocks.widgets";
-
-// @import "components.site-footer";
-@import "wp.media";
 @import "wp.comments";
 @import "wp.content";
+@import "wp.media";
+@import "wp.menus";
+@import "wp.pagination";
+@import "wp.searchform";
+@import "wp.widgets";
+
 @import "prism";
 @import "utilities";
 @import "print";

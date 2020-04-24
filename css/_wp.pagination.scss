@@ -1,0 +1,31 @@
+.pagination {
+  margin-bottom: var(--vertical-space);
+}
+
+.pagination__label,
+.page-numbers {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.pagination .screen-reader-text {
+  @include visuallyhidden;
+}
+
+ul.page-numbers {
+  @include container;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+a.page-numbers,
+span.page-numbers {
+  padding: $my / 2;
+}
+
+.page-numbers[aria-current="page"] {
+  text-decoration-line: underline;
+}

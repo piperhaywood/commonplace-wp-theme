@@ -13,38 +13,8 @@
     font-size: 10px;
     overflow: visible;
   }
-  .header {
-    position: static;
-  }
-  .header__breadcrumb {
-    font-weight: bold;
-  }
-  .nav-icon {
-    display: none;
-  }
-  .article {
+  article {
     padding-top: 15mm;
-  }
-  .post__footer {
-    padding-bottom: 15mm;
-  }
-  .post__time {
-    margin-bottom: 1.5rem;
-  }
-  .post__time .has-bg {
-    background-color: #ffffff;
-    color: #000000;
-    height: auto;
-    padding: 0;
-  }
-  .post__header,
-  .prose,
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5 .prose h6 {
-    break-after: avoid-page;
   }
   .prose img:not(.emoji) {
     height: auto !important;
@@ -65,46 +35,9 @@
     margin-right: 0;
     padding-right: 0;
   }
-  .article .prose blockquote {
-    border: 0.25mm solid #000000;
-  }
-  .prose hr {
-    background-color: #000000;
-    color: #000000;
-    height: 0.25mm;
-  }
   .termindex {
     margin-left: auto;
     margin-right: auto;
     max-width: 40rem;
-  }
-  .post-index__post-item {
-    border-top: 0.25mm solid #000000;
-  }
-  .post-index__post-item:last-child {
-    border-bottom: 0.25mm solid #000000;
-  }
-  .post-item__link {
-    background-color: #ffffff;
-    color: #000000;
-    height: 32px;
-    padding: 0;
-  }
-  .post-item__image {
-    height: 24px;
-    mix-blend-mode: normal;
-  }
-  .pagination .post-index,
-  .rpbt_shortcode .post-index {
-    padding-bottom: 0;
-  }
-  .pagination {
-    display: block !important;
-    margin-bottom: 1cm;
-    padding-top: 1cm;
-  }
-  .infinite-loading,
-  .infinite-end {
-    display: none !important;
   }
 }

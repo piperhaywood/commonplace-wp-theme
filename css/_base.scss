@@ -1,6 +1,6 @@
 :root {
   --gutter: $container-padding-mobile;
-  --site-margin-y: 12rem;
+  --vertical-space: 8rem;
 }
 
 html {
@@ -44,9 +44,10 @@ footer {
 }
 
 article {
-  margin-bottom: var(--site-margin-y);
-  margin-top: var(--site-margin-y);
+  margin-bottom: var(--vertical-space);
+  margin-top: var(--vertical-space);
   overflow-wrap: break-word;
+  padding-bottom: var(--vertical-space);
 }
 
 button,

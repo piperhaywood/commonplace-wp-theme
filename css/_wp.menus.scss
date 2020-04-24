@@ -1,0 +1,28 @@
+.menu {
+  @include style-body;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  margin-right: 2rem;
+  padding: 0;
+}
+
+.menu li {
+  margin-bottom: 0;
+  padding-right: 0.25em;
+}
+
+.menu li:after {
+  content: ", ";
+}
+
+.menu li:last-child:after {
+  content: "";
+}
+
+.current-menu-item a,
+.current_page_item a {
+  text-decoration-line: underline; // TODO Add ancestor
+}

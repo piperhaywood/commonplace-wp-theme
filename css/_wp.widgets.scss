@@ -1,0 +1,57 @@
+.widget-contact {
+  @include style-small;
+  * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.footer-widgets {
+  @include container($container-width);
+  padding-bottom: $my;
+  @media (min-width: $md) {
+    padding-bottom: $my-lg;
+  }
+}
+
+.widget-title {
+  @include style-h5;
+  margin: 0;
+}
+
+.widget p,
+.widget ul,
+.widget ol,
+.widget h3 {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.widget {
+  @include style-body;
+  margin-bottom: $my;
+}
+
+.widget_text,
+.widget_custom_html {
+  a {
+    text-decoration-line: underline;
+  }
+  a:hover {
+    text-decoration-line: none;
+  }
+}
+
+.cp-widget--small .widget {
+  @include style-small;
+}
+
+.widget_recent_entries ul {
+  margin: 0;
+}
+
+.widget_recent_entries a:after {
+  content: " –";
+}

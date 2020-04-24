@@ -1,0 +1,39 @@
+.searchform {
+  position: relative;
+}
+
+.searchform label {
+  @include visuallyhidden;
+}
+
+.searchform input[type="text"] {
+  border: 1px solid $black;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(100vw - (var(--gutter) * 2));
+  padding: $container-padding 7rem $container-padding $container-padding;
+  width: 100%;
+}
+
+.searchform input[type="submit"] {
+  background-color: transparent;
+  color: $black;
+  cursor: pointer;
+  padding: 1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.searchform input[type="submit"]:hover,
+.searchform input[type="submit"]:focus {
+  background-color: $black !important;
+  color: $white;
+}
+
+.searchform__group {
+  border: 1px solid black;
+  display: flex;
+  margin-bottom: 0.5rem;
+}
