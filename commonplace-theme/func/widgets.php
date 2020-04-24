@@ -78,4 +78,4 @@ function cp_footer_widgets() {
   </div>
 <?php echo ob_get_clean();
 }
-add_action('wp_footer', 'cp_footer_widgets', 11);
+add_action('wp_footer', 'cp_footer_widgets', 5);
