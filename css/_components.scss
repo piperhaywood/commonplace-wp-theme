@@ -28,6 +28,10 @@
   margin-bottom: 0;
 }
 
+.home .page-description {
+  font-style: normal;
+}
+
 .post-title {
   @include style-h1;
   margin-top: 0;
