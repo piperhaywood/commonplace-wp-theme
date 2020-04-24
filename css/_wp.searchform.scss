@@ -1,5 +1,14 @@
-.searchform {
+.searchform div {
   position: relative;
+}
+
+.prose .searchform {
+  @include container;
+  margin-bottom: $my;
+}
+
+.searchform + .termindex {
+  margin-top: $my-lg;
 }
 
 .searchform label {
@@ -18,9 +27,10 @@
 
 .searchform input[type="submit"] {
   background-color: transparent;
+  bottom: 0;
   color: $black;
   cursor: pointer;
-  padding: 1rem;
+  padding: $container-padding;
   position: absolute;
   right: 0;
   top: 0;
