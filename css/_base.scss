@@ -1,6 +1,9 @@
 :root {
   --gutter: $container-padding-mobile;
   --vertical-space: 8rem;
+  @media (min-width: $sm) {
+    --gutter: $container-padding;
+  }
 }
 
 html {
@@ -14,6 +17,7 @@ html {
 }
 
 body {
+  background-color: $white;
   color: $black;
   font-size: 1em;
   overflow-x: hidden;
@@ -112,7 +116,7 @@ ul {
     padding-left: 2.5rem;
   }
   @media (min-width: $md) {
-    padding-left: $container-padding;
+    padding-left: var(--gutter);
   }
 }
 
@@ -124,12 +128,16 @@ ol {
     padding-left: 2.5rem;
   }
   @media (min-width: $md) {
-    padding-left: $container-padding;
+    padding-left: var(--gutter);
   }
 }
 
 ol li {
   margin-bottom: 0.75rem;
+}
+
+ol li:last-child {
+  margin-bottom: 0;
 }
 
 a {
@@ -253,10 +261,7 @@ blockquote {
   margin-left: auto;
   margin-right: auto;
   margin-top: $my-md;
-  max-width: $container-width - ($container-padding-mobile * 2);
-  @media (min-width: $sm) {
-    max-width: $container-width - ($container-padding * 2);
-  }
+  max-width: calc(#{$container-width} - calc(var(--gutter) * 2));
 }
 
 blockquote > * {

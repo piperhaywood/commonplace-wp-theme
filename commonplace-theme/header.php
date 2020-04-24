@@ -22,11 +22,11 @@
           'menu_class' => 'menu',
           'depth' => 1
         ) ); ?>
-        <div class="widget-contact">
-          <p>
-            <a href="mailto:mail@piperhaywood.com">mail@piperhaywood.com</a>
-          </p>
-        </div>
+        <?php if (is_active_sidebar('header-area-1')) : ?>
+          <div class="header__widget cp-widget cp-widget--header-1">
+            <?php dynamic_sidebar('header-area-1'); ?>
+          </div>
+        <?php endif; ?>
       </nav>
 
 

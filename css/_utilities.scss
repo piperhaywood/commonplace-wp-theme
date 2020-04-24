@@ -72,6 +72,10 @@ img.pixels {
   width: auto !important;
 }
 
+.smallcaps {
+  @include style-h5;
+}
+
 .mocking {
   font-feature-settings: "aalt";
 }

@@ -28,6 +28,8 @@ See the `/css/_utility.scss` styles for utility classes. The classes that can be
 
 `.thumbs` should be used on wrapper elements that contain a series of thumb-like images. If you add the class `.thumbs--with-border` to this wrapper, the images will be given a solid grey border.
 
+`.smallcaps` can be used to set text in small caps.
+
 `.mocking` can be used for sarcastic or mocking text, the sort of thing might NoRMaLy wRItE LIkE tHiS if you didn’t have this class.
 
 ## Plugins & Extras

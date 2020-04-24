@@ -2,7 +2,6 @@
 @import "mixins";
 @import "fonts";
 @import "base";
-@import "components";
 
 @import "wp.comments";
 @import "wp.content";
@@ -12,6 +11,7 @@
 @import "wp.searchform";
 @import "wp.widgets";
 
+@import "components";
 @import "prism";
 @import "utilities";
 @import "print";

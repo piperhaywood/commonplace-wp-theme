@@ -67,6 +67,7 @@
   list-style-type: none;
   margin-top: 0;
   padding-left: 0;
+  padding-right: 0;
   ol.children {
     list-style-type: none;
     margin-bottom: 0;
@@ -100,7 +101,7 @@
   }
 }
 
-.comment-list.comment,
+.comment-list .comment,
 .pingback,
 .webmention {
   border: 1px solid $black;

@@ -2,6 +2,15 @@
 
 function cp_widgets_init() {
   register_sidebar( array(
+    'name' => 'Header Area',
+    'id' => 'header-area-1',
+    'description' => 'Appears in the header area, best for short text like an email address',
+    'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+    'after_widget' => '</aside>',
+    'before_title' => '<h3 class="widget-title">',
+    'after_title' => '</h3>',
+  ) );
+  register_sidebar( array(
     'name' => 'Footer Area #1',
     'id' => 'footer-area-1',
     'description' => 'Appears in the footer area',
@@ -42,7 +51,6 @@ function cp_unregister_default_widgets() {
   unregister_widget('WP_Widget_Links');
   unregister_widget('WP_Widget_Meta');
   unregister_widget('WP_Widget_Categories');
-  // unregister_widget('WP_Widget_Recent_Posts');
   unregister_widget('WP_Widget_Recent_Comments');
   unregister_widget('WP_Widget_RSS');
   unregister_widget('WP_Widget_Tag_Cloud');

@@ -8,6 +8,10 @@
   margin-top: $my;
 }
 
+.nav .menu {
+  margin-bottom: 0.5rem;
+}
+
 .breadcrumb {
   @include style-small;
   margin: 0;
@@ -179,10 +183,10 @@
   text-indent: -1rem;
 }
 
-.termindex a {
+.termindex a:not([class]) {
   text-decoration-line: none;
 }
-.termindex a:hover {
+.termindex a:not([class]):hover {
   text-decoration-line: underline;
 }
 
@@ -199,23 +203,3 @@
 article.page {
   margin-top: 8rem;
 }
-
-// Improve search input – make it a bit friendlier
-// "prev / next" – opportunity for small caps
-// consider keyline next to search button
-// Something to demarcate the beginning of an article? long rule?
-// scroll margin for anchor links
-// consider grey for list hover
-// ..post-index__post-item display contents + .post-item__image pos sticky
-// not ok, but interesting idea; piles of images
-// in list, title probably needs a bit more space on small screens
-// in list, reduce space around items
-// Add note about supported Gutenberg blocks
-// thoroughly TEST  gutenberg blocks
-// Improve print styles
-
-// more vertical space around contact block on medium screens
-// use h5 style on work page
-// list -> archive? get rid of Index in menu?
-
-// print styles
