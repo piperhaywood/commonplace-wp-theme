@@ -2,7 +2,7 @@
 
 This is a simple, translation-ready WordPress theme that came about after conversations with designer [Bec Worth](http://www.youwouldlovethis.com/) about the usefulness of a Commonplace Book and what it could feel like on the web. Technically, it borrows heavily from my Notebook theme. Most text is typeset in [Work Sans](http://weiweihuanghuang.github.io/Work-Sans/), a variable grotesque designed by Wei Huang. Code is set in variable [Source Code Pro](https://fonts.adobe.com/fonts/source-code-pro). Thanks to [Sam Baldwin](https://sambaldwin.info/) for a lot of typesetting assistance.
 
-This is a WIP! 🚧 Please feel free to raise an issue if you notice anything weird.
+This is a WIP! 🚧 Currently in use on [piperhaywood.com](https://piperhaywood.com). Please feel free to raise an issue if you notice anything weird.
 
 ## Installation
 
