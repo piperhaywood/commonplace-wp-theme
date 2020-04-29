@@ -79,3 +79,13 @@ img.pixels {
 .mocking {
   font-feature-settings: "aalt";
 }
+
+.discreet-links a,
+a.discreet-links {
+  text-decoration-line: none;
+}
+
+.discreet-links a:hover,
+a.discreet-links:hover {
+  text-decoration-line: underline;
+}
