@@ -12,6 +12,10 @@
   margin-bottom: 0.5rem;
 }
 
+.page-context {
+  margin-bottom: calc(var(--vertical-space) * 2);
+}
+
 .breadcrumb {
   @include style-small;
   margin: 0;
@@ -32,9 +36,12 @@
   font-style: normal;
 }
 
+.post-time {
+  @include style-small;
+}
+
 .post-title {
   @include style-h1;
-  margin-top: 0;
 }
 
 .post-footer {
