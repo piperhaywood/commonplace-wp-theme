@@ -37,18 +37,23 @@
       <?php endif; ?>
 
       <?php $title = cp_archive_str(false); ?>
-      <?php if ($title) : ?>
-        <div class="breadcrumb">
-          <p>
-            <a href="<?php bloginfo('url'); ?>" aria-label="Return home">..</a> / <?php echo $title; ?>
-          </p>
-        </div>
-      <?php endif; ?>
-
       <?php $desc = cp_archivedesc(false); ?>
-      <?php if ($desc) : ?>
-        <div class="page-description prose">
-          <?php echo $desc; ?>
+      <?php if ($title || $desc) : ?>
+        <div class="page-context">
+          <?php if ($title) : ?>
+            <div class="breadcrumb">
+              <p>
+                <a href="<?php bloginfo('url'); ?>" aria-label="Return home">..</a> / <?php echo $title; ?>
+              </p>
+            </div>
+          <?php endif; ?>
+
+          <?php $desc = cp_archivedesc(false); ?>
+          <?php if ($desc) : ?>
+            <div class="page-description prose">
+              <?php echo $desc; ?>
+            </div>
+          <?php endif; ?>
         </div>
       <?php endif; ?>
     </header>
