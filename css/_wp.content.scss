@@ -42,7 +42,7 @@
 
 .wp-block-button__link {
   background-color: $black;
-  border: 0.0625rem solid $black;
+  border: 1px solid $black;
   color: $white;
   text-decoration-line: none;
 }
@@ -54,7 +54,7 @@
 }
 
 .is-style-outline .wp-block-button__link {
-  border: 0.0625rem solid $black;
+  border: 1px solid $black;
   color: $black;
 }
 
