@@ -236,7 +236,7 @@ function cp_archive_str() {
     return false;
   }
   if (is_singular()) {
-    return get_the_title();
+    return false;
   }
   if (is_404()) {
     return __('Page not found [404 error]', 'commonplace');
