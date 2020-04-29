@@ -4,23 +4,21 @@
       <?php while (have_posts()) : the_post(); ?>
         <article <?php post_class(array('post', 'article')); ?>>
           <header class="post-header">
-          <?php if (get_post_type() == 'post') : ?>
-              <div class="post-meta meta hidden">
-                <p>
-                  <span class="visuallyhidden">Published </span>
-                  <time class="dt-published post-time" datetime="<?php echo cp_date(true, false); ?>"><a class="u-url" href="<?php the_permalink(); ?>" aria-label="<?php printf(esc_html__('View post published %s', 'commonplace'), get_the_date('l, j F Y')); ?>"><?php echo get_the_date('l, j F Y'); ?></a></time> <span class="post-author"><?php printf(_x('by %s', 'authorship', 'commonplace'), sprintf(
-                    '<a class="p-author h-card" href="%1$s" title="%2$s" rel="author">%3$s</a>',
-                    esc_url( get_author_posts_url( get_the_author_meta('ID'), get_the_author_meta('user_nicename') ) ),
-                    esc_attr( sprintf( __( 'Posts by %s', 'commonplace' ), get_the_author() ) ),
-                    get_the_author()
-                  )); ?></span><?php if (!is_single() && is_sticky()) : ?><span aria-label="<?php _e('Pinned', 'commonplace'); ?>"> 📌</span><?php endif; ?>
-                <?php if (is_singular()) : ?>
-                  &ndash; <?php the_title(); ?>
+            <?php $hideTitle = get_post_format() != false || strpos(get_page_template_slug(), 'no-title') ? true : false; ?>
+            <?php if (get_post_type() == 'post') : ?>
+              <p class="post-time">
+                <span class="visuallyhidden">Published </span>
+                <time class="dt-published" datetime="<?php echo cp_date(true, false); ?>"><a class="u-url" href="<?php the_permalink(); ?>" aria-label="<?php printf(esc_html__('View post published %s', 'commonplace'), get_the_date('l, j F Y')); ?>"><?php echo get_the_date('l, j F Y'); ?></a></time> <span class="post-author"><?php printf(_x('by %s', 'authorship', 'commonplace'), sprintf(
+                  '<a class="p-author h-card" href="%1$s" title="%2$s" rel="author">%3$s</a>',
+                  esc_url( get_author_posts_url( get_the_author_meta('ID'), get_the_author_meta('user_nicename') ) ),
+                  esc_attr( sprintf( __( 'Posts by %s', 'commonplace' ), get_the_author() ) ),
+                  get_the_author()
+                )); ?></span><?php if (!is_single() && is_sticky()) : ?><span aria-label="<?php _e('Pinned', 'commonplace'); ?>"> ◆</span><?php endif; ?>
+                <?php if (is_singular() && $hideTitle) : ?>
+                  <span aria-hidden="true">&mdash; <?php the_title(); ?></span>
                 <?php endif; ?>  
               </p>
-              </div>
             <?php endif; ?>
-            <?php $hideTitle = get_post_format() != '' || strpos(get_page_template_slug(), 'no-title') ? true : false; ?>
             <<?php echo is_singular() ? 'h1' : 'h2'; ?> class="p-name post-title <?php echo $hideTitle ? 'visuallyhidden' : ''; ?>">
               <?php echo cp_title(false); ?>
             </<?php echo is_singular() ? 'h1' : 'h2'; ?>>
@@ -36,18 +34,11 @@
             <?php if (get_post_type() == 'post') : ?>
               <div class="post-meta meta">
                 <p>
-                  <span class="visuallyhidden">Published </span>
-                  <time class="dt-published post-time" datetime="<?php echo cp_date(true, false); ?>"><a class="u-url" href="<?php the_permalink(); ?>" aria-label="<?php printf(esc_html__('View post published %s', 'commonplace'), get_the_date()); ?>"><?php echo get_the_date(); ?></a></time> <span class="post-author"><?php printf(_x('by %s', 'authorship', 'commonplace'), sprintf(
-                    '<a class="p-author h-card" href="%1$s" title="%2$s" rel="author">%3$s</a>',
-                    esc_url( get_author_posts_url( get_the_author_meta('ID'), get_the_author_meta('user_nicename') ) ),
-                    esc_attr( sprintf( __( 'Posts by %s', 'commonplace' ), get_the_author() ) ),
-                    get_the_author()
-                  )); ?></span><?php if (!is_single() && is_sticky()) : ?><span aria-label="<?php _e('Pinned', 'commonplace'); ?>"> 📌</span><?php endif; ?>
                   <?php $terms = get_terms(array(
                     'taxonomy' => array('post_tag', 'category', 'post_format'),
                     'object_ids' => get_the_id()
                   )); ?>
-                  <?php if ($terms) : ?> &mdash;
+                  <?php if ($terms) : ?>
                     <?php foreach ($terms as $slug => $term) : ?>
                       <span class="term<?php echo $term->term_id == get_option('default_category') ? ' term--default' : ''; ?> term--<?php echo $term->taxonomy; ?>">
                         <a class="term-link" aria-label="<?php printf(_n('%s, %s post', '%s, %s posts', $term->count, 'commonplace'), $term->name, $term->count); ?>" href="<?php echo get_tag_link($term->term_id); ?>"><?php echo $term->name; ?></a><span class="separator" aria-hidden="true">,</span>
