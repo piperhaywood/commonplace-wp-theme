@@ -49,7 +49,6 @@ footer {
 
 article {
   margin-bottom: var(--vertical-space);
-  margin-top: var(--vertical-space);
   overflow-wrap: break-word;
   padding-bottom: var(--vertical-space);
 }
@@ -66,7 +65,7 @@ input {
 h1 {
   @include style-h1;
   @include container;
-  margin: $my auto;
+  margin: 3.5rem auto $my;
 }
 
 h2 {
@@ -111,9 +110,9 @@ dl {
 ul {
   @include container;
   margin: 0 auto $my auto;
-  padding-left: 2.5rem;
+  padding-left: 1.75rem;
   @media (min-width: $sm) {
-    padding-left: 2.5rem;
+    padding-left: 2rem;
   }
   @media (min-width: $md) {
     padding-left: var(--gutter);
@@ -123,7 +122,7 @@ ul {
 ol {
   @include container;
   margin: $my-lg auto $my-lg auto;
-  padding-left: 2.5rem;
+  padding-left: 2rem;
   @media (min-width: $sm) {
     padding-left: 2.5rem;
   }
@@ -239,8 +238,8 @@ pre {
   margin: $my-lg auto;
   overflow: scroll;
   overflow-wrap: normal;
-  padding-bottom: 1rem;
-  padding-top: 1.25rem;
+  padding-bottom: 1.125rem;
+  padding-top: 1rem;
 }
 
 pre code {
@@ -256,14 +255,34 @@ details p {
 }
 
 blockquote {
-  border-left: 0.0625rem solid $black;
+  border-left: 1px solid $black;
   margin-bottom: $my-md;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: var(--gutter);
+  margin-right: var(--gutter);
   margin-top: $my-md;
   max-width: calc(#{$container-width} - calc(var(--gutter) * 2));
+  @media (min-width: $container-width-em) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
-blockquote > * {
-  padding-left: $my;
+blockquote > blockquote {
+  margin-left: $my;
+}
+
+blockquote ol {
+  margin-bottom: $my;
+  margin-top: $my;
+  padding-left: 2rem;
+  @media (min-width: $sm) {
+    padding-left: 2.25rem;
+  }
+}
+
+blockquote ul {
+  padding-left: 1.5rem;
+  @media (min-width: $sm) {
+    padding-left: 1.75rem;
+  }
 }

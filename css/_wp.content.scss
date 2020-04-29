@@ -22,6 +22,10 @@
   }
 }
 
+.prose ul > li > ul {
+  margin-bottom: 0;
+}
+
 .prose > p:last-child {
   margin-bottom: calc(#{$my} + 0.5rem);
 }

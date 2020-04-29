@@ -16,11 +16,10 @@
   margin-bottom: $my-lg;
   margin-top: $my-lg;
   &.alignleft {
-    margin-bottom: $my;
-    margin-top: $my;
     width: $aside-width * 1.5;
     @media (min-width: $mqAside) {
       float: left;
+      margin-bottom: 0;
       margin-left: calc((#{$aside-width} + #{$mx}) * -1);
       margin-right: 0;
       margin-top: 0;
@@ -28,17 +27,20 @@
     }
   }
   &.alignright {
-    margin-bottom: $my;
-    margin-top: $my;
     width: $aside-width * 1.5;
     @media (min-width: $mqAside) {
       float: right;
+      margin-bottom: 0;
       margin-left: 0;
       margin-right: calc((#{$aside-width} + #{$mx}) * -1);
       margin-top: 0;
       width: $aside-width;
     }
   }
+}
+
+.prose > p:first-of-type img {
+  margin-top: 0;
 }
 
 .prose > div {
@@ -69,6 +71,7 @@
 
 .gallery img {
   border: none !important;
+  margin-bottom: 0;
 }
 
 .gallery br {
@@ -190,11 +193,20 @@
   width: auto !important;
 }
 
+.wp-caption img {
+  margin-bottom: 0;
+}
+
 .wp-caption-text {
   @include style-small;
+  margin-top: $my / 2;
   max-width: none;
   padding-left: 0;
   padding-right: 0;
+}
+
+.gallery .wp-caption-text {
+  text-align: left;
 }
 
 .wp-video {
