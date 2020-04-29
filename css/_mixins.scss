@@ -85,13 +85,16 @@
 
 @mixin style-h6 {
   @include font-sans;
-  font-size: 0.875rem;
+  font-size: 0.914rem;
   font-style: normal;
   font-weight: 390;
   letter-spacing: 0;
   line-height: 1.3;
   text-transform: none;
   word-spacing: 0;
+  @media (min-width: $sm) {
+    font-size: 0.875rem;
+  }
   a {
     text-decoration-thickness: 0.0625rem !important;
   }
