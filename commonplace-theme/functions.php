@@ -176,35 +176,6 @@ function cp_title($echo = true) {
   }
 }
 
-// function cp_categories($echo = true) {
-//   $return = '';
-//   $cat_arr = array();
-
-//   $cats = get_the_category();
-//   if (empty($cats)) {
-//     return;
-//   }
-
-//   foreach($cats as $cat) {
-//     $cat_arr[$cat->term_id] = '<a href="' . get_category_link($cat->term_id) . '">' . strtolower($cat->name) . '</a>';
-//   }
-
-//   $default = get_option('default_category');
-//   unset($cat_arr[$default]);
-
-//   if (!empty($cat_arr)) {
-//     $last = array_pop($cat_arr);
-//     $return .= !empty($cat_arr) ? implode($cat_arr, ', ') . ' ' . __('and', 'commonplace') . ' ' : '';
-//     $return .= $last;
-//   }
-
-//   if ($echo === true) {
-//     echo $return;
-//   } else {
-//     return $return;
-//   }
-// }
-
 function cp_author($echo = true) {
   $return = '';
 
