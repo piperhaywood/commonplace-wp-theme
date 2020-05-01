@@ -3,11 +3,14 @@
 @import "fonts";
 @import "base";
 
+// Some CSS to deal with all the WP craziness. Here be dragons, etc.
 @import "wp.comments";
 @import "wp.content";
+@import "wp.gallery";
 @import "wp.media";
 @import "wp.menus";
 @import "wp.pagination";
+@import "wp.quotes";
 @import "wp.searchform";
 @import "wp.widgets";
 

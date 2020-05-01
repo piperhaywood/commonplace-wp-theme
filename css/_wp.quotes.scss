@@ -1,0 +1,41 @@
+.wp-block-quote.has-text-align-center {
+  border-bottom: 1px solid $black;
+  border-left: 0;
+  border-top: 1px solid $black;
+  padding-top: $my;
+  > * {
+    padding-left: 0;
+  }
+}
+
+.wp-block-quote.has-text-align-right {
+  border-left: 0;
+  border-right: 1px solid $black;
+  > * {
+    padding-left: 0;
+    padding-right: var(--gutter);
+  }
+}
+
+.wp-block-quote.is-large,
+.wp-block-quote.is-style-large {
+  border: none;
+  margin: $my-lg auto;
+  max-width: none;
+  padding: 0;
+  > * {
+    max-width: $container-width-lg;
+    padding-right: var(--gutter);
+  }
+  > cite {
+    @include style-h4;
+    margin: 0 auto;
+    max-width: $container-width;
+    text-align: left;
+  }
+}
+
+.wp-block-quote.is-large p,
+.wp-block-quote.is-style-large p {
+  @include style-h2;
+}
