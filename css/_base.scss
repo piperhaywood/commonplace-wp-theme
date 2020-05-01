@@ -199,13 +199,33 @@ hr {
   margin-top: $my-lg;
 }
 
+form {
+  @include container;
+  margin: $my-lg auto;
+}
+
 label {
+  @include style-h5;
   a {
     text-decoration-line: underline;
   }
   a:hover {
     text-decoration-line: underline;
   }
+}
+
+input[type="text"] {
+  border: 1px solid $black;
+  display: block;
+  width: 100%;
+}
+
+button[type="submit"],
+input[type="submit"] {
+  bottom: 0;
+  color: $black;
+  cursor: pointer;
+  padding: $container-padding;
 }
 
 mark {
@@ -267,6 +287,15 @@ blockquote {
   }
 }
 
+blockquote > cite {
+  display: block;
+  padding-left: var(--gutter);
+}
+
+blockquote > * {
+  padding-right: 0;
+}
+
 blockquote > blockquote {
   margin-left: $my;
 }
@@ -285,4 +314,11 @@ blockquote ul {
   @media (min-width: $sm) {
     padding-left: 1.75rem;
   }
+}
+
+figcaption {
+  @include container;
+  @include style-small;
+  margin-bottom: 0;
+  margin-top: $my / 2;
 }
