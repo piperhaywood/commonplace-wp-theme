@@ -34,6 +34,8 @@ See the `/css/_utility.scss` styles for utility classes. The classes that can be
 
 `.discreet-links` can be used to make links discreet (only underline on hover).
 
+`.notes` and `.small` can be used for small text.
+
 ## Plugins & Extras
 
 This theme is designed to work well with the [Related Posts By Taxonomy](https://en-gb.wordpress.org/plugins/related-posts-by-taxonomy/). If activated, related posts will be displayed using the same styles as the `[notebooklist]` shortcode.
