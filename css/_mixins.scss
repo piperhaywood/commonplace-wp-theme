@@ -18,7 +18,7 @@
   font-size: 1.125rem;
   font-style: normal;
   font-variant-caps: normal;
-  font-weight: 280;
+  font-weight: 310;
   letter-spacing: 0.005em;
   line-height: 1.4;
   text-transform: none;
@@ -28,6 +28,9 @@
   }
   strong {
     font-weight: 440;
+  }
+  @media (min-width: $sm) {
+    font-weight: 290;
   }
 }
 
@@ -73,7 +76,7 @@
   font-size: 1rem;
   font-style: normal;
   font-variant-caps: small-caps;
-  font-weight: 360;
+  font-weight: 300;
   letter-spacing: 0.03em;
   line-height: 1.3;
   text-transform: lowercase;
@@ -137,7 +140,7 @@
   background-color: #eeeeee;
   font-size: 1.125rem;
   font-style: normal;
-  font-weight: 380;
+  font-weight: 360;
   letter-spacing: -0.032em;
   line-height: 1.3;
   padding: 0 0.25em;
