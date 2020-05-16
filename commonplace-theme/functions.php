@@ -9,6 +9,26 @@ require_once('func/widgets.php');
 
 add_shortcode('notebooksearch', 'get_search_form');
 
+function cp_excerpt_as_title($length) {
+  return 10;
+}
+
+add_filter('excerpt_more', 'cp_excerpt_more');
+function cp_excerpt_more( $more ) {
+  return '&hellip;';
+}
+
+add_filter('document_title_parts', 'filter_title_part');
+function filter_title_part($title) {
+  global $post;
+  if ($post->title == '') {
+    add_filter('the_excerpt', 'cp_excerpt_as_title');
+    $title['title'] = get_the_excerpt($post->ID);
+    remove_filter('the_excerpt', 'cp_excerpt_as_title');
+  }
+    return $title;
+}
+
 
 add_shortcode('notebookindex', 'notebook_index');
 function notebook_index($attr) {
@@ -445,6 +465,7 @@ function cp_get_list($posts = false) {
     ));
   }
   if ($posts) {
+    add_filter( 'excerpt_length', 'cp_excerpt_as_title');
     ob_start(); ?>
     <ul class="post-index">
       <?php foreach ($posts as $post) : ?>
@@ -452,6 +473,7 @@ function cp_get_list($posts = false) {
         <?php $format = get_post_format(); ?>
         <?php $hsl = cp_get_hsl($post); ?>
         <?php $images = get_attached_media( 'image' ); ?>
+        <?php $title = get_the_title(); ?>
         <li class="post-index__post-item" style="--color:<?php echo $hsl; ?>;">
           <?php if (has_post_thumbnail($post)) : ?>
             <?php echo cp_list_thumb($post, 'thumbnail'); ?>
@@ -461,7 +483,7 @@ function cp_get_list($posts = false) {
               <time class="post-item__time" datetime="<?php echo cp_date(true, false); ?>"><?php echo get_the_date('d.m.Y'); ?></time>
             </a>
             <a class="post-item__link" href="<?php the_permalink(); ?>">
-              <span class="post-item__text"><?php the_title(); ?></span>
+              <span class="post-item__text"><?php echo $title == '' ? get_the_excerpt() : $title; ?></span>
             </a>
             <?php $terms = get_terms(array(
               'taxonomy' => array('post_tag'),
@@ -484,6 +506,7 @@ function cp_get_list($posts = false) {
       <?php endforeach; ?>
     </ul>
     <?php return ob_get_clean();
+    remove_filter( 'excerpt_length', 'cp_excerpt_as_title');
   }
 }
 
