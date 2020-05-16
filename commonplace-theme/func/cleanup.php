@@ -31,6 +31,9 @@ function cp_allowed_block_types($allowed_blocks) {
     'core/freeform',
     'core/html',
     'core/preformatted',
+    'core/pullquote',
+    'core/buttons',
+    'core/media-text',
     'core/more',
     'core/nextpage',
     'core/separator',
@@ -40,7 +43,12 @@ function cp_allowed_block_types($allowed_blocks) {
     'core/categories',
     'core/latest-posts',
     'core/search',
-    'core/embed'
+    'core/embed',
+    'core-embed/youtube',
+    'core-embed/soundcloud',
+    'core-embed/vimeo',
+    'core-embed/twitter',
+    'core-embed/spotify'
   );
 }
 
