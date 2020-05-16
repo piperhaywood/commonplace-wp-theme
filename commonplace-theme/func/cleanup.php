@@ -5,7 +5,7 @@ function cp_start_cleanup() {
   add_action('init', 'cp_cleanup_head');
   add_filter('the_generator', 'cp_remove_rss_version');
   add_filter('gallery_style', 'cp_gallery_style');
-  add_filter( 'allowed_block_types', 'cp_allowed_block_types' );
+  add_filter('allowed_block_types', 'cp_allowed_block_types');
 }
 
 function cp_cleanup_head() {
@@ -16,7 +16,7 @@ function cp_cleanup_head() {
   add_filter('script_loader_src', 'cp_alter_wp_ver_css_js', 9999);
 }
 
-function cp_allowed_block_types( $allowed_blocks ) {
+function cp_allowed_block_types($allowed_blocks) {
   return array(
     'core/paragraph',
     'core/image',
