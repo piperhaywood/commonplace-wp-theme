@@ -115,6 +115,7 @@
   padding: 0;
   width: 100%;
   @media (min-width: $mqAside) {
+    margin-top: 0.25rem;
     position: absolute;
     right: calc((calc(100vw - #{$container-width}) / 2) - #{$aside-width});
     width: $aside-width;
@@ -135,6 +136,7 @@
   width: 100%;
   @media (min-width: $mqAside) {
     left: calc((calc(100vw - #{$container-width}) / 2) - #{$aside-width});
+    margin-top: 0.25rem;
     position: absolute;
     width: $aside-width;
   }

@@ -128,12 +128,35 @@ hr.is-style-wide {
   }
 }
 
-.has-medium-font-size {
-  @include style-h2;
-  @include container($container-width-md);
+.has-huge-font-size {
+  @include style-huge;
+  @include container;
+  @include wp-txt-container;
 }
 
 .has-large-font-size {
   @include style-h1;
-  @include container($container-width-lg);
+  @include wp-txt-container;
+}
+
+.has-medium-font-size {
+  @include style-h2;
+  @include container;
+  @include wp-txt-container;
+}
+
+.has-small-font-size {
+  @include style-small;
+  @media (min-width: $sm) {
+    padding-left: 5rem;
+  }
+}
+
+a.more-link {
+  display: inline-block;
+  margin-bottom: $my;
+  margin-left: calc((100vw - 39rem) / 2);
+  margin-top: $my;
+  max-width: 39rem;
+  padding: 0 var(--gutter);
 }

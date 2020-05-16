@@ -1,5 +1,8 @@
 :root {
+  --grid-col: auto;
   --gutter: #{$container-padding-mobile};
+  --justify: start;
+  --text-align: left;
   --vertical-space: 8rem;
   @media (min-width: $sm) {
     --gutter: #{$container-padding};
@@ -316,9 +319,20 @@ blockquote ul {
   }
 }
 
+figure {
+  @include container;
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
+}
+
 figcaption {
   @include container;
   @include style-small;
   margin-bottom: 0;
   margin-top: $my / 2;
+}
+
+th {
+  font-weight: inherit;
+  text-align: left;
 }
