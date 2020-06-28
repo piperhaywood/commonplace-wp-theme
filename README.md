@@ -44,7 +44,9 @@ This theme uses [Prism](https://prismjs.com/) for syntax highlighting.
 
 ## Development
 
-To set this repo up, install WordPress in a separate directory using this [multi-environment `wp-config.php` gist](https://gist.github.com/piperhaywood/2a7217964335e22574784153eab1d38b) if useful, then symlink the theme folder `/notebook-ph` within this repo in to your WP site’s `/wp-content/themes` directory. You can do this with multiple WordPress installations, which can be useful for testing styles against different content. I use this with one WordPress installation that reflects [piperhaywood.com](https://piperhaywood.com) and another that uses WordPress’s theme testing database.
+To set this repo up, install WordPress in a separate directory using this [multi-environment `wp-config.php` gist](https://gist.github.com/piperhaywood/2a7217964335e22574784153eab1d38b) if useful. Note that if you’re using Sequel Pro to manage your local databases, you probably need to use the user `root`, password `root`, and hostname `127.0.0.1`.
+
+Once you have WordPress set up, symlink the theme folder `/commonplace-theme` within this repo in to your WP site’s `/wp-content/themes` directory. You can do this with multiple WordPress installations, which can be useful for testing styles against different content. I use this with one WordPress installation that reflects [piperhaywood.com](https://piperhaywood.com) and another that uses WordPress’s theme testing database.
 
 Once you have the WordPress installation set up and the theme symlinked, run `npm i` from the root of this repo to install dependencies. Run `gulp` to build the theme or `gulp dev` for development. The command `gulp dev` will compile the files and then use BrowserSync for live reloading. To set a BrowserSync proxy other than the default `localhost:8888`, run `gulp dev --proxy custom-proxy` (replace `custom-proxy`).
 
