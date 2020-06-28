@@ -108,6 +108,7 @@
   max-width: $container-width;
 }
 
+[aria-label="Block: Image"][data-align="right"],
 .wp-block-image .alignright {
   @include container(calc(#{$container-width} - (var(--gutter) * 2)));
   clear: both;
@@ -117,7 +118,7 @@
   @media (min-width: $mqAside) {
     margin-top: 0.25rem;
     position: absolute;
-    right: calc((calc(100vw - #{$container-width}) / 2) - #{$aside-width});
+    right: calc((calc(100% - #{$container-width}) / 2) - #{$aside-width});
     width: $aside-width;
   }
   figcaption {
@@ -128,6 +129,7 @@
   }
 }
 
+[aria-label="Block: Image"][data-align="left"],
 .wp-block-image .alignleft {
   @include container(calc(#{$container-width} - (var(--gutter) * 2)));
   clear: both;
@@ -135,7 +137,7 @@
   padding: 0;
   width: 100%;
   @media (min-width: $mqAside) {
-    left: calc((calc(100vw - #{$container-width}) / 2) - #{$aside-width});
+    left: calc((calc(100% - #{$container-width}) / 2) - #{$aside-width});
     margin-top: 0.25rem;
     position: absolute;
     width: $aside-width;

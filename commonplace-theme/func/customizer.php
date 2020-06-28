@@ -64,7 +64,7 @@ function cp_customizer_live_preview() {
 
   wp_enqueue_script(
     'cp-theme-customizer',
-    get_template_directory_uri() . '/customizer.js',
+    get_template_directory_uri() . '/assets/customizer.js',
     array('jquery', 'customize-preview'),
     $version,
     true

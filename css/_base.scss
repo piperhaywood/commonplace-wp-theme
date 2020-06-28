@@ -106,11 +106,13 @@ h6 {
 p,
 details,
 dl {
+  @include style-body;
   @include container;
   margin: 0 auto $my auto;
 }
 
 ul {
+  @include style-body;
   @include container;
   margin: 0 auto $my auto;
   padding-left: 1.75rem;
@@ -123,6 +125,7 @@ ul {
 }
 
 ol {
+  @include style-body;
   @include container;
   margin: $my-lg auto $my-lg auto;
   padding-left: 2rem;

@@ -3,6 +3,7 @@
 require_once('func/cleanup.php');
 require_once('func/customizer.php');
 require_once('func/enqueue.php');
+require_once('func/gutenberg.php');
 require_once('func/navigation.php');
 require_once('func/theme-support.php');
 require_once('func/widgets.php');

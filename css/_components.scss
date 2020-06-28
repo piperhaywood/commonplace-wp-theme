@@ -210,3 +210,137 @@
 article.page {
   margin-top: 8rem;
 }
+
+.cp-table {
+  @include container($container-width-xl);
+}
+
+.cp-table-row {
+  border-top: 1px solid $black;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-top: 1rem;
+}
+
+.cp-table-row:last-child {
+  border-bottom: 1px solid $black;
+}
+
+.cp-row-header,
+.cp-row-body {
+  margin-bottom: 1.125rem;
+  @media (min-width: $lg) {
+    display: grid;
+    grid-column-gap: 2rem;
+    grid-template-columns: repeat(12, 1fr);
+    justify-items: start;
+  }
+}
+
+.cp-row-header {
+  align-items: baseline;
+}
+
+.cp-row-body {
+  align-items: start;
+}
+
+.cp-row-header > *,
+.cp-row-body > * {
+  @media (min-width: $lg) {
+    grid-column: var(--grid-col);
+    justify-self: var(--justify);
+    text-align: var(--text-align);
+  }
+}
+
+.cp-row-header a {
+  text-decoration-line: none !important;
+}
+
+.cp-row-header a:hover {
+  text-decoration-line: underline !important;
+}
+
+.cp-row-header > h3 {
+  --grid-col: auto / span 8;
+}
+
+.cp-row-header > h3 a:after {
+  content: "\2193";
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.cp-table-row--open .cp-row-header > h3 a:after {
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) {
+  .cp-row-header > h3 a:after {
+    opacity: 0;
+  }
+  .cp-row-header > h3 a:hover:after {
+    opacity: 1;
+  }
+}
+
+.cp-row-header > p {
+  --grid-col: 10 / span 3;
+  --justify: end;
+  --text-align: right;
+}
+
+.cp-row-body > div {
+  --grid-col: 2 / span 6;
+}
+
+.cp-row-body > figure {
+  --grid-col: 9 / span 4;
+  --justify: end;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: $my;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+  @media (min-width: $lg) {
+    margin-top: 0;
+  }
+}
+
+.cp-row-body > figure img {
+  display: block;
+  margin-bottom: 0;
+  @media (min-width: $lg) {
+    margin-left: auto;
+  }
+}
+
+.cp-table h1,
+.cp-table h2,
+.cp-table h3,
+.cp-table h4,
+.cp-table h5,
+.cp-table h6,
+.cp-table p {
+  margin: 0;
+  max-width: none;
+  padding: 0;
+}
+
+.thumbs {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.thumbs img {
+  display: none;
+}
+
+.thumbs img:first-child {
+  display: block;
+  // margin-left: auto;
+}
