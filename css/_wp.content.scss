@@ -1,3 +1,13 @@
+.prose {
+  margin-bottom: $my-xl;
+}
+
+.prose p,
+.prose details,
+.prose dl {
+  @include style-body;
+}
+
 .prose a:not([class]),
 .prose a.more-link {
   text-decoration-line: underline;
@@ -39,30 +49,18 @@
 }
 
 .wp-block-button__link {
-  background-color: $black;
-  border: 1px solid $black;
-  color: $white;
-  text-decoration-line: none;
-}
-
-.wp-block-button__link:hover {
-  background-color: $white;
-  color: $black;
-  text-decoration-line: none;
+  @include input-submit;
+  border-radius: 0;
 }
 
 .is-style-outline .wp-block-button__link {
   border: 1px solid $black;
   color: $black;
-}
-
-.is-style-outline .wp-block-button__link:hover {
-  background-color: $black;
-  color: $white;
+  @include input-submit(true);
 }
 
 hr.is-style-wide {
-  @include container($container-width-md);
+  @include container($container-width-lg);
 }
 
 .wp-block-audio {
@@ -87,10 +85,6 @@ hr.is-style-wide {
 
 .wp-block-video video {
   width: 100%;
-}
-
-.wp-block-search .wp-block-search__button {
-  margin-left: 0;
 }
 
 .wp-block-embed__wrapper {
@@ -128,23 +122,6 @@ hr.is-style-wide {
   }
 }
 
-.has-huge-font-size {
-  @include style-huge;
-  @include container;
-  @include wp-txt-container;
-}
-
-.has-large-font-size {
-  @include style-h1;
-  @include wp-txt-container;
-}
-
-.has-medium-font-size {
-  @include style-h2;
-  @include container;
-  @include wp-txt-container;
-}
-
 .has-small-font-size {
   @include style-small;
   @media (min-width: $sm) {
@@ -152,11 +129,24 @@ hr.is-style-wide {
   }
 }
 
-a.more-link {
+.prose > a.more-link {
   display: inline-block;
   margin-bottom: $my;
   margin-left: calc((100vw - 39rem) / 2);
   margin-top: $my;
   max-width: 39rem;
   padding: 0 var(--gutter);
+}
+
+p.has-background {
+  margin-bottom: $my-xl;
+  margin-top: $my-xl;
+  padding: var(--gutter);
+  &:first-child {
+    margin-top: $my;
+  }
+  @media (min-width: $md) {
+    max-width: calc(#{$container-width} + (var(--gutter) * 2));
+    padding: calc(var(--gutter) * 2);
+  }
 }

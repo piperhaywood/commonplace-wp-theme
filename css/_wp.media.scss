@@ -36,31 +36,34 @@
     @media (min-width: $mqAside) {
       float: right;
       margin-bottom: $my;
-      margin-left: calc((#{$aside-width} + #{$mx}) * -1);
+      margin-left: 0;
+      margin-right: calc((#{$aside-width} + #{$mx}) * -1);
       margin-top: 0;
       width: $aside-width;
     }
   }
 }
 
-.prose > p:first-of-type img {
-  margin-top: 0;
-}
-
 .prose > div {
   &.alignnone {
     @include container;
-    margin-bottom: $my-lg;
-    margin-top: $my-lg;
+    margin-bottom: $my-xl;
+    margin-top: $my-xl;
     width: 100% !important;
+    &:first-child {
+      margin-top: $my;
+    }
   }
   .aligncenter {
     display: block;
-    margin-bottom: $my-lg;
+    margin-bottom: $my-xl;
     margin-left: auto;
     margin-right: auto;
-    margin-top: $my-lg;
+    margin-top: $my-xl;
     padding: 0 var(--gutter);
+    &:first-child {
+      margin-top: $my;
+    }
   }
 }
 
@@ -77,8 +80,8 @@
   margin-bottom: 0;
 }
 
-.wp-caption-text {
-  @include style-small;
+.prose .wp-caption-text {
+  @include style-h6;
   margin-top: $my / 2;
   max-width: none;
   padding-left: 0;
@@ -94,12 +97,25 @@
 
 .wp-block-image {
   @include container($container-width-lg);
-  margin: $my-lg auto;
+  margin-bottom: 0;
+  figure {
+    margin: $my-lg auto;
+  }
+}
+
+figure.wp-block-image {
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
+  &:first-child {
+    margin-top: $my;
+  }
 }
 
 .wp-block-image.size-large {
-  @include container($container-width);
+  margin-bottom: $my-xl;
+  margin-top: $my-xl;
   figcaption {
+    max-width: calc(#{$container-width} - (var(--gutter) * 2));
     padding: 0;
   }
 }

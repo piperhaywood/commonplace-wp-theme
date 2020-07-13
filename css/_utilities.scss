@@ -94,3 +94,7 @@ a.discreet-links:hover {
 .small {
   @include style-small;
 }
+
+.button {
+  @include input-submit;
+}

@@ -27,8 +27,11 @@
     max-width: $container-width-lg;
     padding-right: var(--gutter);
   }
+  p:last-of-type {
+    margin-bottom: 0.5rem;
+  }
   > cite {
-    @include style-h4;
+    @include style-h6;
     margin: 0 auto;
     max-width: $container-width;
     text-align: left;
@@ -38,4 +41,33 @@
 .wp-block-quote.is-large p,
 .wp-block-quote.is-style-large p {
   @include style-h2;
+}
+
+.wp-block-pullquote {
+  @include container;
+  margin-bottom: $my-xl;
+  margin-top: $my-xl;
+  padding-bottom: 0;
+  padding-top: 0;
+  text-align: left;
+  &:first-child {
+    margin-top: $my;
+  }
+  blockquote {
+    border-left: none;
+    margin-left: 0;
+    margin-right: 0;
+    > *:not(cite) {
+      @include style-h1;
+    }
+  }
+  cite {
+    @include style-body;
+  }
+  ul,
+  ol,
+  p,
+  cite {
+    padding-left: 0;
+  }
 }

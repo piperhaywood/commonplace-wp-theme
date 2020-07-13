@@ -13,35 +13,35 @@
 }
 
 .page-context {
-  margin-bottom: calc(var(--vertical-space) * 2);
+  margin-bottom: calc(var(--vertical-space) * 1.25);
 }
 
 .breadcrumb {
-  @include style-small;
   margin: 0;
   padding: 0;
 }
 
 .breadcrumb p {
-  margin-bottom: 0.5rem;
+  @include style-h5;
 }
 
-.page-description {
-  @include style-body;
-  font-style: italic;
+.page-description > p,
+.page-description > details,
+.page-description > dl {
+  @include style-h3;
+}
+
+.page-description > *:last-child {
   margin-bottom: 0;
 }
 
-.home .page-description {
-  font-style: normal;
-}
-
 .post-time {
-  @include style-small;
+  @include style-h5;
 }
 
 .post-title {
   @include style-h1;
+  margin: 0 auto $my-xl;
 }
 
 .post-footer {
@@ -49,7 +49,7 @@
 }
 
 .meta {
-  @include style-small;
+  @include style-h5;
 }
 
 .post-meta-title {
@@ -143,6 +143,7 @@
 }
 
 .post-item__terms {
+  @include style-h5;
   margin: 0;
   padding: 0;
 }
@@ -161,7 +162,14 @@
 
 .termindex {
   @include container($container-width-xl);
-  columns: 11rem auto;
+  column-gap: var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  row-gap: 5rem;
+  @media (min-width: $lg) {
+    columns: 11rem auto;
+    display: block;
+  }
 }
 
 .termindex h2 {
@@ -175,6 +183,7 @@
 }
 
 .termindex ol {
+  @include style-h3;
   list-style-type: none;
   margin-bottom: $my-lg;
   margin-left: 0;
@@ -198,13 +207,17 @@
 }
 
 .term__count {
-  @include style-small;
+  @include style-h5;
+  margin-left: 0.5rem;
+}
+
+.termindex .term--post_format,
+.termindex .term--category {
+  @include style-body;
 }
 
 .post-item__time {
-  font-variant-caps: normal;
-  font-variant-numeric: tabular-nums;
-  text-transform: uppercase;
+  @include style-h5;
 }
 
 article.page {

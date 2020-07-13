@@ -29,6 +29,7 @@
           
           <section class="prose e-content">
             <?php the_content(esc_html__('Read more', 'commonplace')); ?>
+          </section>
           <footer class="post-footer">
             <?php wp_link_pages(); ?>
 

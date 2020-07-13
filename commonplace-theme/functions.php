@@ -51,29 +51,7 @@ function notebook_list() {
 
 function get_notebook_index($taxonomy, $showYears, $count) {
   // Set up the index groups
-  $groups = array(); 
-
-  // Add the terms to the index
-  $terms = get_terms(array(
-    'taxonomy' => $taxonomy
-  ));
-  if ($terms && is_array($terms)) {
-    foreach ($terms as $term) {
-      if ($term->count >= $count) {
-        // NOTE strip "post-format-" from slug, for some reason this gets included
-        $slug = str_replace('post-format-', '', $term->slug);
-        $tax = get_taxonomy($term->taxonomy);
-        $groups = cp_add_to_index($groups, array(
-          'name' => $term->name,
-          'url' => get_tag_link($term->term_id),
-          'count' => $term->count,
-          'slug' => $slug,
-          'type' => $term->taxonomy,
-          'aria' => sprintf(esc_html__('%s: %s, %s posts', 'notebook-ph'), $tax->labels->singular_name, $term->name, $term->count)
-        ));
-      }
-    }
-  }
+  $groups = array();
 
   // Add the year archives to the index
   if ($showYears) {
@@ -104,6 +82,28 @@ function get_notebook_index($taxonomy, $showYears, $count) {
     }
   }
 
+  // Add the terms to the index
+  $terms = get_terms(array(
+    'taxonomy' => $taxonomy
+  ));
+  if ($terms && is_array($terms)) {
+    foreach ($terms as $term) {
+      if ($term->count >= $count) {
+        // NOTE strip "post-format-" from slug, for some reason this gets included
+        $slug = str_replace('post-format-', '', $term->slug);
+        $tax = get_taxonomy($term->taxonomy);
+        $groups = cp_add_to_index($groups, array(
+          'name' => $term->name,
+          'url' => get_tag_link($term->term_id),
+          'count' => $term->count,
+          'slug' => $slug,
+          'type' => $term->taxonomy,
+          'aria' => sprintf(esc_html__('%s: %s, %s posts', 'notebook-ph'), $tax->labels->singular_name, $term->name, $term->count)
+        ));
+      }
+    }
+  }
+
   ob_start(); ?>
     <?php if (!empty($groups)) : ?>
       <div class="termindex">
@@ -111,14 +111,16 @@ function get_notebook_index($taxonomy, $showYears, $count) {
           <?php ksort($terms); ?>
           <?php $label = $char == '#' ? esc_attr__('a number', 'notebook-ph') : $char; ?>
           <?php $label = sprintf(esc_attr__('Terms beginning with %s', 'notebook-ph'), $label); ?>
-          <h2 aria-label="<?php echo $label; ?>"><?php echo apply_filters( 'the_title', $char ); ?></h2>
-          <ol>
-          <?php foreach ($terms as $slug => $term) : ?>
-            <li>
-              <a aria-label="<?php echo $term['aria']; ?>" href="<?php echo $term['url']; ?>"><span class="term term--<?php echo $term['type']; ?>"><?php echo $term['name']; ?></span>&nbsp;<span class="term__count"><?php echo $term['count']; ?></span></a>
-            </li>
-          <?php endforeach; ?>
-          </ol>
+          <div class="termgroup">
+            <h2 aria-label="<?php echo $label; ?>"><?php echo apply_filters( 'the_title', $char ); ?></h2>
+            <ol>
+            <?php foreach ($terms as $slug => $term) : ?>
+              <li>
+                <a aria-label="<?php echo $term['aria']; ?>" href="<?php echo $term['url']; ?>"><span class="term term--<?php echo $term['type']; ?>"><?php echo $term['name']; ?></span>&nbsp;<span class="term__count"><?php echo $term['count']; ?></span></a>
+              </li>
+            <?php endforeach; ?>
+            </ol>
+          </div>
         <?php endforeach; ?>
       </div>
     <?php endif; ?>

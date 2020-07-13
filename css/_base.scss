@@ -1,12 +1,9 @@
 :root {
   --grid-col: auto;
-  --gutter: #{$container-padding-mobile};
+  --gutter: #{$container-padding};
   --justify: start;
   --text-align: left;
   --vertical-space: 8rem;
-  @media (min-width: $sm) {
-    --gutter: #{$container-padding};
-  }
 }
 
 html {
@@ -46,7 +43,6 @@ main {
 
 header,
 footer {
-  @include style-body;
   overflow-wrap: break-word;
 }
 
@@ -68,13 +64,13 @@ input {
 h1 {
   @include style-h1;
   @include container;
-  margin: 3.5rem auto $my;
+  margin: 3.5rem auto $my-xl;
 }
 
 h2 {
   @include style-h2;
   @include container;
-  margin: 3.5rem auto $my;
+  margin: 3.5rem auto $my-sm;
 }
 
 h3 {
@@ -106,7 +102,6 @@ h6 {
 p,
 details,
 dl {
-  @include style-body;
   @include container;
   margin: 0 auto $my auto;
 }
@@ -282,10 +277,10 @@ details p {
 
 blockquote {
   border-left: 1px solid $black;
-  margin-bottom: $my-md;
+  margin-bottom: $my-lg;
   margin-left: var(--gutter);
   margin-right: var(--gutter);
-  margin-top: $my-md;
+  margin-top: $my-lg;
   max-width: calc(#{$container-width} - calc(var(--gutter) * 2));
   @media (min-width: $container-width-em) {
     margin-left: auto;
@@ -293,7 +288,9 @@ blockquote {
   }
 }
 
-blockquote > cite {
+blockquote > cite,
+blockquote > footer > cite {
+  @include style-h6;
   display: block;
   padding-left: var(--gutter);
 }
@@ -326,6 +323,9 @@ figure {
   @include container;
   margin-bottom: $my-lg;
   margin-top: $my-lg;
+  &:first-child {
+    margin-top: $my;
+  }
 }
 
 figcaption {
