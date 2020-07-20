@@ -3,7 +3,7 @@
 require_once('func/cleanup.php');
 require_once('func/customizer.php');
 require_once('func/enqueue.php');
-require_once('func/gutenberg.php');
+// require_once('func/gutenberg.php');
 require_once('func/navigation.php');
 require_once('func/theme-support.php');
 require_once('func/widgets.php');
@@ -463,50 +463,52 @@ function cp_add_to_index($groups, $args) {
 function cp_get_list($posts = false) {
   global $post;
   if (!$posts) {
-    $posts = get_posts(array(
-      'posts_per_page' => -1
-    ));
+    $posts = new WP_Query([
+      'post_type' => 'post',
+      'posts_per_page' => -1,
+    ]);
   }
   if ($posts) {
     add_filter( 'excerpt_length', 'cp_excerpt_as_title');
     ob_start(); ?>
     <ul class="post-index">
-      <?php foreach ($posts as $post) : ?>
-        <?php setup_postdata($post); ?>
-        <?php $format = get_post_format(); ?>
-        <?php $hsl = cp_get_hsl($post); ?>
-        <?php $images = get_attached_media( 'image' ); ?>
-        <?php $title = get_the_title(); ?>
-        <li class="post-index__post-item" style="--color:<?php echo $hsl; ?>;">
-          <?php if (has_post_thumbnail($post)) : ?>
-            <?php echo cp_list_thumb($post, 'thumbnail'); ?>
-          <?php endif; ?>
-          <div class="post-item">
-            <a class="post-item__link" href="<?php the_permalink(); ?>">
-              <time class="post-item__time" datetime="<?php echo cp_date(true, false); ?>"><?php echo get_the_date('d.m.Y'); ?></time>
-            </a>
-            <a class="post-item__link" href="<?php the_permalink(); ?>">
-              <span class="post-item__text"><?php echo $title == '' ? get_the_excerpt() : $title; ?></span>
-            </a>
-            <?php $terms = get_terms(array(
-              'taxonomy' => array('post_tag'),
-              'object_ids' => get_the_id()
-            )); ?>
-            <?php if ($terms) : ?>
-              <ul class="post-item__terms">
-                <?php foreach ($terms as $slug => $term) : ?>
-                  <?php if ($term->term_id != get_option('default_category')) : ?>
-                    <li class="term term--<?php echo $term->taxonomy; ?>">
-                      <a class="term-link" aria-label="<?php printf(_n('%s, %s post', '%s, %s posts', $term->count, 'commonplace'), $term->name, $term->count); ?>" href="<?php echo get_tag_link($term->term_id); ?>"><?php echo $term->name; ?></a><span class="separator" aria-hidden="true">,</span>
-                    </li>
-                  <?php endif; ?>
-                <?php endforeach; ?>
-              </ul>
+      <?php if ($posts->have_posts()) : ?>
+        <?php while ($posts->have_posts()) : ?>
+          <?php $posts->the_post(); ?>
+          <?php $format = get_post_format(); ?>
+          <?php $hsl = cp_get_hsl(); ?>
+          <?php $images = get_attached_media( 'image' ); ?>
+          <?php $title = get_the_title(); ?>
+          <li class="post-index__post-item" style="--color:<?php echo $hsl; ?>;">
+            <?php if (has_post_thumbnail()) : ?>
+              <?php echo cp_list_thumb($post, 'thumbnail'); ?>
             <?php endif; ?>
-          </div>
-        </li>
-        <?php wp_reset_postdata(); ?>
-      <?php endforeach; ?>
+            <div class="post-item">
+              <a class="post-item__link" href="<?php the_permalink(); ?>">
+                <time class="post-item__time" datetime="<?php echo cp_date(true, false); ?>"><?php echo get_the_date('d.m.Y'); ?></time><?php if (!is_single() && is_sticky()) : ?><span aria-label="<?php _e('Pinned', 'commonplace'); ?>"> ◆</span><?php endif; ?>
+              </a>
+              <a class="post-item__link" href="<?php the_permalink(); ?>">
+                <span class="post-item__text"><?php echo $title == '' ? get_the_excerpt() : $title; ?></span>
+              </a>
+              <?php $terms = get_terms(array(
+                'taxonomy' => array('post_tag'),
+                'object_ids' => get_the_id()
+              )); ?>
+              <?php if ($terms) : ?>
+                <ul class="post-item__terms">
+                  <?php foreach ($terms as $slug => $term) : ?>
+                    <?php if ($term->term_id != get_option('default_category')) : ?>
+                      <li class="term term--<?php echo $term->taxonomy; ?>">
+                        <a class="term-link" aria-label="<?php printf(_n('%s, %s post', '%s, %s posts', $term->count, 'commonplace'), $term->name, $term->count); ?>" href="<?php echo get_tag_link($term->term_id); ?>"><?php echo $term->name; ?></a><span class="separator" aria-hidden="true">,</span>
+                      </li>
+                    <?php endif; ?>
+                  <?php endforeach; ?>
+                </ul>
+              <?php endif; ?>
+            </div>
+          </li>
+        <?php endwhile; ?>
+      <?php endif; ?>
     </ul>
     <?php return ob_get_clean();
     remove_filter( 'excerpt_length', 'cp_excerpt_as_title');

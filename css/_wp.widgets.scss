@@ -13,6 +13,7 @@
 }
 
 .footer-widgets {
+  @include style-h3;
   @include container($container-width);
   padding-bottom: $my;
   @media (min-width: $md) {
@@ -36,7 +37,6 @@
 }
 
 .widget {
-  @include style-body;
   margin-bottom: $my;
 }
 

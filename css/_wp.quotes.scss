@@ -20,6 +20,7 @@
 .wp-block-quote.is-large,
 .wp-block-quote.is-style-large {
   border: none;
+  color: $black;
   margin: $my-lg auto;
   max-width: none;
   padding: 0;
@@ -33,7 +34,7 @@
   > cite {
     @include style-h6;
     margin: 0 auto;
-    max-width: $container-width;
+    max-width: $container-width !important;
     text-align: left;
   }
 }
@@ -55,6 +56,7 @@
   }
   blockquote {
     border-left: none;
+    color: $black;
     margin-left: 0;
     margin-right: 0;
     > *:not(cite) {
@@ -69,5 +71,8 @@
   p,
   cite {
     padding-left: 0;
+  }
+  p:last-of-type {
+    margin-bottom: 0.5rem;
   }
 }

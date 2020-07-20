@@ -1,9 +1,16 @@
 @mixin font-sans {
-  font-family: "Source Sans Variable", "Helvetica", sans-serif;
+  font-family: "Source Sans Variable", "Helvetica", "Microsoft YaHei New",
+    "Microsoft Yahei", STXihei, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN",
+    "游ゴシック", "游ゴシック体", YuGothic, "Yu Gothic", "メイリオ", Meiryo,
+    "ＭＳ ゴシック", "MS Gothic", HiraKakuProN-W3, "TakaoExゴシック",
+    TakaoExGothic, "MotoyaLCedar", "Droid Sans Japanese", sans-serif;
 }
 
 @mixin font-serif {
-  font-family: "Source Serif Variable", "Times New Roman", Times, serif;
+  font-family: "Source Serif Variable", "Times New Roman", Times, "FangSong",
+    STFangSong, "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", "游明朝",
+    "游明朝体", YuMincho, "Yu Mincho", "ＭＳ 明朝", "MS Mincho", HiraMinProN-W3,
+    "TakaoEx明朝", TakaoExMincho, "MotoyaLCedar", "Droid Sans Japanese", serif;
 }
 
 @mixin font-mono {
@@ -35,10 +42,10 @@
 
 @mixin style-h2 {
   @include font-sans;
-  font-size: 1.125rem;
+  font-size: 1.5rem;
   font-style: normal;
-  font-weight: 750;
-  line-height: 1.5;
+  font-weight: 375;
+  line-height: 1.25;
   text-transform: none;
   a {
     text-decoration-thickness: $underline !important;
@@ -71,11 +78,11 @@
 
 @mixin style-h5 {
   @include font-sans;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-style: normal;
-  font-weight: 450;
-  letter-spacing: 0.25px;
-  line-height: 1.285;
+  font-weight: 425;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
   text-transform: none;
   a {
     text-decoration-thickness: 0.0625rem !important;
@@ -84,28 +91,14 @@
 
 @mixin style-h6 {
   @include font-serif;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-style: normal;
-  font-weight: 450;
+  font-weight: 425;
   letter-spacing: 0.25px;
-  line-height: 1.285;
+  line-height: 1.2;
   text-transform: none;
   a {
     text-decoration-thickness: 0.0625rem !important;
-  }
-}
-
-@mixin style-huge {
-  @include font-sans;
-  font-size: 3rem;
-  font-style: normal;
-  font-weight: 225;
-  letter-spacing: -0.006em;
-  line-height: 1.2;
-  text-transform: none;
-  word-spacing: 0;
-  a {
-    text-decoration-thickness: $underline !important;
   }
 }
 

@@ -1,10 +1,20 @@
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
+  column-gap: var(--gutter);
+  display: grid;
   justify-content: center;
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
   max-width: 100%;
-  padding-left: calc(var(--gutter) / 2);
-  padding-right: calc(var(--gutter) / 2);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  row-gap: var(--gutter);
+  &:first-child {
+    margin-top: $my-lg;
+  }
+  @media (min-width: $md) {
+    margin-bottom: $my-xl;
+    margin-top: $my-xl;
+  }
 }
 
 .gallery img {
@@ -25,155 +35,153 @@
 }
 
 .gallery-item {
-  margin-bottom: var(--gutter);
-  padding-left: calc(var(--gutter) / 2);
-  padding-right: calc(var(--gutter) / 2);
+  margin-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.gallery-columns-2 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-}
-
-.gallery-columns-3 .gallery-item {
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
+.gallery-columns-2 {
+  @include container($container-width-lg);
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.gallery-columns-4 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-
-  @media (min-width: 766px) {
-    width: calc((100vw - var(--gutter)) / 4);
+.gallery-columns-3 {
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.gallery-columns-5 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 3);
+.gallery-columns-4 {
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  @media (min-width: 900px) {
-    width: calc((100vw - var(--gutter)) / 5);
-  }
-}
-
-.gallery-columns-6 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 6);
+  @media (min-width: $md) {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.gallery-columns-7 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
+.gallery-columns-5 {
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 7);
+  @media (min-width: $md) {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
-.gallery-columns-8 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
+.gallery-columns-6 {
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(3, 1fr);
   }
-
-  @media (min-width: 766px) {
-    width: calc((100vw - var(--gutter)) / 4);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 8);
+  @media (min-width: $md) {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
-.gallery-columns-9 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
+.gallery-columns-7 {
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(3, 1fr);
   }
-
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
+  @media (min-width: $md) {
+    grid-template-columns: repeat(7, 1fr);
   }
+}
 
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 6);
+.gallery-columns-8 {
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(2, 1fr);
   }
+  @media (min-width: $md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (min-width: $lg) {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
 
-  @media (min-width: 1600px) {
-    width: calc((100vw - var(--gutter)) / 9);
+.gallery-columns-9 {
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: $md) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  @media (min-width: $lg) {
+    grid-template-columns: repeat(9, 1fr);
   }
 }
 
 .gallery .wp-caption-text {
+  margin-bottom: $my;
   text-align: left;
 }
 
-.blocks-gallery-grid,
-.wp-block-gallery {
-  margin: 0 auto;
-}
-
-.columns-1 .blocks-gallery-grid {
-  max-width: $container-width-lg;
-  padding: 0 var(--gutter);
-}
+// Styles to override default WP gallery blocks styles
 
 .wp-block-gallery {
-  margin: $my-lg auto;
-  margin-bottom: $my-lg - $my;
+  @include container($container-width-xl);
+  margin: $my-xl auto $my-xl auto !important;
 }
 
-.wp-block-gallery.columns-1 {
-  margin: $my-lg auto;
-}
-
-.wp-block-gallery.columns-1 figure {
-  display: block;
-}
-
-.wp-block-gallery.columns-1 figcaption {
-  background: none;
-  color: $black;
+.wp-block-gallery figure {
+  max-width: none;
   padding: 0;
-  position: relative;
-}
-
-.wp-block-gallery.columns-1 .blocks-gallery-grid {
-  display: block;
-}
-
-.wp-block-gallery.columns-1 .blocks-gallery-item {
-  margin: $my-lg 0;
-  &:first-child {
-    margin-top: 0;
-  }
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.wp-block-gallery ul {
-  @include container($container-width-lg);
 }
 
 .wp-block-gallery img {
   margin-bottom: 0;
 }
+
+.wp-block-gallery .blocks-gallery-grid {
+  max-width: none;
+}
+
+.blocks-gallery-grid .blocks-gallery-image:last-child,
+.blocks-gallery-grid .blocks-gallery-item:last-child,
+.wp-block-gallery .blocks-gallery-image:last-child,
+.wp-block-gallery .blocks-gallery-item:last-child {
+  figure {
+    margin: 0 auto;
+  }
+}
+
+.blocks-gallery-grid .blocks-gallery-image figcaption,
+.blocks-gallery-grid .blocks-gallery-item figcaption,
+.wp-block-gallery .blocks-gallery-image figcaption,
+.wp-block-gallery .blocks-gallery-item figcaption {
+  @include style-caption;
+}
+
+.blocks-gallery-grid .blocks-gallery-image figure,
+.blocks-gallery-grid .blocks-gallery-item figure,
+.wp-block-gallery .blocks-gallery-image figure,
+.wp-block-gallery .blocks-gallery-item figure {
+  margin: 0 auto;
+}
+
+.blocks-gallery-grid .blocks-gallery-image img,
+.blocks-gallery-grid .blocks-gallery-item img,
+.wp-block-gallery .blocks-gallery-image img,
+.wp-block-gallery .blocks-gallery-item img {
+}
+
+// .gallery {
+//   @include container($container-width-xl);
+//   margin-bottom: $my-lg !important;
+//   margin-top: $my-lg !important;
+// }
+
+// .gallery-columns-2 {
+//   @include container($container-width-lg);
+// }
+
+// .gallery img {
+//   border: none !important;
+//   margin-bottom: 0;
+// }
+
+// .gallery-item {
+//   text-align: left !important;
+// }

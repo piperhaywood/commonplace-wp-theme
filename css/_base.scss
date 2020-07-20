@@ -109,7 +109,7 @@ dl {
 ul {
   @include style-body;
   @include container;
-  margin: 0 auto $my auto;
+  margin: $my-lg auto $my-lg auto;
   padding-left: 1.75rem;
   @media (min-width: $sm) {
     padding-left: 2rem;
@@ -132,6 +132,7 @@ ol {
   }
 }
 
+ul li,
 ol li {
   margin-bottom: 0.75rem;
 }
@@ -271,17 +272,23 @@ abbr {
   @include style-h5;
 }
 
+details[open] {
+  margin-bottom: $my-lg;
+}
+
 details p {
   padding: 0;
 }
 
 blockquote {
   border-left: 1px solid $black;
-  margin-bottom: $my-lg;
+  color: $grey;
+  margin-bottom: $my;
   margin-left: var(--gutter);
   margin-right: var(--gutter);
-  margin-top: $my-lg;
+  margin-top: $my;
   max-width: calc(#{$container-width} - calc(var(--gutter) * 2));
+  padding-bottom: 0.25rem;
   @media (min-width: $container-width-em) {
     margin-left: auto;
     margin-right: auto;
@@ -291,12 +298,17 @@ blockquote {
 blockquote > cite,
 blockquote > footer > cite {
   @include style-h6;
+  color: $black;
   display: block;
-  padding-left: var(--gutter);
+  padding-left: 1.125rem;
 }
 
 blockquote > * {
   padding-right: 0;
+}
+
+blockquote > *:last-child {
+  margin-bottom: 0;
 }
 
 blockquote > blockquote {

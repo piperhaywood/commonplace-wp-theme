@@ -25,31 +25,31 @@ function cp_aside_block_init() {
   $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
 
   wp_register_script(
-      'fancy-custom-block-block-editor',
-      plugins_url( 'build/index.js', __FILE__ ),
-      $asset_file['dependencies'],
-      $asset_file['version']
+    'fancy-custom-block-block-editor',
+    plugins_url( 'build/index.js', __FILE__ ),
+    $asset_file['dependencies'],
+    $asset_file['version']
   );
 
   wp_register_style(
-      'fancy-custom-block-block-editor',
-      plugins_url( 'editor.css', __FILE__ ),
-      array( ),
-      filemtime( plugin_dir_path( __FILE__ ) . 'editor.css' )
+    'fancy-custom-block-block-editor',
+    plugins_url( 'editor.css', __FILE__ ),
+    array( ),
+    filemtime( plugin_dir_path( __FILE__ ) . 'editor.css' )
   );
 
   wp_register_style(
-      'fancy-custom-block-block',
-      plugins_url( 'style.css', __FILE__ ),
-      array( ),
-      filemtime( plugin_dir_path( __FILE__ ) . 'style.css' )
+    'fancy-custom-block-block',
+    plugins_url( 'style.css', __FILE__ ),
+    array( ),
+    filemtime( plugin_dir_path( __FILE__ ) . 'style.css' )
   );
 
   register_block_type( 'fancy-block-plugin/fancy-custom-block', array(
-      'editor_script' => 'fancy-custom-block-block-editor',
-      'editor_style'  => 'fancy-custom-block-block-editor',
-      'style'         => 'fancy-custom-block-block',
-  ) );
+    'editor_script' => 'fancy-custom-block-block-editor',
+    'editor_style'  => 'fancy-custom-block-block-editor',
+    'style'         => 'fancy-custom-block-block',
+  ));
 }
 
 // add_action( 'init', 'cp_aside_block_init' );

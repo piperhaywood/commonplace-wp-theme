@@ -1,3 +1,7 @@
+[aria-label="Pinned"] {
+  @include style-h5;
+}
+
 .prose {
   margin-bottom: $my-xl;
 }
@@ -44,8 +48,8 @@
 
 .prose .wp-block-button {
   @include container;
-  margin-bottom: $my;
-  margin-top: $my;
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
 }
 
 .wp-block-button__link {

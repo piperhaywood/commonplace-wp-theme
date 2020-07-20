@@ -74,9 +74,14 @@
   margin-top: 0;
 }
 
+.rpbt_shortcode .post-index {
+  margin-top: 0;
+}
+
 .post-index {
   @include style-small;
-  @include container($container-width-xl);
+  max-width: none;
+  padding: 0;
 }
 
 .post-index__post-item {
@@ -85,6 +90,7 @@
 }
 
 .post-item {
+  @include container($container-width-xl);
   align-items: baseline;
   border-top: 1px solid $black;
   display: grid;
@@ -126,6 +132,8 @@
 
 .post-item__text {
   @include style-body;
+  display: block;
+  margin-bottom: 0.25rem;
 }
 
 .post-item__image {
