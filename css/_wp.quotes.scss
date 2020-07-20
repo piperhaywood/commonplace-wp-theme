@@ -17,6 +17,11 @@
   }
 }
 
+.wp-block-quote__citation {
+  @include style-h6;
+  color: inherit;
+}
+
 .wp-block-quote.is-large,
 .wp-block-quote.is-style-large {
   border: none;
@@ -31,8 +36,10 @@
   p:last-of-type {
     margin-bottom: 0.5rem;
   }
-  > cite {
+  > cite,
+  .wp-block-quote__citation {
     @include style-h6;
+    color: inherit;
     margin: 0 auto;
     max-width: $container-width !important;
     text-align: left;
@@ -46,6 +53,8 @@
 
 .wp-block-pullquote {
   @include container;
+  border-bottom: none;
+  border-top: none;
   margin-bottom: $my-xl;
   margin-top: $my-xl;
   padding-bottom: 0;
@@ -63,8 +72,10 @@
       @include style-h1;
     }
   }
-  cite {
+  cite,
+  .wp-block-pullquote__citation {
     @include style-body;
+    color: inherit;
   }
   ul,
   ol,
