@@ -1,6 +1,6 @@
 # Commonplace WordPress theme
 
-This is a simple, translation-ready WordPress theme that came about after conversations with designer [Bec Worth](http://www.youwouldlovethis.com/) about the usefulness of a Commonplace Book and what it could feel like on the web. Technically, it borrows heavily from my Notebook theme. Most text is typeset in [Work Sans](http://weiweihuanghuang.github.io/Work-Sans/), a variable grotesque designed by Wei Huang. Code is set in variable [Source Code Pro](https://fonts.adobe.com/fonts/source-code-pro). Thanks to [Sam Baldwin](https://sambaldwin.info/) for a lot of typesetting assistance.
+This is a simple, translation-ready WordPress theme that came about after conversations with designer [Bec Worth](http://www.youwouldlovethis.com/) about the usefulness of a Commonplace Book and what it could feel like on the web. Technically, it borrows heavily from my Notebook theme. Most text is set in the variable versions of [Source Serif Pro](https://github.com/adobe-fonts/source-serif-pro) and [Source Sans Pro](https://github.com/adobe-fonts/source-sans-pro) with appropriate fallbacks for Chinese and Japanese characters.
 
 This is a WIP! 🚧 Currently in use on [piperhaywood.com](https://piperhaywood.com). Please feel free to raise an issue if you notice anything weird.
 
@@ -34,6 +34,8 @@ See the `/css/_utility.scss` styles for utility classes. The classes that can be
 
 `.discreet-links` can be used to make links discreet (only underline on hover).
 
+`.notes` and `.small` can be used for small text.
+
 ## Plugins & Extras
 
 This theme is designed to work well with the [Related Posts By Taxonomy](https://en-gb.wordpress.org/plugins/related-posts-by-taxonomy/). If activated, related posts will be displayed using the same styles as the `[notebooklist]` shortcode.
@@ -42,7 +44,9 @@ This theme uses [Prism](https://prismjs.com/) for syntax highlighting.
 
 ## Development
 
-To set this repo up, install WordPress in a separate directory using this [multi-environment `wp-config.php` gist](https://gist.github.com/piperhaywood/2a7217964335e22574784153eab1d38b) if useful, then symlink the theme folder `/notebook-ph` within this repo in to your WP site’s `/wp-content/themes` directory. You can do this with multiple WordPress installations, which can be useful for testing styles against different content. I use this with one WordPress installation that reflects [piperhaywood.com](https://piperhaywood.com) and another that uses WordPress’s theme testing database.
+To set this repo up, install WordPress in a separate directory using this [multi-environment `wp-config.php` gist](https://gist.github.com/piperhaywood/2a7217964335e22574784153eab1d38b) if useful. Note that if you’re using Sequel Pro to manage your local databases, you probably need to use the user `root`, password `root`, and hostname `127.0.0.1`.
+
+Once you have WordPress set up, symlink the theme folder `/commonplace-theme` within this repo in to your WP site’s `/wp-content/themes` directory. You can do this with multiple WordPress installations, which can be useful for testing styles against different content. I use this with one WordPress installation that reflects [piperhaywood.com](https://piperhaywood.com) and another that uses WordPress’s theme testing database.
 
 Once you have the WordPress installation set up and the theme symlinked, run `npm i` from the root of this repo to install dependencies. Run `gulp` to build the theme or `gulp dev` for development. The command `gulp dev` will compile the files and then use BrowserSync for live reloading. To set a BrowserSync proxy other than the default `localhost:8888`, run `gulp dev --proxy custom-proxy` (replace `custom-proxy`).
 

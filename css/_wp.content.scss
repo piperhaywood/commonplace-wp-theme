@@ -1,4 +1,16 @@
-// Some CSS to deal with all the WP craziness. Here be dragons, etc.
+[aria-label="Pinned"] {
+  @include style-h5;
+}
+
+.prose {
+  margin-bottom: $my-xl;
+}
+
+.prose p,
+.prose details,
+.prose dl {
+  @include style-body;
+}
 
 .prose a:not([class]),
 .prose a.more-link {
@@ -36,33 +48,109 @@
 
 .prose .wp-block-button {
   @include container;
-  margin-bottom: $my;
-  margin-top: $my;
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
 }
 
 .wp-block-button__link {
-  background-color: $black;
-  border: 1px solid $black;
-  color: $white;
-  text-decoration-line: none;
-}
-
-.wp-block-button__link:hover {
-  background-color: $white;
-  color: $black;
-  text-decoration-line: none;
+  @include input-submit;
+  border-radius: 0;
 }
 
 .is-style-outline .wp-block-button__link {
   border: 1px solid $black;
   color: $black;
-}
-
-.is-style-outline .wp-block-button__link:hover {
-  background-color: $black;
-  color: $white;
+  @include input-submit(true);
 }
 
 hr.is-style-wide {
-  @include container($container-width-md);
+  @include container($container-width-lg);
+}
+
+.wp-block-audio {
+  @include container;
+  margin: $my-lg auto;
+}
+
+.wp-block-file {
+  @include container;
+  a:not([class]) {
+    text-decoration-line: none;
+  }
+  a:not([class]):hover {
+    text-decoration-line: underline;
+  }
+}
+
+.wp-block-video {
+  @include container;
+  margin: $my-lg auto;
+}
+
+.wp-block-video video {
+  width: 100%;
+}
+
+.wp-block-embed__wrapper {
+  text-align: center;
+}
+
+.wp-block-embed__wrapper iframe {
+  background: $black;
+  width: calc(#{$container-width} - calc(var(--gutter) * 2));
+}
+
+.wp-block-archives,
+.wp-block-categories,
+.wp-block-latest-posts {
+  @include container;
+  margin: $my auto;
+  label {
+    display: block;
+  }
+  a:not([class]) {
+    text-decoration-line: none;
+  }
+  a:not([class]):hover {
+    text-decoration-line: underline;
+  }
+}
+
+.wp-block-latest-posts__post-date {
+  @include style-h5;
+  color: $black;
+  display: inline-block;
+  &:before {
+    content: "— ";
+    margin-left: 0.5em;
+  }
+}
+
+.has-small-font-size {
+  @include style-small;
+  @media (min-width: $sm) {
+    padding-left: 5rem;
+  }
+}
+
+.prose > a.more-link {
+  display: inline-block;
+  margin-bottom: $my;
+  margin-left: calc((100vw - 39rem) / 2);
+  margin-top: $my;
+  max-width: 39rem;
+  padding: 0 var(--gutter);
+}
+
+p.has-background {
+  margin-bottom: $my-xl;
+  margin-top: $my-xl;
+  padding: var(--gutter);
+  &:first-child {
+    margin-top: $my;
+  }
+  @media (min-width: $md) {
+    max-width: calc(#{$container-width} + (var(--gutter) * 2));
+    padding: calc(var(--gutter) * 2);
+  }
 }

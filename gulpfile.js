@@ -50,7 +50,7 @@ var themeDir = pkg.name + "/";
 
 gulp.task("sass", function () {
   return gulp
-    .src("css/**/*.scss")
+    .src("css/main.scss")
     .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(sourcemaps.write())
@@ -59,6 +59,23 @@ gulp.task("sass", function () {
     .pipe(cleanCSS())
     .pipe(header(banner, { pkg: pkg }))
     .pipe(gulp.dest(themeDir))
+    .pipe(
+      browserSync.reload({
+        stream: true,
+      })
+    );
+});
+
+gulp.task("editorSass", function () {
+  return gulp
+    .src("css/editor.scss")
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(sourcemaps.write())
+    .pipe(autoprefixer())
+    .pipe(concat("editor.css"))
+    .pipe(cleanCSS())
+    .pipe(gulp.dest(themeDir + "assets/"))
     .pipe(
       browserSync.reload({
         stream: true,
@@ -76,23 +93,10 @@ gulp.task("js", function () {
     .pipe(gulp.dest(themeDir));
 });
 
-gulp.task("customizer", function () {
-  return gulp
-    .src(["js/customizer.js"])
-    .pipe(sourcemaps.init())
-    .pipe(concat("customizer.js"))
-    .pipe(uglify())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(themeDir));
-});
-
 gulp.task("watch", function (done) {
-  gulp.watch("css/**/*.scss", gulp.series("sass"));
+  gulp.watch("css/**/*.scss", gulp.series("sass", "editorSass"));
   gulp
     .watch("js/scripts.js", gulp.series("js"))
-    .on("change", browserSync.reload);
-  gulp
-    .watch("js/customizer.js", gulp.series("customizer"))
     .on("change", browserSync.reload);
   gulp.watch(themeDir + "**/*.php").on("change", browserSync.reload);
   done();
@@ -109,5 +113,5 @@ gulp.task("browserSync", function (done) {
   done();
 });
 
-gulp.task("default", gulp.parallel("sass", "js", "customizer"));
+gulp.task("default", gulp.parallel("sass", "editorSass", "js"));
 gulp.task("dev", gulp.series("default", gulp.parallel("watch", "browserSync")));

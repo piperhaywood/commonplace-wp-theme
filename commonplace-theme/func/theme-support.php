@@ -8,4 +8,15 @@ function cp_theme_support() {
   add_theme_support('post-formats', array('aside', 'gallery', 'link', 'image', 'quote', 'video', 'audio', 'chat'));
   add_theme_support('post-thumbnails');
   add_theme_support('title-tag');
+  add_theme_support( 'disable-custom-colors' );
+  add_theme_support('editor-styles');
+  add_editor_style('assets/editor.css');
+  add_theme_support( 'editor-font-sizes', array(
+    array(
+      'name' => __( 'Small', 'commonplace' ),
+      'size' => 14,
+      'slug' => 'small'
+    )
+  ) );
+  add_theme_support( 'disable-custom-font-sizes' );
 }

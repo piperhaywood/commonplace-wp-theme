@@ -14,20 +14,22 @@
                   esc_attr( sprintf( __( 'Posts by %s', 'commonplace' ), get_the_author() ) ),
                   get_the_author()
                 )); ?></span><?php if (!is_single() && is_sticky()) : ?><span aria-label="<?php _e('Pinned', 'commonplace'); ?>"> ◆</span><?php endif; ?>
-                <?php if (is_singular() && $hideTitle) : ?>
+                <?php if (is_singular() && $hideTitle && get_the_title() != '') : ?>
                   <span aria-hidden="true">&mdash; <?php the_title(); ?></span>
                 <?php endif; ?>  
               </p>
             <?php endif; ?>
-            <<?php echo is_singular() ? 'h1' : 'h2'; ?> class="p-name post-title <?php echo $hideTitle ? 'visuallyhidden' : ''; ?>">
-              <?php echo cp_title(false); ?>
-            </<?php echo is_singular() ? 'h1' : 'h2'; ?>>
+            <?php $title = cp_title(false); ?>
+            <?php if ($title && $title != '') : ?>
+              <<?php echo is_singular() ? 'h1' : 'h2'; ?> class="p-name post-title <?php echo $hideTitle ? 'visuallyhidden' : ''; ?>">
+                <?php echo $title; ?>
+              </<?php echo is_singular() ? 'h1' : 'h2'; ?>>
+            <?php endif; ?>
           </header>
           
           <section class="prose e-content">
             <?php the_content(esc_html__('Read more', 'commonplace')); ?>
           </section>
-
           <footer class="post-footer">
             <?php wp_link_pages(); ?>
 

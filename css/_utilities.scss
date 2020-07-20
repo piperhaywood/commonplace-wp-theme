@@ -89,3 +89,12 @@ a.discreet-links {
 a.discreet-links:hover {
   text-decoration-line: underline;
 }
+
+.notes,
+.small {
+  @include style-small;
+}
+
+.button {
+  @include input-submit;
+}

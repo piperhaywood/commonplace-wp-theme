@@ -16,6 +16,8 @@
   margin-bottom: $my-lg;
   margin-top: $my-lg;
   &.alignleft {
+    clear: both;
+    float: none;
     width: $aside-width * 1.5;
     @media (min-width: $mqAside) {
       float: left;
@@ -27,10 +29,13 @@
     }
   }
   &.alignright {
+    clear: both;
+    float: none;
+    margin-left: 0;
     width: $aside-width * 1.5;
     @media (min-width: $mqAside) {
       float: right;
-      margin-bottom: 0;
+      margin-bottom: $my;
       margin-left: 0;
       margin-right: calc((#{$aside-width} + #{$mx}) * -1);
       margin-top: 0;
@@ -39,148 +44,26 @@
   }
 }
 
-.prose > p:first-of-type img {
-  margin-top: 0;
-}
-
 .prose > div {
   &.alignnone {
     @include container;
-    margin-bottom: $my-lg;
-    margin-top: $my-lg;
+    margin-bottom: $my-xl;
+    margin-top: $my-xl;
     width: 100% !important;
+    &:first-child {
+      margin-top: $my;
+    }
   }
   .aligncenter {
     display: block;
-    margin-bottom: $my-lg;
+    margin-bottom: $my-xl;
     margin-left: auto;
     margin-right: auto;
-    margin-top: $my-lg;
+    margin-top: $my-xl;
     padding: 0 var(--gutter);
-  }
-}
-
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 100%;
-  padding-left: calc(var(--gutter) / 2);
-  padding-right: calc(var(--gutter) / 2);
-}
-
-.gallery img {
-  border: none !important;
-  margin-bottom: 0;
-}
-
-.gallery br {
-  display: none;
-}
-
-.gallery-columns-1 {
-  display: block;
-}
-
-.gallery dd {
-  padding-left: 0;
-}
-
-.gallery-item {
-  margin-bottom: var(--gutter);
-  padding-left: calc(var(--gutter) / 2);
-  padding-right: calc(var(--gutter) / 2);
-}
-
-.gallery-columns-2 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-}
-
-.gallery-columns-3 .gallery-item {
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
-  }
-}
-
-.gallery-columns-4 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-
-  @media (min-width: 766px) {
-    width: calc((100vw - var(--gutter)) / 4);
-  }
-}
-
-.gallery-columns-5 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 3);
-  }
-
-  @media (min-width: 900px) {
-    width: calc((100vw - var(--gutter)) / 5);
-  }
-}
-
-.gallery-columns-6 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 6);
-  }
-}
-
-.gallery-columns-7 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 7);
-  }
-}
-
-.gallery-columns-8 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-
-  @media (min-width: 766px) {
-    width: calc((100vw - var(--gutter)) / 4);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 8);
-  }
-}
-
-.gallery-columns-9 .gallery-item {
-  @media (min-width: 410px) {
-    width: calc((100vw - var(--gutter)) / 2);
-  }
-
-  @media (min-width: 500px) {
-    width: calc((100vw - var(--gutter)) / 3);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc((100vw - var(--gutter)) / 6);
-  }
-
-  @media (min-width: 1600px) {
-    width: calc((100vw - var(--gutter)) / 9);
+    &:first-child {
+      margin-top: $my;
+    }
   }
 }
 
@@ -197,16 +80,12 @@
   margin-bottom: 0;
 }
 
-.wp-caption-text {
-  @include style-small;
+.prose .wp-caption-text {
+  @include style-h6;
   margin-top: $my / 2;
   max-width: none;
   padding-left: 0;
   padding-right: 0;
-}
-
-.gallery .wp-caption-text {
-  text-align: left;
 }
 
 .wp-video {
@@ -214,4 +93,117 @@
   margin-bottom: $my;
   max-width: $container-width !important;
   width: auto !important;
+}
+
+.wp-block-image {
+  @include container($container-width-lg);
+  margin-bottom: 0;
+  figure {
+    margin: $my-lg auto;
+  }
+}
+
+figure.wp-block-image {
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
+  &:first-child {
+    margin-top: $my;
+  }
+}
+
+.wp-block-image.size-large {
+  margin-bottom: $my-xl;
+  margin-top: $my-xl;
+  figcaption {
+    max-width: calc(#{$container-width} - (var(--gutter) * 2));
+    padding: 0;
+  }
+}
+
+.wp-block-image .size-large {
+  max-width: $container-width;
+}
+
+[aria-label="Block: Image"][data-align="right"],
+.wp-block-image .alignright {
+  @include container(calc(#{$container-width} - (var(--gutter) * 2)));
+  clear: both;
+  float: none;
+  padding: 0;
+  width: 100%;
+  @media (min-width: $mqAside) {
+    margin-top: 0.25rem;
+    position: absolute;
+    right: calc((calc(100% - #{$container-width}) / 2) - #{$aside-width});
+    width: $aside-width;
+  }
+  figcaption {
+    padding: 0;
+  }
+  img {
+    width: $aside-width * 1.5;
+  }
+}
+
+[aria-label="Block: Image"][data-align="left"],
+.wp-block-image .alignleft {
+  @include container(calc(#{$container-width} - (var(--gutter) * 2)));
+  clear: both;
+  float: none;
+  padding: 0;
+  width: 100%;
+  @media (min-width: $mqAside) {
+    left: calc((calc(100% - #{$container-width}) / 2) - #{$aside-width});
+    margin-top: 0.25rem;
+    position: absolute;
+    width: $aside-width;
+  }
+  figcaption {
+    padding: 0;
+  }
+  img {
+    width: $aside-width * 1.5;
+  }
+}
+
+.wp-block-image figcaption {
+  @include style-small;
+  margin-bottom: 0;
+  margin-top: $my / 2;
+  padding: 0;
+  @media (min-width: $md) {
+    padding: 0 var(--gutter);
+  }
+}
+
+.wp-block-image img {
+  margin-bottom: 0;
+}
+
+.wp-block-image.aligncenter img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-block-image.size-full {
+  padding: 0 var(--gutter);
+  figcaption {
+    @include container;
+    padding: 0;
+    @media (min-width: $md) {
+      padding: 0 var(--gutter);
+    }
+  }
+}
+
+.prose .wp-block-image .aligncenter {
+  padding: 0;
+}
+
+.wp-block-image .aligncenter > figcaption,
+.wp-block-image .alignleft > figcaption,
+.wp-block-image .alignright > figcaption,
+.wp-block-image.is-resized > figcaption {
+  display: block;
 }

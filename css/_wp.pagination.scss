@@ -1,9 +1,12 @@
 .pagination {
+  @include style-h3;
+  @include container;
   margin-bottom: var(--vertical-space);
 }
 
 .pagination__label,
 .page-numbers {
+  @include style-h3;
   margin-bottom: 0;
   margin-top: 0;
 }
@@ -13,11 +16,11 @@
 }
 
 ul.page-numbers {
-  @include container;
   display: flex;
   flex-shrink: 0;
   flex-wrap: wrap;
   list-style-type: none;
+  margin-left: ($my / 2) * -1;
   padding: 0;
 }
 
@@ -28,4 +31,8 @@ span.page-numbers {
 
 .page-numbers[aria-current="page"] {
   text-decoration-line: underline;
+}
+
+.pagination__label {
+  padding: 0;
 }

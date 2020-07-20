@@ -1,6 +1,10 @@
 .comments {
   margin-bottom: 2rem;
-  margin-top: 1.5rem;
+  margin-top: $my-xl;
+  summary,
+  .comment-notes {
+    @include style-h3;
+  }
   details {
     color: $black;
   }
@@ -33,6 +37,12 @@
   }
 }
 
+.comment-form {
+  margin-top: $my;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .comment-reply-title {
   display: none;
 }
@@ -48,12 +58,12 @@
 .comment-form-cookies-consent {
   display: flex;
   input[type="checkbox"] {
-    margin-top: 0.25rem;
+    margin-top: 0.05rem;
   }
 }
 
 .comment-form-cookies-consent label {
-  @include style-body;
+  @include style-h5;
 }
 
 .comments--has-comments {

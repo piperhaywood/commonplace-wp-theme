@@ -13,35 +13,35 @@
 }
 
 .page-context {
-  margin-bottom: calc(var(--vertical-space) * 2);
+  margin-bottom: calc(var(--vertical-space) * 1.25);
 }
 
 .breadcrumb {
-  @include style-small;
   margin: 0;
   padding: 0;
 }
 
 .breadcrumb p {
-  margin-bottom: 0.5rem;
+  @include style-h5;
 }
 
-.page-description {
-  @include style-body;
-  font-style: italic;
+.page-description > p,
+.page-description > details,
+.page-description > dl {
+  @include style-h3;
+}
+
+.page-description > *:last-child {
   margin-bottom: 0;
 }
 
-.home .page-description {
-  font-style: normal;
-}
-
 .post-time {
-  @include style-small;
+  @include style-h5;
 }
 
 .post-title {
   @include style-h1;
+  margin: 0 auto $my-xl;
 }
 
 .post-footer {
@@ -49,7 +49,7 @@
 }
 
 .meta {
-  @include style-small;
+  @include style-h5;
 }
 
 .post-meta-title {
@@ -74,9 +74,14 @@
   margin-top: 0;
 }
 
+.rpbt_shortcode .post-index {
+  margin-top: 0;
+}
+
 .post-index {
   @include style-small;
-  @include container($container-width-xl);
+  max-width: none;
+  padding: 0;
 }
 
 .post-index__post-item {
@@ -85,6 +90,7 @@
 }
 
 .post-item {
+  @include container($container-width-xl);
   align-items: baseline;
   border-top: 1px solid $black;
   display: grid;
@@ -126,6 +132,8 @@
 
 .post-item__text {
   @include style-body;
+  display: block;
+  margin-bottom: 0.25rem;
 }
 
 .post-item__image {
@@ -143,6 +151,7 @@
 }
 
 .post-item__terms {
+  @include style-h5;
   margin: 0;
   padding: 0;
 }
@@ -161,7 +170,14 @@
 
 .termindex {
   @include container($container-width-xl);
-  columns: 11rem auto;
+  column-gap: var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  row-gap: 5rem;
+  @media (min-width: $lg) {
+    columns: 11rem auto;
+    display: block;
+  }
 }
 
 .termindex h2 {
@@ -175,6 +191,7 @@
 }
 
 .termindex ol {
+  @include style-h3;
   list-style-type: none;
   margin-bottom: $my-lg;
   margin-left: 0;
@@ -198,15 +215,153 @@
 }
 
 .term__count {
-  @include style-small;
+  @include style-h5;
+  margin-left: 0.5rem;
+}
+
+.termindex .term--post_format,
+.termindex .term--category {
+  @include style-body;
 }
 
 .post-item__time {
-  font-variant-caps: normal;
-  font-variant-numeric: tabular-nums;
-  text-transform: uppercase;
+  @include style-h5;
 }
 
 article.page {
   margin-top: 8rem;
+}
+
+.cp-table {
+  @include container($container-width-xl);
+}
+
+.cp-table-row {
+  border-top: 1px solid $black;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-top: 1rem;
+}
+
+.cp-table-row:last-child {
+  border-bottom: 1px solid $black;
+}
+
+.cp-row-header,
+.cp-row-body {
+  margin-bottom: 1.125rem;
+  @media (min-width: $lg) {
+    display: grid;
+    grid-column-gap: 2rem;
+    grid-template-columns: repeat(12, 1fr);
+    justify-items: start;
+  }
+}
+
+.cp-row-header {
+  align-items: baseline;
+}
+
+.cp-row-body {
+  align-items: start;
+}
+
+.cp-row-header > *,
+.cp-row-body > * {
+  @media (min-width: $lg) {
+    grid-column: var(--grid-col);
+    justify-self: var(--justify);
+    text-align: var(--text-align);
+  }
+}
+
+.cp-row-header a {
+  text-decoration-line: none !important;
+}
+
+.cp-row-header a:hover {
+  text-decoration-line: underline !important;
+}
+
+.cp-row-header > h3 {
+  --grid-col: auto / span 8;
+}
+
+.cp-row-header > h3 a:after {
+  content: "\2193";
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.cp-table-row--open .cp-row-header > h3 a:after {
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) {
+  .cp-row-header > h3 a:after {
+    opacity: 0;
+  }
+  .cp-row-header > h3 a:hover:after {
+    opacity: 1;
+  }
+}
+
+.cp-row-header > p {
+  --grid-col: 10 / span 3;
+  --justify: end;
+  --text-align: right;
+}
+
+.cp-row-body > div {
+  --grid-col: 2 / span 6;
+}
+
+.cp-row-body > figure {
+  --grid-col: 9 / span 4;
+  --justify: end;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: $my;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+  @media (min-width: $lg) {
+    margin-top: 0;
+  }
+}
+
+.cp-row-body > figure img {
+  display: block;
+  margin-bottom: 0;
+  @media (min-width: $lg) {
+    margin-left: auto;
+  }
+}
+
+.cp-table h1,
+.cp-table h2,
+.cp-table h3,
+.cp-table h4,
+.cp-table h5,
+.cp-table h6,
+.cp-table p {
+  margin: 0;
+  max-width: none;
+  padding: 0;
+}
+
+.thumbs {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.thumbs img {
+  display: none;
+}
+
+.thumbs img:first-child {
+  display: block;
+  // margin-left: auto;
 }

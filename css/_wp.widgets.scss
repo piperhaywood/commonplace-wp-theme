@@ -1,5 +1,5 @@
 .cp-widget--header-1 .widget {
-  @include style-small;
+  @include style-h5;
   * {
     margin: 0;
     padding: 0;
@@ -13,6 +13,7 @@
 }
 
 .footer-widgets {
+  @include style-h3;
   @include container($container-width);
   padding-bottom: $my;
   @media (min-width: $md) {
@@ -36,7 +37,6 @@
 }
 
 .widget {
-  @include style-body;
   margin-bottom: $my;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .cp-widget--small .widget {
-  @include style-small;
+  @include style-h5;
 }
 
 .widget_recent_entries ul {
@@ -60,4 +60,8 @@
 
 .widget_recent_entries a:after {
   content: " –";
+}
+
+.widget .searchform {
+  padding: 0;
 }

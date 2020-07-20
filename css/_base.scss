@@ -1,9 +1,9 @@
 :root {
-  --gutter: #{$container-padding-mobile};
+  --grid-col: auto;
+  --gutter: #{$container-padding};
+  --justify: start;
+  --text-align: left;
   --vertical-space: 8rem;
-  @media (min-width: $sm) {
-    --gutter: #{$container-padding};
-  }
 }
 
 html {
@@ -43,7 +43,6 @@ main {
 
 header,
 footer {
-  @include style-body;
   overflow-wrap: break-word;
 }
 
@@ -65,13 +64,13 @@ input {
 h1 {
   @include style-h1;
   @include container;
-  margin: 3.5rem auto $my;
+  margin: 3.5rem auto $my-xl;
 }
 
 h2 {
   @include style-h2;
   @include container;
-  margin: 3.5rem auto $my;
+  margin: 3.5rem auto $my-sm;
 }
 
 h3 {
@@ -108,8 +107,9 @@ dl {
 }
 
 ul {
+  @include style-body;
   @include container;
-  margin: 0 auto $my auto;
+  margin: $my-lg auto $my-lg auto;
   padding-left: 1.75rem;
   @media (min-width: $sm) {
     padding-left: 2rem;
@@ -120,6 +120,7 @@ ul {
 }
 
 ol {
+  @include style-body;
   @include container;
   margin: $my-lg auto $my-lg auto;
   padding-left: 2rem;
@@ -131,6 +132,7 @@ ol {
   }
 }
 
+ul li,
 ol li {
   margin-bottom: 0.75rem;
 }
@@ -199,13 +201,33 @@ hr {
   margin-top: $my-lg;
 }
 
+form {
+  @include container;
+  margin: $my-lg auto;
+}
+
 label {
+  @include style-h5;
   a {
     text-decoration-line: underline;
   }
   a:hover {
     text-decoration-line: underline;
   }
+}
+
+input[type="text"] {
+  border: 1px solid $black;
+  display: block;
+  width: 100%;
+}
+
+button[type="submit"],
+input[type="submit"] {
+  bottom: 0;
+  color: $black;
+  cursor: pointer;
+  padding: $container-padding;
 }
 
 mark {
@@ -250,21 +272,43 @@ abbr {
   @include style-h5;
 }
 
+details[open] {
+  margin-bottom: $my-lg;
+}
+
 details p {
   padding: 0;
 }
 
 blockquote {
   border-left: 1px solid $black;
-  margin-bottom: $my-md;
+  color: $grey;
+  margin-bottom: $my;
   margin-left: var(--gutter);
   margin-right: var(--gutter);
-  margin-top: $my-md;
+  margin-top: $my;
   max-width: calc(#{$container-width} - calc(var(--gutter) * 2));
+  padding-bottom: 0.25rem;
   @media (min-width: $container-width-em) {
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+blockquote > cite,
+blockquote > footer > cite {
+  @include style-h6;
+  color: $black;
+  display: block;
+  padding-left: 1.125rem;
+}
+
+blockquote > * {
+  padding-right: 0;
+}
+
+blockquote > *:last-child {
+  margin-bottom: 0;
 }
 
 blockquote > blockquote {
@@ -285,4 +329,25 @@ blockquote ul {
   @media (min-width: $sm) {
     padding-left: 1.75rem;
   }
+}
+
+figure {
+  @include container;
+  margin-bottom: $my-lg;
+  margin-top: $my-lg;
+  &:first-child {
+    margin-top: $my;
+  }
+}
+
+figcaption {
+  @include container;
+  @include style-small;
+  margin-bottom: 0;
+  margin-top: $my / 2;
+}
+
+th {
+  font-weight: inherit;
+  text-align: left;
 }

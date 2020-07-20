@@ -27,10 +27,6 @@
 
 .searchform input[type="submit"] {
   background-color: transparent;
-  bottom: 0;
-  color: $black;
-  cursor: pointer;
-  padding: $container-padding;
   position: absolute;
   right: 0;
   top: 0;
@@ -46,4 +42,8 @@
   border: 1px solid black;
   display: flex;
   margin-bottom: 0.5rem;
+}
+
+.wp-block-search .wp-block-search__button {
+  margin-left: 0;
 }

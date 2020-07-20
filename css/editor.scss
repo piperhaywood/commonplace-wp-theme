@@ -1,0 +1,41 @@
+@import "variables";
+@import "mixins";
+@import "fonts";
+
+.wp-block {
+  @include style-body;
+}
+
+.wp-block > * {
+  // @include container;
+}
+
+.editor-post-title {
+  @include style-h1;
+  @include container;
+}
+
+.editor-post-title__block .editor-post-title__input {
+  @include style-h1;
+}
+.wp-block .wp-block-quote.is-large > *,
+.wp-block .wp-block-quote.is-style-large > * {
+  // max-width: $container-width-lg !important;
+}
+
+// @import "base";
+
+// Some CSS to deal with all the WP craziness. Here be dragons, etc.
+// @import "wp.comments";
+// @import "wp.content";
+// @import "wp.gallery";
+// @import "wp.media";
+// @import "wp.menus";
+// @import "wp.pagination";
+@import "wp.quotes";
+// @import "wp.searchform";
+// @import "wp.widgets";
+
+// @import "components";
+// @import "prism";
+// @import "utilities";
