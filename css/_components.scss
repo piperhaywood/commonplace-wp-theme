@@ -350,18 +350,3 @@ article.page {
   max-width: none;
   padding: 0;
 }
-
-.thumbs {
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.thumbs img {
-  display: none;
-}
-
-.thumbs img:first-child {
-  display: block;
-  // margin-left: auto;
-}
