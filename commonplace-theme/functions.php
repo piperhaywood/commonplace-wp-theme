@@ -472,6 +472,7 @@ function cp_get_list($posts = false) {
     add_filter( 'excerpt_length', 'cp_excerpt_as_title');
     ob_start(); ?>
     <ul class="post-index">
+      <?php $orig = $post; ?>
       <?php if ($posts->have_posts()) : ?>
         <?php while ($posts->have_posts()) : ?>
           <?php $posts->the_post(); ?>
@@ -509,6 +510,7 @@ function cp_get_list($posts = false) {
           </li>
         <?php endwhile; ?>
       <?php endif; ?>
+      <?php $post = $orig; ?>
     </ul>
     <?php return ob_get_clean();
     remove_filter( 'excerpt_length', 'cp_excerpt_as_title');
