@@ -4,8 +4,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: var(--vertical-space);
+  margin-bottom: $my;
   margin-top: $my;
+  @media (min-width: $md) {
+    margin-bottom: var(--vertical-space);
+  }
 }
 
 .nav .menu {
@@ -41,7 +44,7 @@
 
 .post-title {
   @include style-h1;
-  margin: 0 auto $my-xl;
+  margin: -0.75rem auto $my-xl;
 }
 
 .post-footer {
