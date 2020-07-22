@@ -1,16 +1,18 @@
 @mixin font-sans {
-  font-family: "Source Sans Variable", "Helvetica", "Microsoft YaHei New",
-    "Microsoft Yahei", STXihei, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN",
-    "游ゴシック", "游ゴシック体", YuGothic, "Yu Gothic", "メイリオ", Meiryo,
-    "ＭＳ ゴシック", "MS Gothic", HiraKakuProN-W3, "TakaoExゴシック",
-    TakaoExGothic, "MotoyaLCedar", "Droid Sans Japanese", sans-serif;
+  font-family: "Source Sans Variable", "PT Sans", "Helvetica",
+    "Microsoft YaHei New", "Microsoft Yahei", STXihei, "ヒラギノ角ゴ ProN",
+    "Hiragino Kaku Gothic ProN", "游ゴシック", "游ゴシック体", YuGothic,
+    "Yu Gothic", "メイリオ", Meiryo, "ＭＳ ゴシック", "MS Gothic",
+    HiraKakuProN-W3, "TakaoExゴシック", TakaoExGothic, "MotoyaLCedar",
+    "Droid Sans Japanese", sans-serif;
 }
 
 @mixin font-serif {
-  font-family: "Source Serif Variable", "Times New Roman", Times, "FangSong",
-    STFangSong, "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", "游明朝",
-    "游明朝体", YuMincho, "Yu Mincho", "ＭＳ 明朝", "MS Mincho", HiraMinProN-W3,
-    "TakaoEx明朝", TakaoExMincho, "MotoyaLCedar", "Droid Sans Japanese", serif;
+  font-family: "Source Serif Variable", "PT Serif", "Georgia", "Times New Roman",
+    Times, "FangSong", STFangSong, "ヒラギノ明朝 ProN", "Hiragino Mincho ProN",
+    "游明朝", "游明朝体", YuMincho, "Yu Mincho", "ＭＳ 明朝", "MS Mincho",
+    HiraMinProN-W3, "TakaoEx明朝", TakaoExMincho, "MotoyaLCedar",
+    "Droid Sans Japanese", serif;
 }
 
 @mixin font-mono {
