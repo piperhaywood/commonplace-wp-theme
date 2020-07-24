@@ -21,15 +21,15 @@ function cp_excerpt_more( $more ) {
 
 add_filter('document_title_parts', 'filter_title_part');
 function filter_title_part($title) {
-  global $post;
-  if ($post->title == '') {
-    add_filter('the_excerpt', 'cp_excerpt_as_title');
-    $title['title'] = get_the_excerpt($post->ID);
-    remove_filter('the_excerpt', 'cp_excerpt_as_title');
+  if (!is_feed() && $title['title'] == '') {
+    global $post;
+    add_filter('excerpt_length', 'cp_excerpt_as_title');
+    $excerpt = get_the_excerpt();
+    remove_filter('excerpt_length', 'cp_excerpt_as_title');
+    $title['title'] = $excerpt;
   }
-    return $title;
+  return $title;
 }
-
 
 add_shortcode('notebookindex', 'notebook_index');
 function notebook_index($attr) {
