@@ -24,7 +24,7 @@
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify-es": "^2.0.0",
-    "prismjs": "^1.20.0",
+    "prismjs": "^1.21.0",
     "stylelint": "^10.1.0",
     "stylelint-config-recommended": "^2.2.0",
     "stylelint-config-recommended-scss": "^3.3.0",
