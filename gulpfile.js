@@ -1,12 +1,12 @@
-var gulp = require("gulp");
-var browserSync = require("browser-sync").create();
-var sass = require("gulp-sass");
-var autoprefixer = require("gulp-autoprefixer");
-var sourcemaps = require("gulp-sourcemaps");
-var cleanCSS = require("gulp-clean-css");
-var concat = require("gulp-concat");
-var uglify = require("gulp-uglify-es").default;
-var header = require("gulp-header");
+const gulp = require("gulp");
+const browserSync = require("browser-sync").create();
+const sass = require('gulp-sass')(require('node-sass'));
+const autoprefixer = require("gulp-autoprefixer");
+const sourcemaps = require("gulp-sourcemaps");
+const cleanCSS = require("gulp-clean-css");
+const concat = require("gulp-concat");
+const uglify = require("gulp-uglify-es").default;
+const header = require("gulp-header");
 
 const arg = ((argList) => {
   let arg = {},
@@ -32,8 +32,8 @@ const arg = ((argList) => {
   return arg;
 })(process.argv);
 
-var pkg = require("./package.json");
-var banner = [
+const pkg = require("./package.json");
+const banner = [
   "/**",
   " * Theme Name: <%= pkg.title %>",
   " * Author: <%= pkg.author.name %>",
@@ -46,7 +46,7 @@ var banner = [
   "",
 ].join("\n");
 
-var themeDir = pkg.name + "/";
+const themeDir = pkg.name + "/";
 
 gulp.task("sass", function () {
   return gulp
@@ -85,7 +85,7 @@ gulp.task("editorSass", function () {
 
 gulp.task("js", function () {
   return gulp
-    .src(["node_modules/prismjs/prism.js", "js/scripts.js"])
+    .src(["js/prism.js", "js/scripts.js"])
     .pipe(sourcemaps.init())
     .pipe(concat("scripts.js"))
     .pipe(uglify())
@@ -103,7 +103,7 @@ gulp.task("watch", function (done) {
 });
 
 gulp.task("browserSync", function (done) {
-  var proxy = arg.proxy ? arg.proxy : "localhost:8888/";
+  const proxy = arg.proxy ? arg.proxy : "wordpress-unit-test.test";
   browserSync.init({
     ghostMode: false,
     open: true,
