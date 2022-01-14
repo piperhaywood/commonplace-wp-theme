@@ -8,7 +8,7 @@
             <?php if (get_post_type() == 'post') : ?>
               <p class="post-time">
                 <span class="visuallyhidden">Published </span>
-                <time class="dt-published" datetime="<?php echo cp_date(true, false); ?>"><a class="u-url" href="<?php the_permalink(); ?>" aria-label="<?php printf(esc_html__('View post published %s', 'commonplace'), get_the_date('l, j F Y')); ?>"><?php echo get_the_date('l, j F Y'); ?></a></time> <span class="post-author"><?php printf(_x('by %s', 'authorship', 'commonplace'), sprintf(
+                <time class="dt-published" datetime="<?php echo cp_date(true, false); ?>"><a class="u-url" href="<?php the_permalink(); ?>" aria-label="<?php printf(esc_html__('View post published %s', 'commonplace'), get_the_date()); ?>"><?php echo get_the_date(); ?></a></time> <span class="post-author"><?php printf(_x('by %s', 'authorship', 'commonplace'), sprintf(
                   '<a class="p-author h-card" href="%1$s" title="%2$s" rel="author">%3$s</a>',
                   esc_url( get_author_posts_url( get_the_author_meta('ID'), get_the_author_meta('user_nicename') ) ),
                   esc_attr( sprintf( __( 'Posts by %s', 'commonplace' ), get_the_author() ) ),
