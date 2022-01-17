@@ -331,10 +331,7 @@ blockquote ol {
 }
 
 blockquote ul {
-  padding-left: 1.5rem;
-  @media (min-width: $sm) {
-    padding-left: 1.75rem;
-  }
+  padding-left: 2.25rem;
 }
 
 figure {
