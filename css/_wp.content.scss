@@ -103,7 +103,6 @@ hr.is-style-wide {
 .wp-block-archives,
 .wp-block-categories,
 .wp-block-latest-posts {
-  @include container;
   margin: $my auto;
   label {
     display: block;
