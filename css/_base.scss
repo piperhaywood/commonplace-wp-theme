@@ -301,7 +301,7 @@ blockquote {
 }
 
 blockquote > cite,
-blockquote > footer > cite {
+blockquote > footer {
   @include style-h6;
   color: $black;
   display: block;
