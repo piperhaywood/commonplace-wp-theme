@@ -46,8 +46,6 @@ if ( post_password_required() ) {
   <?php if (comments_open()) : ?>
     <div class="comments__section">
       <details id="reply">
-        <?php $discussion = 'Leave a reply'; ?>
-        <?php $discussion = have_comments() ? $discussion . ' / view discussion <span class="comments__count">%s</span>' : $discussion; ?>
         <summary>
           <?php _e( 'Leave a reply', 'notebook-ph' ); ?>
         </summary>
