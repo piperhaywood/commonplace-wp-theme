@@ -251,6 +251,10 @@ pre {
   @include code;
 }
 
+pre > code {
+  padding: 0;
+}
+
 small {
   @include style-small;
 }
