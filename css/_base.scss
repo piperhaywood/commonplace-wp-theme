@@ -32,9 +32,6 @@ body {
 
 * {
   text-underline-offset: 0.1em;
-  @media (min-width: $sm) {
-    hanging-punctuation: first;
-  }
 }
 
 main {
