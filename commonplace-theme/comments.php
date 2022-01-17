@@ -37,7 +37,8 @@ if ( post_password_required() ) {
         ) ); ?>
         <?php // If comments are closed and there are comments, let's leave a little note, shall we?
         if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
-          <p class="no-comments"><?php _e( 'Discussion is closed.', 'notebook-ph' ); ?></p>
+          <?php $closed_msg = cp_is_plugin_active('webmention/webmention.php') ? 'On-site comments are closed, but you may comment via webmentions.' : 'Discussion is closed'; ?>
+          <p class="no-comments"><?php _e( $closed_msg, 'notebook-ph' ); ?></p>
         <?php endif; ?>
       </details>
     </div>

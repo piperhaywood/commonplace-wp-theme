@@ -10,6 +10,10 @@ require_once('func/widgets.php');
 
 add_shortcode('notebooksearch', 'get_search_form');
 
+function cp_is_plugin_active( $plugin ) {
+  return in_array($plugin, (array) get_option('active_plugins', array()));
+}
+
 function cp_excerpt_as_title($length) {
   return 10;
 }
