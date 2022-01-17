@@ -15,6 +15,7 @@
   @include visuallyhidden;
 }
 
+.searchform input[type="search"],
 .searchform input[type="text"] {
   border: 1px solid $black;
   display: block;

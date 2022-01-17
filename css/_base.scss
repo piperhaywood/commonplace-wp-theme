@@ -217,7 +217,8 @@ label {
   }
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="search"] {
   border: 1px solid $black;
   display: block;
   width: 100%;

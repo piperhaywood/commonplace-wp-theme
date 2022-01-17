@@ -154,11 +154,13 @@
 
 @mixin input-text {
   border: 1px solid $black;
+  border-radius: 0;
   display: block;
   max-width: 100%;
   padding: $container-padding 0 $container-padding $container-padding;
   width: 100%;
   /* stylelint-disable */
+  -webkit-appearance: none;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
