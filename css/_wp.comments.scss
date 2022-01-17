@@ -34,6 +34,7 @@
   }
   input[type="submit"] {
     @include input-submit;
+    padding: 0.5rem 1rem;
   }
   form p {
     margin-top: 0;
