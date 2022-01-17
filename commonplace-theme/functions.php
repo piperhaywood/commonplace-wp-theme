@@ -110,6 +110,7 @@ function get_notebook_index($taxonomy, $showYears, $count) {
 
   ob_start(); ?>
     <?php if (!empty($groups)) : ?>
+      <?php ksort($groups); ?>
       <div class="termindex">
         <?php foreach ($groups as $char => $terms) : ?>
           <?php ksort($terms); ?>
