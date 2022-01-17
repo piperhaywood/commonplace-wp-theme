@@ -585,6 +585,14 @@ function cp_comment($comment, $args, $depth) {
         }
       ?>
     </div>
+
+    <div class="comment-content prose">
+      <?php if ( $comment->comment_approved == '0' ) : ?>
+        <p><em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em></p>
+      <?php endif; ?>
+      <?php comment_text(); ?>
+    </div>
+
     <div class="comment-author vcard">
         <?php printf( __( '<cite class="fn">%s</cite>' ), get_comment_author_link() ); ?>, 
       <span class="comment-meta commentmetadata">
@@ -597,13 +605,6 @@ function cp_comment($comment, $args, $depth) {
           ); ?>
         </a>
       </span><?php edit_comment_link( __( 'Edit' ), ' / ', '' ); ?>
-    </div>
-
-    <div class="comment-content prose">
-      <?php if ( $comment->comment_approved == '0' ) : ?>
-        <p><em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em></p>
-      <?php endif; ?>
-      <?php comment_text(); ?>
     </div>
 
     <div class="reply"><?php

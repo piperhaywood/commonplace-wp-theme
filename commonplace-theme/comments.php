@@ -9,7 +9,7 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div id="comments" class="comments<?php echo have_comments() ? ' comments--has-comments' : ''; ?>">
+<div id="comments" class="comments<?php echo have_comments() ? ' comments--has-comments' : ''; ?><?php echo comments_open() ? ' comments--open' : 'comments--closed'; ?>">
 
   <?php if ( have_comments() ) : ?>
     <div class="comments__section">

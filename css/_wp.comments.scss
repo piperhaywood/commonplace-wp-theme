@@ -35,6 +35,10 @@
   input[type="submit"] {
     @include input-submit;
   }
+  form p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
 }
 
 .comment-form {
@@ -92,7 +96,6 @@
 
 .comment-author {
   @include style-h5;
-  margin-bottom: 1rem;
   a:hover,
   a:focus {
     text-decoration-line: underline;
@@ -100,6 +103,10 @@
   cite {
     font-style: normal;
   }
+}
+
+.comments--open .comment-author {
+  margin-bottom: 1rem;
 }
 
 .comment-avatar {
@@ -175,10 +182,10 @@
 
 .comment-reply-link {
   @include input-submit;
+  padding: 0.5rem 1rem;
 }
 
 .comment-respond p,
-#webmention-form p,
 .link_description > * {
   margin-bottom: 1.5em;
   margin-top: 1.5em;
@@ -186,4 +193,12 @@
 
 .prose.comment-content {
   margin-bottom: 1rem;
+  > p:first-child {
+    margin-top: 0;
+  }
+}
+
+#webmention-form {
+  padding-left: 0;
+  padding-right: 0;
 }
