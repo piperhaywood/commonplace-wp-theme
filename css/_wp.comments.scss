@@ -91,8 +91,8 @@
 }
 
 .comment-author {
-  @include style-body;
-  margin-bottom: 1.5rem;
+  @include style-h5;
+  margin-bottom: 1rem;
   a:hover,
   a:focus {
     text-decoration-line: underline;
@@ -132,6 +132,9 @@
     margin-top: 1.5rem;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    &:first-child {
+      margin-top: 1rem;
+    }
   }
 
   a {
@@ -179,4 +182,8 @@
 .link_description > * {
   margin-bottom: 1.5em;
   margin-top: 1.5em;
+}
+
+.prose.comment-content {
+  margin-bottom: 1rem;
 }
