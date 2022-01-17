@@ -110,10 +110,7 @@ ul {
   @include style-body;
   @include container;
   margin: $my-lg auto $my-lg auto;
-  padding-left: 1.75rem;
-  @media (min-width: $sm) {
-    padding-left: 2rem;
-  }
+  padding-left: 2.25rem;
   @media (min-width: $md) {
     padding-left: var(--gutter);
   }
@@ -123,22 +120,36 @@ ol {
   @include style-body;
   @include container;
   margin: $my-lg auto $my-lg auto;
-  padding-left: 2rem;
-  @media (min-width: $sm) {
-    padding-left: 2.5rem;
-  }
+  padding-left: 2.5rem;
   @media (min-width: $md) {
     padding-left: var(--gutter);
   }
 }
 
-ul li,
-ol li {
-  margin-bottom: 0.75rem;
+ol,
+ul {
+  li {
+    margin-bottom: 0.75rem;
+  }
+  ol {
+    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+  }
+  ul {
+    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+  }
 }
 
 ol li:last-child {
   margin-bottom: 0;
+}
+
+li > p {
+  margin: 0 auto 0.75rem 0;
+  padding: 0;
 }
 
 a {
