@@ -470,7 +470,7 @@ function cp_add_to_index($groups, $args) {
   $first_char = strtoupper($args['name'][0]);
   if (is_numeric($first_char)) {
     $first_char = '#';
-  } elseif (mb_detect_encoding($first_char) == 'UTF-8') {
+  } elseif ($first_char == '&' || mb_detect_encoding($first_char) == 'UTF-8') {
     $first_char = '?';
   }
   $groups[$first_char][$args['slug']] = $args;
