@@ -44,6 +44,10 @@
 
 .wp-block-latest-posts.wp-block-latest-posts__list {
   list-style: disc;
+  padding-left: 2.25rem;
+  @media (min-width: $md) {
+    padding-left: var(--gutter);
+  }
 }
 
 .prose .wp-block-button {
