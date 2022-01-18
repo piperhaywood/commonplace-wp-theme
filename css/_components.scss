@@ -176,10 +176,18 @@
   column-gap: var(--gutter);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  margin-bottom: 6rem;
+  margin-top: 6rem;
   row-gap: 5rem;
   @media (min-width: $lg) {
     columns: 11rem auto;
     display: block;
+  }
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
