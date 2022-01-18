@@ -52,8 +52,8 @@
 
 .prose .wp-block-button {
   @include container;
-  margin-bottom: $my-lg;
-  margin-top: $my-lg;
+  margin-bottom: $my;
+  margin-top: $my;
 }
 
 .wp-block-button__link {
