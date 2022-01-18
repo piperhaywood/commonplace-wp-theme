@@ -108,9 +108,21 @@ function get_notebook_index($taxonomy, $showYears, $count) {
     }
   }
 
+  // Move # and ? items to end of index
+  if (!empty($groups)) {
+    ksort($groups);
+    $endKeys = array('#', '?');
+    foreach($endKeys as $key) {
+      if (array_key_exists($key, $groups)) {
+        $unsetGroup = $groups[$key];
+        unset($groups[$key]);
+        $groups[$key] = $unsetGroup;
+      }
+    }
+  }
+
   ob_start(); ?>
     <?php if (!empty($groups)) : ?>
-      <?php ksort($groups); ?>
       <div class="termindex">
         <?php foreach ($groups as $char => $terms) : ?>
           <?php ksort($terms); ?>
