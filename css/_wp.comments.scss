@@ -34,7 +34,6 @@
   }
   input[type="submit"] {
     @include input-submit;
-    padding: 0.5rem 1rem;
   }
   form p {
     margin-top: 0;
@@ -183,7 +182,6 @@
 
 .comment-reply-link {
   @include input-submit;
-  padding: 0.5rem 1rem;
 }
 
 .comment-respond p,

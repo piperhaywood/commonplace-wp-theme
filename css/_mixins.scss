@@ -171,7 +171,7 @@
   @include style-h5;
   border: 1px solid $black;
   display: inline-block;
-  padding: 1.3125rem 3rem;
+  padding: 0.5rem 1rem;
   @if $keyline {
     background-color: $white;
     color: $black;
