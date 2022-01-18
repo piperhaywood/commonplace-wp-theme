@@ -4,8 +4,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: var(--vertical-space);
+  margin-bottom: $my;
   margin-top: $my;
+  @media (min-width: $md) {
+    margin-bottom: var(--vertical-space);
+  }
 }
 
 .nav .menu {
@@ -41,7 +44,7 @@
 
 .post-title {
   @include style-h1;
-  margin: 0 auto $my-xl;
+  margin: -0.75rem auto $my-xl;
 }
 
 .post-footer {
@@ -173,10 +176,18 @@
   column-gap: var(--gutter);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  margin-bottom: 6rem;
+  margin-top: 6rem;
   row-gap: 5rem;
   @media (min-width: $lg) {
     columns: 11rem auto;
     display: block;
+  }
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
@@ -349,19 +360,4 @@ article.page {
   margin: 0;
   max-width: none;
   padding: 0;
-}
-
-.thumbs {
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.thumbs img {
-  display: none;
-}
-
-.thumbs img:first-child {
-  display: block;
-  // margin-left: auto;
 }

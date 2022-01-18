@@ -29,7 +29,7 @@
 ?>
 
 <?php if ( $related_posts ) : ?>
-  <?php echo cp_get_list($related_posts); ?>
+  <?php echo cp_get_list_arr($related_posts); ?>
 <?php endif ?>
 
 <?php

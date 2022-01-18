@@ -16,7 +16,7 @@
 
 .visuallyhidden.button:focus,
 .visuallyhidden.button:active {
-  background-color: $black;
+  background-color: $black !important;
   color: $white;
   display: inline-block;
   height: auto;
@@ -30,6 +30,10 @@
   white-space: nowrap;
   width: auto;
   z-index: auto;
+  &:hover {
+    background-color: $white !important;
+    color: $black;
+  }
 }
 
 .visuallyhidden.button:hover {

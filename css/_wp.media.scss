@@ -23,7 +23,7 @@
       float: left;
       margin-bottom: 0;
       margin-left: calc((#{$aside-width} + #{$mx}) * -1);
-      margin-right: 0;
+      margin-right: 1.75rem;
       margin-top: 0;
       width: $aside-width;
     }
@@ -36,7 +36,7 @@
     @media (min-width: $mqAside) {
       float: right;
       margin-bottom: $my;
-      margin-left: 0;
+      margin-left: 1.75rem;
       margin-right: calc((#{$aside-width} + #{$mx}) * -1);
       margin-top: 0;
       width: $aside-width;

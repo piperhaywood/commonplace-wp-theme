@@ -1,7 +1,7 @@
 {
   "name": "commonplace-theme",
   "title": "Commonplace Theme",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple WordPress theme akin to a Commonplace Book.",
   "author": {
     "name": "Piper Haywood",
@@ -18,21 +18,19 @@
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
     "gulp-add-src": "^1.0.0",
-    "gulp-autoprefixer": "^3.1.0",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify-es": "^2.0.0",
-    "prismjs": "^1.20.0",
-    "stylelint": "^10.1.0",
-    "stylelint-config-recommended": "^2.2.0",
-    "stylelint-config-recommended-scss": "^3.3.0",
-    "stylelint-order": "^3.0.1",
-    "stylelint-scss": "^3.9.2"
-  },
-  "dependencies": {
-    "gulp-header": "^1.7.1",
-    "gulp-util": "^3.0.7"
+    "gulp-header": "^2.0.9",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify-es": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "node-sass": "^7.0.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-recommended": "^6.0.0",
+    "stylelint-config-recommended-scss": "^5.0.2",
+    "stylelint-order": "^5.0.0",
+    "stylelint-scss": "^4.1.0"
   }
 }

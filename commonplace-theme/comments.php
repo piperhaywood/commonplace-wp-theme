@@ -9,7 +9,7 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div id="comments" class="comments<?php echo have_comments() ? ' comments--has-comments' : ''; ?>">
+<div id="comments" class="comments<?php echo have_comments() ? ' comments--has-comments' : ''; ?><?php echo comments_open() ? ' comments--open' : 'comments--closed'; ?>">
 
   <?php if ( have_comments() ) : ?>
     <div class="comments__section">
@@ -37,7 +37,8 @@ if ( post_password_required() ) {
         ) ); ?>
         <?php // If comments are closed and there are comments, let's leave a little note, shall we?
         if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
-          <p class="no-comments"><?php _e( 'Discussion is closed.', 'notebook-ph' ); ?></p>
+          <?php $closed_msg = cp_is_plugin_active('webmention/webmention.php') ? 'On-site comments are closed, but you may comment via webmentions.' : 'Discussion is closed'; ?>
+          <p class="no-comments"><?php _e( $closed_msg, 'notebook-ph' ); ?></p>
         <?php endif; ?>
       </details>
     </div>
@@ -46,8 +47,6 @@ if ( post_password_required() ) {
   <?php if (comments_open()) : ?>
     <div class="comments__section">
       <details id="reply">
-        <?php $discussion = 'Leave a reply'; ?>
-        <?php $discussion = have_comments() ? $discussion . ' / view discussion <span class="comments__count">%s</span>' : $discussion; ?>
         <summary>
           <?php _e( 'Leave a reply', 'notebook-ph' ); ?>
         </summary>
