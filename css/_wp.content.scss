@@ -145,6 +145,10 @@ hr.is-style-wide {
   padding: 0 var(--gutter);
 }
 
+.prose video {
+  height: auto;
+}
+
 p.has-background {
   margin-bottom: $my-xl;
   margin-top: $my-xl;
