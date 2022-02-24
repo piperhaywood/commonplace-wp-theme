@@ -77,3 +77,9 @@ function cp_lazyload_content_images( $content ) {
   }
   return $content;
 }
+
+// Wrap the “Protected” text with HTML so that it can be styled
+add_filter( 'protected_title_format', 'cp_remove_protected_text' );
+  function cp_remove_protected_text() {
+  return __('<span class="protected-label">Protected: </span>%s');
+}
