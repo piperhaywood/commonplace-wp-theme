@@ -4,9 +4,11 @@ This is a simple, translation-ready WordPress theme that came about after conver
 
 > ⚠️ **Fair warning:** This is a work in progress! 🚧 It’s currently in use on [piperhaywood.com](https://piperhaywood.com), but there are definitely bugs, particularly when it comes to Gutenberg compatibility. Please feel free to [raise an issue](https://github.com/piperhaywood/commonplace-wp-theme/issues) if you notice anything weird or have suggestions. Unfortunately I do not have the capacity to provide individualized support, so **it is provided as-is** for you to work with as you wish.
 
-## Installation
+## Installation and updates
 
-The compiled theme is in `/commonplace-theme`. This directory can be zipped and uploaded in the WordPress theme management page, or the directory can be manually uploaded via cPanel or FTP. For further instructions, see the WordPress documentation page [Using Themes](https://wordpress.org/support/article/using-themes/#adding-new-themes-using-the-administration-screens).
+I deliberately do not list this theme in the WordPress theme library because I do not have capacity to go through and maintain that process. As such, installation and all updates must be done manually as described below.
+
+To install the theme, compress the compiled theme folder `/commonplace-theme` and upload that ZIP file in the WordPress theme management page. Alternatively, the ZIP file can be manually uploaded via your hosting dashboard such as cPanel or FTP/SFTP. For further instructions, see the WordPress documentation page [Using Themes](https://wordpress.org/support/article/using-themes/#adding-new-themes-using-the-administration-screens).
 
 ## Shortcodes
 
