@@ -2,7 +2,7 @@
 
 This is a simple, translation-ready WordPress theme that came about after conversations with designer [Bec Worth](http://www.youwouldlovethis.com/) about the usefulness of a Commonplace Book and what it could feel like on the web. Technically, it borrows heavily from my Notebook theme. Most text is set in the variable versions of [Source Serif Pro](https://github.com/adobe-fonts/source-serif-pro) and [Source Sans Pro](https://github.com/adobe-fonts/source-sans-pro) with appropriate fallbacks for Chinese and Japanese characters.
 
-This is a WIP! 🚧 Currently in use on [piperhaywood.com](https://piperhaywood.com). Please feel free to raise an issue if you notice anything weird.
+> ⚠️ **Fair warning:** This is a work in progress! 🚧 It’s currently in use on [piperhaywood.com](https://piperhaywood.com), but there are definitely bugs, particularly when it comes to Gutenberg compatibility. Please feel free to [raise an issue](https://github.com/piperhaywood/commonplace-wp-theme/issues) if you notice anything weird or have suggestions. Unfortunately I do not have the capacity to provide individualized support, so **it is provided as-is** for you to work with as you wish.
 
 ## Installation
 
