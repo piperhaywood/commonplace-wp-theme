@@ -18,8 +18,7 @@
       <nav class="nav">
         <?php wp_nav_menu( array(
           'theme_location' => 'cp-menu',
-          'container_class' => 'menu',
-          'menu_class' => '',
+          'container_class' => 'header-menu',
           'depth' => 1
         ) ); ?>
         <?php if (is_active_sidebar('header-area-1')) : ?>
