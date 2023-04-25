@@ -27,10 +27,10 @@
     "gulp-uglify-es": "^3.0.0",
     "gulp-util": "^3.0.8",
     "node-sass": "^7.0.1",
-    "stylelint": "^14.2.0",
-    "stylelint-config-recommended": "^6.0.0",
-    "stylelint-config-recommended-scss": "^5.0.2",
-    "stylelint-order": "^5.0.0",
-    "stylelint-scss": "^4.1.0"
+    "stylelint": "^15.6.0",
+    "stylelint-config-recommended": "^12.0.0",
+    "stylelint-config-recommended-scss": "^11.0.0",
+    "stylelint-order": "^6.0.3",
+    "stylelint-scss": "^4.6.0"
   }
 }
