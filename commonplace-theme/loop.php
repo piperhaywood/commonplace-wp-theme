@@ -19,7 +19,7 @@
                 <?php endif; ?>  
               </p>
             <?php endif; ?>
-            <?php $title = cp_title(false); ?>
+            <?php $title = cp_title(false, $hideTitle); ?>
             <?php if ($title && $title != '') : ?>
               <<?php echo is_singular() ? 'h1' : 'h2'; ?> class="p-name post-title <?php echo $hideTitle ? 'visuallyhidden' : ''; ?>">
                 <?php echo $title; ?>

@@ -15,7 +15,7 @@
   margin-bottom: 0.5rem;
 }
 
-.page-context {
+.header {
   margin-bottom: calc(var(--vertical-space) * 1.25);
 }
 
@@ -26,6 +26,7 @@
 
 .breadcrumb p {
   @include style-h5;
+  margin-bottom: 0.5rem;
 }
 
 .page-description > p,

@@ -7,6 +7,7 @@ require_once('func/enqueue.php');
 require_once('func/navigation.php');
 require_once('func/theme-support.php');
 require_once('func/widgets.php');
+require_once('func/related-posts-by-taxonomy/related-posts-by-taxonomy.php');
 
 add_shortcode('notebooksearch', 'get_search_form');
 
@@ -199,13 +200,13 @@ function cp_date($format = false, $echo = true) {
   }
 }
 
-function cp_title($echo = true) {
+function cp_title($echo = true, $isHidden = false) {
   $title = get_the_title();
   if (empty($title)) {
     return;
   }
 
-  if (!is_singular()) {
+  if (!is_singular() && !$isHidden) {
     $title = '<a href="' . get_the_permalink() . '">' . $title . '</a>';
   }
 

@@ -42,6 +42,10 @@
   margin-bottom: calc(#{$my} + 0.5rem);
 }
 
+.prose form p {
+  padding: 0;
+}
+
 .wp-block-latest-posts.wp-block-latest-posts__list {
   list-style: disc;
   padding-left: 2.25rem;
@@ -145,6 +149,21 @@ hr.is-style-wide {
   padding: 0 var(--gutter);
 }
 
+.prose video {
+  height: auto;
+}
+
+.prose sup {
+  font-size: 0.6em;
+  position: relative;
+  top: -0.25em;
+}
+
+.prose sup a:not([class]) {
+  color: blue;
+  text-decoration-line: none;
+}
+
 p.has-background {
   margin-bottom: $my-xl;
   margin-top: $my-xl;
@@ -155,5 +174,24 @@ p.has-background {
   @media (min-width: $md) {
     max-width: calc(#{$container-width} + (var(--gutter) * 2));
     padding: calc(var(--gutter) * 2);
+  }
+}
+
+.protected-label {
+  @include visuallyhidden;
+}
+
+.post-password-form {
+  label {
+    display: block;
+    margin-bottom: 1rem;
+  }
+  input[type="password"] {
+    @include input-text;
+    margin-top: 0.25rem; // WordPress puts the input within the label...
+    padding: $container-padding 0 $container-padding $container-padding;
+  }
+  input[type="submit"] {
+    @include input-submit;
   }
 }
