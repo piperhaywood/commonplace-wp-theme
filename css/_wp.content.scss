@@ -153,6 +153,17 @@ hr.is-style-wide {
   height: auto;
 }
 
+.prose sup {
+  font-size: 0.6em;
+  position: relative;
+  top: -0.25em;
+}
+
+.prose sup a:not([class]) {
+  color: blue;
+  text-decoration-line: none;
+}
+
 p.has-background {
   margin-bottom: $my-xl;
   margin-top: $my-xl;
