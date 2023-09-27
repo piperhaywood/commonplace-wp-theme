@@ -200,13 +200,13 @@ function cp_date($format = false, $echo = true) {
   }
 }
 
-function cp_title($echo = true) {
+function cp_title($echo = true, $isHidden = false) {
   $title = get_the_title();
   if (empty($title)) {
     return;
   }
 
-  if (!is_singular()) {
+  if (!is_singular() && !$isHidden) {
     $title = '<a href="' . get_the_permalink() . '">' . $title . '</a>';
   }
 
