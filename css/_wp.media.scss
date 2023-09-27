@@ -82,7 +82,7 @@
 
 .prose .wp-caption-text {
   @include style-h6;
-  margin-top: $my / 2;
+  margin-top: calc($my / 2);
   max-width: none;
   padding-left: 0;
   padding-right: 0;
@@ -169,7 +169,7 @@ figure.wp-block-image {
 .wp-block-image figcaption {
   @include style-small;
   margin-bottom: 0;
-  margin-top: $my / 2;
+  margin-top: calc($my / 2);
   padding: 0;
   @media (min-width: $md) {
     padding: 0 var(--gutter);

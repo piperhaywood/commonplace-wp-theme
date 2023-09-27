@@ -20,13 +20,13 @@ ul.page-numbers {
   flex-shrink: 0;
   flex-wrap: wrap;
   list-style-type: none;
-  margin-left: ($my / 2) * -1;
+  margin-left: (calc($my / 2)) * -1;
   padding: 0;
 }
 
 a.page-numbers,
 span.page-numbers {
-  padding: $my / 2;
+  padding: calc($my / 2);
 }
 
 .page-numbers[aria-current="page"] {
