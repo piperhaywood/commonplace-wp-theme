@@ -7,6 +7,7 @@ require_once('func/enqueue.php');
 require_once('func/navigation.php');
 require_once('func/theme-support.php');
 require_once('func/widgets.php');
+require_once('func/related-posts-by-taxonomy/related-posts-by-taxonomy.php');
 
 add_shortcode('notebooksearch', 'get_search_form');
 
