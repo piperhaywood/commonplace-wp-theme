@@ -109,6 +109,10 @@ gulp.task("browserSync", function (done) {
     open: true,
     notify: false,
     proxy: proxy,
+    ...(arg.host ? { host: arg.host } : {}),
+    ...(arg["ssl-key"] && arg["ssl-cert"]
+      ? { https: { key: arg["ssl-key"], cert: arg["ssl-cert"] } }
+      : {}),
   });
   done();
 });
