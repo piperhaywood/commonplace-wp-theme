@@ -454,7 +454,7 @@ function cp_get_years_array() {
   $result = array();
   $years = $wpdb->get_results(
     $wpdb->prepare(
-      "SELECT YEAR(post_date) FROM {$wpdb->posts} WHERE post_status = %s GROUP BY YEAR(post_date) DESC",
+      "SELECT YEAR(post_date) FROM {$wpdb->posts} WHERE post_status = %s GROUP BY YEAR(post_date) ORDER BY YEAR(post_date) DESC",
       array('publish')
     ),
     ARRAY_N
