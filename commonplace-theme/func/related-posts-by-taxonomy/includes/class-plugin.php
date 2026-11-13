@@ -17,7 +17,6 @@ if ( ! class_exists( 'Related_Posts_By_Taxonomy_Plugin' ) ) {
 	 * - widget
 	 * - cache
 	 * - debug
-	 * - WP Rest API
 	 * - lazy loading
 	 *
 	 * @since 2.5.0
@@ -33,9 +32,9 @@ if ( ! class_exists( 'Related_Posts_By_Taxonomy_Plugin' ) ) {
 			Related_Posts_By_Taxonomy_Defaults::init();
 
 			// Initialize plugin features.
+			// The bundled REST API is intentionally not registered; it exposes raw post records.
 			add_action( 'init', array( $this, 'shortcode_init' ) );
 			add_action( 'widgets_init', array( $this, 'widget_init' ) );
-			add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
 			add_action( 'wp_loaded', array( $this, 'cache_init' ) );
 			add_action( 'wp_loaded', array( $this, 'debug_init' ) );
 			add_action( 'wp_loaded', array( $this, 'lazy_loading_init' ) );
@@ -96,26 +95,6 @@ if ( ! class_exists( 'Related_Posts_By_Taxonomy_Plugin' ) ) {
 		 */
 		public function shortcode_init() {
 			add_shortcode( 'related_posts_by_tax', 'km_rpbt_related_posts_by_taxonomy_shortcode' );
-		}
-
-		/**
-		 * Set up the WordPress REST API feature.
-		 *
-		 * @since 2.5.0
-		 */
-		public function rest_api_init() {
-
-			// Class exists for WordPress 4.7 and up.
-			if ( ! class_exists( 'WP_REST_Controller' ) ) {
-				return;
-			}
-
-			if ( is_user_logged_in() || km_rpbt_plugin_supports( 'wp_rest_api' ) ) {
-				require_once RELATED_POSTS_BY_TAXONOMY_PLUGIN_DIR . 'includes/class-rest-api.php';
-
-				$rest_api = new Related_Posts_By_Taxonomy_Rest_API();
-				$rest_api->register_routes();
-			}
 		}
 
 		/**
