@@ -4,7 +4,7 @@ add_action('after_setup_theme', 'cp_start_cleanup');
 function cp_start_cleanup() {
   add_action('init', 'cp_cleanup_head');
   add_filter('the_generator', 'cp_remove_rss_version');
-  add_filter('allowed_block_types', 'cp_allowed_block_types');
+  add_filter('allowed_block_types_all', 'cp_allowed_block_types', 10, 2);
   add_filter( 'use_default_gallery_style', '__return_false' );
 }
 
@@ -16,7 +16,12 @@ function cp_cleanup_head() {
   add_filter('script_loader_src', 'cp_alter_wp_ver_css_js', 9999);
 }
 
-function cp_allowed_block_types($allowed_blocks) {
+function cp_allowed_block_types($allowed_blocks, $editor_context) {
+  // Preserve the post-editor scope of the former allowed_block_types hook.
+  if (empty($editor_context->post)) {
+    return $allowed_blocks;
+  }
+
   return array(
     'core/paragraph',
     'core/image',
