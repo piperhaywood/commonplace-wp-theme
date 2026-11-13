@@ -59,14 +59,57 @@ npm run build
 
 The build writes frontend CSS, editor CSS, and JavaScript to `commonplace-theme/dist/`. Rebuild before packaging the `commonplace-theme/` directory for installation. The build also generates the theme metadata header in `commonplace-theme/style.css` from `package.json`; edit the package metadata rather than that generated file.
 
-To increment the patch version for a release and regenerate the theme header:
+### Releases
 
-```sh
-npm version patch --no-git-tag-version
-npm run build
-```
+`main` contains ongoing development. Published versions are snapshots marked by
+Git tags such as `v0.1.7`; merging ordinary work into `main` does not publish it.
 
-The version command updates `package.json` and `package-lock.json` together without creating a Git commit or tag. Commit those changes with the rebuilt theme files.
+Release Please maintains a release PR after releasable changes reach `main`.
+It updates `package.json`, `package-lock.json`, `CHANGELOG.md`, the release
+manifest, and the generated WordPress version header. Leave that PR open while
+changes accumulate. Check the frontend and editor locally, review the release
+notes, and merge the release PR when everything on `main` is ready to ship.
+The release workflow runs Theme CI before creating the tag and GitHub Release,
+then uploads `commonplace-theme.zip`. Download that asset for WordPress
+installation; GitHub's automatic source archives contain the entire repository.
+Publishing does not install the update on any WordPress site.
+
+Use Conventional Commits for commits reaching `main`:
+
+- `fix: correct index ordering` proposes a patch release.
+- `feat: add a new index option` proposes a minor release.
+- `feat!: change shortcode arguments` marks a breaking change. Before 1.0,
+  breaking changes bump the minor version; from 1.0 they bump the major version.
+- `docs:`, `chore:`, and `ci:` alone do not normally propose a release.
+
+For squash merges, use a conventional PR title as the squash commit message.
+For merge commits, ensure the individual commits follow this convention.
+Release notes are generated from Conventional Commits. For the first release,
+add a summary of older changes to the release PR's changelog manually: historical
+nonconventional commit messages are not included automatically. Review carefully: the latest existing GitHub release is `v0.1.4`, while the working
+package version is `0.1.6`. The bootstrap SHA points to `v0.1.4`, and the manifest
+starts at `0.1.6` to avoid reusing a version. Historical tags are preserved.
+Merge this setup with a `fix:` commit (for example, `fix: distribute installable
+theme releases`) to seed the first release PR; the old nonconventional commits
+alone may not trigger one. Do not manually bump versions for routine releases.
+
+#### One-time GitHub setup
+
+Create a fine-grained personal access token restricted to this repository with
+**Contents**, **Issues**, and **Pull requests** read/write permissions. Save it as
+the repository Actions secret `RELEASE_PLEASE_TOKEN`. A GitHub App token with the
+same permissions can also be used. The token allows release PR creation and
+updates to trigger normal pull-request CI; the default `GITHUB_TOKEN` does not.
+Enable **Allow GitHub Actions to create and approve pull requests** in repository
+Settings → Actions → General if repository policy requires it. No automatic PR
+approval or merging is configured.
+
+The workflow runs on pushes to `main` and can be rerun manually from Actions.
+If a release was created but ZIP packaging/upload failed, run **Theme release**
+on `main` with `release_tag` set to the existing tag, such as `v0.1.7`. This
+rebuilds that tag, checks its version and committed assets, and replaces the ZIP
+without creating another release. Leave the input empty for a normal Release
+Please run. Tags must continue to identify the original release commit.
 
 ### My development setup
 

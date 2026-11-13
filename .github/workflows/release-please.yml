@@ -1,0 +1,99 @@
+name: Theme release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Existing release tag to retry ZIP upload (leave empty to run Release Please)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: theme-release
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    if: github.ref == 'refs/heads/main' && !inputs.release_tag
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      created: ${{ steps.release.outputs.release_created }}
+      tag: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - name: Check release credentials
+        env:
+          RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+        run: |
+          if [ -z "$RELEASE_PLEASE_TOKEN" ]; then
+            echo '::error::Add the RELEASE_PLEASE_TOKEN repository secret. See README.md under Releases.'
+            exit 1
+          fi
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          target-branch: main
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  package:
+    needs: [checks, release]
+    if: >-
+      always() && github.ref == 'refs/heads/main' &&
+      needs.checks.result == 'success' &&
+      (needs.release.outputs.created == 'true' || inputs.release_tag != '')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ needs.release.outputs.tag || inputs.release_tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Validate release tag
+        shell: bash
+        run: |
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
+            echo '::error::Expected a stable version tag such as v0.1.7.'
+            exit 1
+          }
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY"
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Verify release version and generated assets
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+            if (`v${pkg.version}` !== process.env.RELEASE_TAG) {
+              throw new Error("Release tag does not match package.json");
+            }
+          '
+          git diff --exit-code -- commonplace-theme/
+          test -z "$(git ls-files --others --exclude-standard -- commonplace-theme/)"
+      - name: Package tracked theme files
+        run: git archive --format=zip --output=commonplace-theme.zip HEAD commonplace-theme/
+      - name: Upload installable theme
+        run: gh release upload "$RELEASE_TAG" commonplace-theme.zip --clobber --repo "$GITHUB_REPOSITORY"
