@@ -138,7 +138,7 @@ function km_rpbt_validate_shortcode_atts( $atts ) {
 	$atts['include_children'] = ( '' !== trim( $atts['include_children'] ) ) ? $atts['include_children'] : false;
 
 	// Deprecated argument changed from boolean to null (back compat)
-	$atts['related'] = ( '' !== trim( $atts['related'] ) ) ? $atts['related'] : null;
+	$atts['related'] = ( '' !== trim( (string) $atts['related'] ) ) ? $atts['related'] : null;
 
 	if ( 'regular_order' !== $atts['include_self'] ) {
 		$atts['include_self']  = ( '' !== trim( $atts['include_self'] ) ) ? $atts['include_self'] : false;
