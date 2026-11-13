@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 ul.menu {
   @include style-h3;
   display: flex;

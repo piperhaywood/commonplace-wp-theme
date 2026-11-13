@@ -102,7 +102,9 @@ To check the production build locally, stop Vite, remove or comment out `CP_VITE
 
 Edit the source files rather than generated files in `dist/`. Fonts are served directly by WordPress and are not copied by the build.
 
-`npm run lint:css` checks the Sass files. Existing Sass `@import` deprecation warnings are expected.
+`npm run lint:css` checks the Sass files. Styles use Sass modules (`@use`) rather than deprecated Sass imports. The editor uses `meta.load-css()` to keep shared styles in their original cascade order.
+
+Build and lint tooling require Node 22.22.2+, 24.15.0+, or 26+ (see `package.json` for the supported ranges). The version in `.nvmrc` satisfies these requirements. Run `npm run lint:css` and `npm run build` after dependency updates, and check both the frontend and WordPress editor before releasing.
 
 ### Notes
 
@@ -117,8 +119,8 @@ lint Sass, build production assets, and check that the committed
 a fresh build. Run `npm run build` and commit the generated files whenever the
 source assets or theme metadata change.
 
-The editor stylesheet intentionally imports Sass partials after local rules to preserve
-the cascade; its Stylelint override allows that valid Sass pattern.
+The editor stylesheet uses `meta.load-css()` after local rules to preserve the
+cascade without deprecated Sass imports or a Stylelint exception.
 
 A separate job checks the syntax of every PHP file in `commonplace-theme/`,
 including the bundled related-posts library, using PHP 8.2. This is a syntax check;

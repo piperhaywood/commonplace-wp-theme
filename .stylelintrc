@@ -3,21 +3,10 @@
     "stylelint-order"
   ],
   "extends": [
-    "stylelint-config-recommended",
     "stylelint-config-recommended-scss"
   ],
   "rules": {
     "order/properties-alphabetical-order": true,
     "no-descending-specificity": null
-  },
-  "overrides": [
-    {
-      "files": [
-        "css/editor.scss"
-      ],
-      "rules": {
-        "no-invalid-position-at-import-rule": null
-      }
-    }
-  ]
+  }
 }

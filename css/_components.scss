@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 .nav {
   @include container($container-width-xl);
   align-items: baseline;
@@ -97,8 +100,8 @@
   @include container($container-width-xl);
   align-items: baseline;
   border-top: 1px solid $black;
+  column-gap: 2rem;
   display: grid;
-  grid-column-gap: 2rem;
   grid-template-columns: repeat(12, 1fr);
   padding-bottom: 1.125rem;
   padding-top: 1rem;
@@ -263,8 +266,8 @@ article.page {
 .cp-row-body {
   margin-bottom: 1.125rem;
   @media (min-width: $lg) {
+    column-gap: 2rem;
     display: grid;
-    grid-column-gap: 2rem;
     grid-template-columns: repeat(12, 1fr);
     justify-items: start;
   }

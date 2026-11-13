@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 .wp-block-quote.has-text-align-center {
   border-bottom: 1px solid $black;
   border-left: 0;

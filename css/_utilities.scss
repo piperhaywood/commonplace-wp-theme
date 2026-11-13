@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 .container {
   @include container;
 }
@@ -53,11 +56,11 @@ img.pixels {
 
 .thumbs {
   @include container;
+  column-gap: calc(var(--gutter) / 2);
   display: grid;
-  grid-column-gap: calc(var(--gutter) / 2);
-  grid-row-gap: calc(var(--gutter) / 2);
   grid-template-columns: repeat(auto-fill, 80px);
   margin-bottom: $my;
+  row-gap: calc(var(--gutter) / 2);
 }
 
 .thumbs img {
