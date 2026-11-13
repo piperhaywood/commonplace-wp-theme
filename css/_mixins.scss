@@ -101,16 +101,12 @@
 }
 
 @mixin container($width: $container-width, $offset: false) {
-  margin-left: auto;
-  @if $offset {
-    margin-left: calc((100vw - #{$width}) / 2 - #{$offset});
-  } @else {
-    margin-left: auto;
-  }
-  margin-right: auto;
+  margin-inline: auto;
   max-width: $width;
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
+  padding-inline: var(--gutter);
+  @if $offset {
+    margin-inline-start: calc((100vw - #{$width}) / 2 - #{$offset});
+  }
 }
 
 @mixin visuallyhidden {

@@ -2,16 +2,17 @@
 @use "mixins" as *;
 
 .wp-block-quote.has-text-align-center {
-  border-bottom: 1px solid $black;
-  border-left: 0;
-  border-top: 1px solid $black;
-  padding-top: $my;
+  border-block-end: 1px solid $black;
+  border-block-start: 1px solid $black;
+  border-inline-start: 0;
+  padding-block-start: $my;
   > * {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 }
 
 .wp-block-quote.has-text-align-right {
+  border-inline-start: 0;
   border-left: 0;
   border-right: 1px solid $black;
   > * {
@@ -34,10 +35,10 @@
   padding: 0;
   > * {
     max-width: $container-width-lg;
-    padding-right: var(--gutter);
+    padding-inline-end: var(--gutter);
   }
   p:last-of-type {
-    margin-bottom: 0.5rem;
+    margin-block-end: 0.5rem;
   }
   > cite,
   .wp-block-quote__citation {
@@ -45,7 +46,7 @@
     color: inherit;
     margin: 0 auto;
     max-width: $container-width !important;
-    text-align: left;
+    text-align: start;
   }
 }
 
@@ -56,21 +57,20 @@
 
 .wp-block-pullquote {
   @include container;
-  border-bottom: none;
-  border-top: none;
-  margin-bottom: $my-xl;
-  margin-top: $my-xl;
-  padding-bottom: 0;
-  padding-top: 0;
-  text-align: left;
+  border-block-end: none;
+  border-block-start: none;
+  margin-block-end: $my-xl;
+  margin-block-start: $my-xl;
+  padding-block-end: 0;
+  padding-block-start: 0;
+  text-align: start;
   &:first-child {
-    margin-top: $my;
+    margin-block-start: $my;
   }
   blockquote {
-    border-left: none;
+    border-inline-start: none;
     color: $black;
-    margin-left: 0;
-    margin-right: 0;
+    margin-inline: 0;
     > *:not(cite) {
       @include style-h1;
     }
@@ -84,9 +84,9 @@
   ol,
   p,
   cite {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
   p:last-of-type {
-    margin-bottom: 0.5rem;
+    margin-block-end: 0.5rem;
   }
 }

@@ -18,9 +18,9 @@
 .footer-widgets {
   @include style-h3;
   @include container($container-width);
-  padding-bottom: $my;
+  padding-block-end: $my;
   @media (min-width: $md) {
-    padding-bottom: $my-lg;
+    padding-block-end: $my-lg;
   }
 }
 
@@ -33,14 +33,12 @@
 .widget ul,
 .widget ol,
 .widget h3 {
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 0;
-  padding-right: 0;
+  margin-inline: 0;
+  padding-inline: 0;
 }
 
 .widget {
-  margin-bottom: $my;
+  margin-block-end: $my;
 }
 
 .widget_text,

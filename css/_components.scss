@@ -7,19 +7,19 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: $my;
-  margin-top: $my;
+  margin-block-end: $my;
+  margin-block-start: $my;
   @media (min-width: $md) {
-    margin-bottom: var(--vertical-space);
+    margin-block-end: var(--vertical-space);
   }
 }
 
 .nav .menu {
-  margin-bottom: 0.5rem;
+  margin-block-end: 0.5rem;
 }
 
 .header {
-  margin-bottom: calc(var(--vertical-space) * 1.25);
+  margin-block-end: calc(var(--vertical-space) * 1.25);
 }
 
 .breadcrumb {
@@ -29,7 +29,7 @@
 
 .breadcrumb p {
   @include style-h5;
-  margin-bottom: 0.5rem;
+  margin-block-end: 0.5rem;
 }
 
 .page-description > p,
@@ -39,7 +39,7 @@
 }
 
 .page-description > *:last-child {
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 .post-time {
@@ -72,17 +72,17 @@
 }
 
 .rpbt_shortcode {
-  margin-bottom: var(--vertical-space);
+  margin-block-end: var(--vertical-space);
 }
 
 .rpbt_shortcode h3 {
   @include style-h5;
   @include container($container-width-xl);
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .rpbt_shortcode .post-index {
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .post-index {
@@ -99,17 +99,17 @@
 .post-item {
   @include container($container-width-xl);
   align-items: baseline;
-  border-top: 1px solid $black;
+  border-block-start: 1px solid $black;
   column-gap: 2rem;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding-bottom: 1.125rem;
-  padding-top: 1rem;
+  padding-block-end: 1.125rem;
+  padding-block-start: 1rem;
   text-shadow: white 0 0 10px;
 }
 
 .post-index__post-item:last-child .post-item {
-  border-bottom: 1px solid $black;
+  border-block-end: 1px solid $black;
 }
 
 .post-item > * {
@@ -140,7 +140,7 @@
 .post-item__text {
   @include style-body;
   display: block;
-  margin-bottom: 0.25rem;
+  margin-block-end: 0.25rem;
 }
 
 .post-item__image {
@@ -180,27 +180,26 @@
   column-gap: var(--gutter);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  margin-bottom: 6rem;
-  margin-top: 6rem;
+  margin-block-end: 6rem;
+  margin-block-start: 6rem;
   row-gap: 5rem;
   @media (min-width: $lg) {
     columns: 11rem auto;
     display: block;
   }
   &:first-child {
-    margin-top: 0;
+    margin-block-start: 0;
   }
   &:last-child {
-    margin-bottom: 0;
+    margin-block-end: 0;
   }
 }
 
 .termindex h2 {
   @include style-body;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 0;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-inline: 0;
   max-width: none;
   padding: 0;
 }
@@ -208,17 +207,16 @@
 .termindex ol {
   @include style-h3;
   list-style-type: none;
-  margin-bottom: $my-lg;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 0;
+  margin-block-end: $my-lg;
+  margin-block-start: 0;
+  margin-inline: 0;
   max-width: none;
   padding: 0;
 }
 
 .termindex li {
-  margin-bottom: 0;
-  margin-left: 1rem;
+  margin-block-end: 0;
+  margin-inline-start: 1rem;
   text-indent: -1rem;
 }
 
@@ -231,7 +229,7 @@
 
 .term__count {
   @include style-h5;
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
 }
 
 .termindex .term--post_format,
@@ -244,7 +242,7 @@
 }
 
 article.page {
-  margin-top: 8rem;
+  margin-block-start: 8rem;
 }
 
 .cp-table {
@@ -252,19 +250,19 @@ article.page {
 }
 
 .cp-table-row {
-  border-top: 1px solid $black;
-  margin-bottom: 0;
-  padding-bottom: 0;
-  padding-top: 1rem;
+  border-block-start: 1px solid $black;
+  margin-block-end: 0;
+  padding-block-end: 0;
+  padding-block-start: 1rem;
 }
 
 .cp-table-row:last-child {
-  border-bottom: 1px solid $black;
+  border-block-end: 1px solid $black;
 }
 
 .cp-row-header,
 .cp-row-body {
-  margin-bottom: 1.125rem;
+  margin-block-end: 1.125rem;
   @media (min-width: $lg) {
     column-gap: 2rem;
     display: grid;
@@ -305,7 +303,7 @@ article.page {
 .cp-row-header > h3 a:after {
   content: "\2193";
   display: inline-block;
-  margin-left: 1em;
+  margin-inline-start: 1em;
 }
 
 .cp-table-row--open .cp-row-header > h3 a:after {
@@ -324,7 +322,7 @@ article.page {
 .cp-row-header > p {
   --grid-col: 10 / span 3;
   --justify: end;
-  --text-align: right;
+  --text-align: end;
 }
 
 .cp-row-body > div {
@@ -334,23 +332,21 @@ article.page {
 .cp-row-body > figure {
   --grid-col: 9 / span 4;
   --justify: end;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: $my;
-  padding-left: 0;
-  padding-right: 0;
+  margin-block-end: 0;
+  margin-block-start: $my;
+  margin-inline: 0;
+  padding-inline: 0;
   width: 100%;
   @media (min-width: $lg) {
-    margin-top: 0;
+    margin-block-start: 0;
   }
 }
 
 .cp-row-body > figure img {
   display: block;
-  margin-bottom: 0;
+  margin-block-end: 0;
   @media (min-width: $lg) {
-    margin-left: auto;
+    margin-inline-start: auto;
   }
 }
 

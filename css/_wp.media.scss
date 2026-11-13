@@ -9,8 +9,7 @@
 /* stylelint-enable */
 
 .prose > iframe.instagram-media {
-  margin-left: auto !important;
-  margin-right: auto !important;
+  margin-inline: auto !important;
   width: calc(100vw - (var(--gutter) * 2)) !important;
 }
 
@@ -59,9 +58,8 @@
   }
   .aligncenter {
     display: block;
+    margin-inline: auto;
     margin-bottom: $my-xl;
-    margin-left: auto;
-    margin-right: auto;
     margin-top: $my-xl;
     padding: 0 var(--gutter);
     &:first-child {
@@ -87,8 +85,7 @@
   @include style-h6;
   margin-top: calc($my / 2);
   max-width: none;
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline: 0;
 }
 
 .wp-video {
@@ -185,8 +182,7 @@ figure.wp-block-image {
 
 .wp-block-image.aligncenter img {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
 }
 
 .wp-block-image.size-full {

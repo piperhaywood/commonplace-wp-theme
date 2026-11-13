@@ -2,8 +2,8 @@
 @use "mixins" as *;
 
 .comments {
-  margin-bottom: 2rem;
-  margin-top: $my-xl;
+  margin-block-end: 2rem;
+  margin-block-start: $my-xl;
   summary,
   .comment-notes {
     @include style-h3;
@@ -13,14 +13,14 @@
   }
   details[open] {
     color: $black;
-    margin-bottom: 3rem;
+    margin-block-end: 3rem;
   }
   label {
     display: block;
-    margin-bottom: 0.25rem;
+    margin-block-end: 0.25rem;
   }
   input[type="checkbox"] {
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
   input[type="checkbox"] ~ label {
     display: inline;
@@ -39,15 +39,14 @@
     @include input-submit;
   }
   form p {
-    margin-bottom: 1rem;
-    margin-top: 0;
+    margin-block-end: 1rem;
+    margin-block-start: 0;
   }
 }
 
 .comment-form {
-  margin-top: $my;
-  padding-left: 0;
-  padding-right: 0;
+  margin-block-start: $my;
+  padding-inline: 0;
 }
 
 .comment-reply-title {
@@ -65,7 +64,7 @@
 .comment-form-cookies-consent {
   display: flex;
   input[type="checkbox"] {
-    margin-top: 0.05rem;
+    margin-block-start: 0.05rem;
   }
 }
 
@@ -74,7 +73,7 @@
 }
 
 .comments--has-comments {
-  margin-top: 3rem;
+  margin-block-start: 3rem;
   details {
     color: $black;
   }
@@ -82,19 +81,18 @@
 
 .comment-list {
   list-style-type: none;
-  margin-top: 0;
-  padding-left: 0;
-  padding-right: 0;
+  margin-block-start: 0;
+  padding-inline: 0;
   ol.children {
     list-style-type: none;
-    margin-bottom: 0;
-    margin-top: 0;
-    padding-left: 0;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    padding-inline-start: 0;
   }
 }
 
 .comment-list > li {
-  margin-bottom: $my-lg;
+  margin-block-end: $my-lg;
 }
 
 .comment-author {
@@ -109,14 +107,14 @@
 }
 
 .comments--open .comment-author {
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
 }
 
 .comment-avatar {
   display: none;
   img {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-block-end: 0.5rem;
     max-width: 3rem;
   }
 }
@@ -125,7 +123,7 @@
 .pingback,
 .webmention {
   border: 1px solid $black;
-  margin-top: 1rem;
+  margin-block-start: 1rem;
   padding: $container-padding;
 }
 
@@ -138,12 +136,11 @@
   > h6,
   > p,
   > table {
-    margin-bottom: 1.5rem;
-    margin-top: 1.5rem;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    margin-block-end: 1.5rem;
+    margin-block-start: 1.5rem;
+    padding-inline: 0 !important;
     &:first-child {
-      margin-top: 1rem;
+      margin-block-start: 1rem;
     }
   }
 
@@ -156,21 +153,20 @@
 
   img {
     display: block;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
+    margin-block-end: 0.5rem;
+    margin-block-start: 0.5rem;
   }
 
   > blockquote,
   > ul {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    margin-inline: 0 !important;
   }
 
   > ul {
-    padding-left: 1rem;
+    padding-inline-start: 1rem;
   }
   *:last-child {
-    margin-bottom: 0 !important;
+    margin-block-end: 0 !important;
   }
 }
 
@@ -189,18 +185,17 @@
 
 .comment-respond p,
 .link_description > * {
-  margin-bottom: 1.5em;
-  margin-top: 1.5em;
+  margin-block-end: 1.5em;
+  margin-block-start: 1.5em;
 }
 
 .prose.comment-content {
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
   > p:first-child {
-    margin-top: 0;
+    margin-block-start: 0;
   }
 }
 
 #webmention-form {
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline: 0;
 }
