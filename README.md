@@ -110,7 +110,7 @@ The CSS classes are a little wild currently, an amalgamation of a few different 
 
 ## Continuous integration
 
-GitHub Actions runs **Theme CI** on pull requests, pushes to `main`, and manual runs.
+The **Theme CI** workflow runs on pull requests and pushes to `main`, and can also be triggered manually.
 It uses the Node version in `.nvmrc` to install locked dependencies with `npm ci`,
 lint Sass, build production assets, and check that the committed
 `commonplace-theme/dist/` files and generated `commonplace-theme/style.css` match
