@@ -129,8 +129,12 @@ of this workflow.
 ### PHP coding standards
 
 PHP_CodeSniffer checks the theme's own PHP against `WordPress-Extra`, which
-includes WordPress core conventions and additional best-practice checks. It does
-not require a running WordPress installation. Install Composer and PHP 8.2 with
+includes WordPress core conventions and additional best-practice checks. The
+project overrides the indentation rules to use **two spaces instead of tabs**,
+including in multiline arrays and switch statements. Use the Composer commands
+below: they pass `--tab-width=2` to override the imported WordPress default. Other
+WordPress checks, including security and escaping checks, remain enabled. The
+check does not require a running WordPress installation. Install Composer and PHP 8.2 with
 `mbstring` and XML extensions, then run from the repository root:
 
 ```sh

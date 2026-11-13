@@ -13,7 +13,7 @@
     "sort-packages": true
   },
   "scripts": {
-    "lint:php": "phpcs",
-    "format:php": "phpcbf"
+    "lint:php": "phpcs --tab-width=2",
+    "format:php": "phpcbf --tab-width=2"
   }
 }
