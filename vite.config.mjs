@@ -46,6 +46,25 @@ export default defineConfig(({ mode, command }) => {
       },
     },
     plugins: [{
+      name: 'commonplace-theme-header',
+      apply: 'build',
+      writeBundle() {
+        const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+        const header = [
+          '/**',
+          ` * Theme Name: ${pkg.title}`,
+          ` * Author: ${pkg.author.name}`,
+          ` * Author URI: ${pkg.author.url}`,
+          ` * Description: ${pkg.description}`,
+          ` * Version: ${pkg.version}`,
+          ` * License: ${pkg.license}`,
+          ` * Textdomain: ${pkg.name}`,
+          ' */',
+          '',
+        ].join('\n');
+        writeFileSync('commonplace-theme/style.css', header);
+      },
+    }, {
       name: 'commonplace-development',
       async configureServer(server) {
         // WordPress reads editor styles from disk and embeds them in its iframe.

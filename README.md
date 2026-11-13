@@ -57,7 +57,16 @@ npm ci
 npm run build
 ```
 
-The build writes frontend CSS, editor CSS, and JavaScript to `commonplace-theme/dist/`. Rebuild before packaging the `commonplace-theme/` directory for installation.
+The build writes frontend CSS, editor CSS, and JavaScript to `commonplace-theme/dist/`. Rebuild before packaging the `commonplace-theme/` directory for installation. The build also generates the theme metadata header in `commonplace-theme/style.css` from `package.json`; edit the package metadata rather than that generated file.
+
+To increment the patch version for a release and regenerate the theme header:
+
+```sh
+npm version patch --no-git-tag-version
+npm run build
+```
+
+The version command updates `package.json` and `package-lock.json` together without creating a Git commit or tag. Commit those changes with the rebuilt theme files.
 
 ### My development setup
 
