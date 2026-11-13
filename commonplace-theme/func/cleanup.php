@@ -64,20 +64,6 @@ function cp_alter_wp_ver_css_js($src) {
   return $src;
 }
 
-// Add loading attribute to images
-add_filter( 'the_content', 'cp_lazyload_content_images' );
-function cp_lazyload_content_images( $content ) {
-  if ( ! preg_match_all( '/<img [^>]+>/', $content, $matches ) ) {
-    return $content;
-  }
-  foreach ( $matches[0] as $image ) {
-    if ( false === strpos( $image, ' loading=' ) ) {
-      $content = str_replace( $image, preg_replace( '/>/', 'loading="lazy">', $image ), $content);
-    }
-  }
-  return $content;
-}
-
 // Wrap the “Protected” text with HTML so that it can be styled
 add_filter( 'protected_title_format', 'cp_remove_protected_text' );
   function cp_remove_protected_text() {
