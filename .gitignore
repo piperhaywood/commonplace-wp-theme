@@ -5,3 +5,5 @@ node_modules
 deploy
 .env.local
 commonplace-theme/dist/editor-dev.css
+
+/vendor/

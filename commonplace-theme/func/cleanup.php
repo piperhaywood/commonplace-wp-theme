@@ -1,24 +1,24 @@
 <?php
 
-add_action('after_setup_theme', 'cp_start_cleanup');
+add_action( 'after_setup_theme', 'cp_start_cleanup' );
 function cp_start_cleanup() {
-  add_action('init', 'cp_cleanup_head');
-  add_filter('the_generator', 'cp_remove_rss_version');
-  add_filter('allowed_block_types_all', 'cp_allowed_block_types', 10, 2);
+  add_action( 'init', 'cp_cleanup_head' );
+  add_filter( 'the_generator', 'cp_remove_rss_version' );
+  add_filter( 'allowed_block_types_all', 'cp_allowed_block_types', 10, 2 );
   add_filter( 'use_default_gallery_style', '__return_false' );
 }
 
 function cp_cleanup_head() {
-  remove_action ('wp_head', 'rsd_link');
-  remove_action('wp_head', 'wlwmanifest_link');
-  remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
-  add_filter('style_loader_src', 'cp_alter_wp_ver_css_js', 9999);
-  add_filter('script_loader_src', 'cp_alter_wp_ver_css_js', 9999);
+  remove_action( 'wp_head', 'rsd_link' );
+  remove_action( 'wp_head', 'wlwmanifest_link' );
+  remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
+  add_filter( 'style_loader_src', 'cp_alter_wp_ver_css_js', 9999 );
+  add_filter( 'script_loader_src', 'cp_alter_wp_ver_css_js', 9999 );
 }
 
-function cp_allowed_block_types($allowed_blocks, $editor_context) {
+function cp_allowed_block_types( $allowed_blocks, $editor_context ) {
   // Preserve the post-editor scope of the former allowed_block_types hook.
-  if (empty($editor_context->post)) {
+  if ( empty( $editor_context->post ) ) {
     return $allowed_blocks;
   }
 
@@ -53,26 +53,29 @@ function cp_allowed_block_types($allowed_blocks, $editor_context) {
     'core-embed/soundcloud',
     'core-embed/vimeo',
     'core-embed/twitter',
-    'core-embed/spotify'
+    'core-embed/spotify',
   );
 }
 
-function cp_remove_rss_version() { return ''; }
+function cp_remove_rss_version() {
+  return '';
+}
 
 // Add the theme version to the css and js, not the WP version
-function cp_alter_wp_ver_css_js($src) {
-  if (strpos($src, 'ver=')) {
+function cp_alter_wp_ver_css_js( $src ) {
+  if ( strpos( $src, 'ver=' ) ) {
     $version = cp_get_theme_version();
-    $src = remove_query_arg('ver', $src);
-    $src = add_query_arg('ver', $version, $src);
+    $src     = remove_query_arg( 'ver', $src );
+    $src     = add_query_arg( 'ver', $version, $src );
   }
   return $src;
 }
 
 // Wrap the “Protected” text with HTML so that it can be styled
 add_filter( 'protected_title_format', 'cp_remove_protected_text' );
-  function cp_remove_protected_text() {
-  return __('<span class="protected-label">Protected: </span>%s');
+function cp_remove_protected_text() {
+  /* translators: %s: Password-protected post title. */
+  return __( '<span class="protected-label">Protected: </span>%s' );
 }
 
 // Disable the emoji's
@@ -84,7 +87,7 @@ function disable_emojis() {
   remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
   remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
   remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-  
+
   // Remove from TinyMCE
   add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
 }
