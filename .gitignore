@@ -7,3 +7,5 @@ deploy
 commonplace-theme/dist/editor-dev.css
 
 /vendor/
+
+/dist/
