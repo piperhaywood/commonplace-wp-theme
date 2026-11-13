@@ -27,7 +27,8 @@
 
 ## Branches and pull requests
 
-- Start new work on a `codex/` branch from the latest `main`, unless the user specifies another base or branch.
+- Start new work from the latest `main` using a semantic branch prefix: `feat/`, `fix/`, `refactor/`, `docs/`, `build/`, `ci/`, or `chore/`, followed by a short hyphenated description (for example, `fix/editor-spacing`), unless the user specifies another base or branch.
+- Give the PR a matching semantic title with a readable description (for example, `fix: correct editor spacing`). Set the title explicitly rather than relying on a title generated from the branch name or commits.
 - Before opening a PR, fetch `origin` and merge the latest `origin/main` into the working branch. Resolve conflicts, then rerun checks affected by the merge. Use a merge rather than rebasing unless the user requests otherwise.
 - Keep changes focused and preserve unrelated work. Review the final diff for generated assets, accidental local configuration, and unrelated formatting.
 - Describe the concrete change and relevant verification in the PR. Do not bump the theme version automatically for routine work; follow the README's versioning procedure when preparing a requested release.
