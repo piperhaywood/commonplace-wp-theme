@@ -29,11 +29,12 @@
 ?>
 
 <?php if ( $related_posts ) : ?>
-  <?php echo cp_get_list_arr($related_posts); ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme list template escapes its values; preserve thumbnail CSS properties.
+	echo cp_get_list_arr( $related_posts );
+	?>
 <?php endif ?>
 
 <?php
 /**
  * Note: wp_reset_postdata(); is used after this template by the widget and the shortcode.
  */
-?>

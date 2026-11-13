@@ -1,0 +1,19 @@
+{
+  "name": "piperhaywood/commonplace-theme",
+  "description": "Development checks for the Commonplace WordPress theme.",
+  "type": "project",
+  "license": "GPL-3.0-or-later",
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^3.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "lint:php": "phpcs",
+    "format:php": "phpcbf"
+  }
+}

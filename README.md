@@ -123,4 +123,29 @@ the cascade; its Stylelint override allows that valid Sass pattern.
 A separate job checks the syntax of every PHP file in `commonplace-theme/`,
 including the bundled related-posts library, using PHP 8.2. This is a syntax check;
 it does not boot WordPress or verify runtime compatibility. WordPress Coding
-Standards and browser tests are not yet part of this workflow.
+Standards run in a separate job as described below. Browser tests are not yet part
+of this workflow.
+
+### PHP coding standards
+
+PHP_CodeSniffer checks the theme's own PHP against `WordPress-Extra`, which
+includes WordPress core conventions and additional best-practice checks. It does
+not require a running WordPress installation. Install Composer and PHP 8.2 with
+`mbstring` and XML extensions, then run from the repository root:
+
+```sh
+composer install
+composer lint:php
+```
+
+To apply automatic formatting fixes, run `composer format:php`, review the diff,
+and rerun `composer lint:php`. Some findings, including output escaping, require
+manual changes. Commit `composer.lock` so local checks and CI use the same tools;
+`vendor/` is development-only and is not included in the installable theme.
+
+The ruleset lives in `.phpcs.xml.dist`. It excludes the bundled third-party
+`commonplace-theme/func/related-posts-by-taxonomy/` library, but includes the
+custom related-post template in `commonplace-theme/related-post-plugin/`.
+Documented inline exceptions cover intentional global-post setup, WordPress or
+theme-rendered HTML, Vite's development scripts, and retained Gutenberg examples.
+The separate PHP syntax job still checks the bundled library as well.
