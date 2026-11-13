@@ -199,8 +199,8 @@
 }
 
 @mixin code {
-  font-family: var(--font-mono);
   background-color: #eeeeee;
+  font-family: var(--font-mono);
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;

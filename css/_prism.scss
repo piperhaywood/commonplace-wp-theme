@@ -172,14 +172,14 @@ span.inline-color-wrapper {
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxwYXRoIGZpbGw9ImdyYXkiIGQ9Ik0wIDBoMnYySDB6Ii8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0wIDBoMXYxSDB6TTEgMWgxdjFIMXoiLz48L3N2Zz4=);
   background-position: center;
   background-size: 110%;
+  border: 1px solid #fff;
+  box-sizing: border-box;
   display: inline-block;
   height: 1.333ch;
-  width: 1.333ch;
   margin: 0 0.333ch;
-  box-sizing: border-box;
-  border: 1px solid #fff;
   outline: 1px solid rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  width: 1.333ch;
 }
 span.inline-color {
   display: block;
@@ -215,37 +215,37 @@ span.inline-color {
   content: attr(data-prompt);
 }
 .token.treeview-part .entry-line {
+  display: inline-block;
   position: relative;
   text-indent: -99em;
-  display: inline-block;
   vertical-align: top;
   width: 1.2em;
 }
 .token.treeview-part .entry-line:before,
 .token.treeview-part .line-h:after {
   content: "";
+  height: 100%;
+  left: 50%;
   position: absolute;
   top: 0;
-  left: 50%;
   width: 50%;
-  height: 100%;
 }
 .token.treeview-part .line-h:before,
 .token.treeview-part .line-v:before {
   border-left: 1px solid #ccc;
 }
 .token.treeview-part .line-v-last:before {
-  height: 50%;
-  border-left: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  height: 50%;
 }
 .token.treeview-part .line-h:after {
-  height: 50%;
   border-bottom: 1px solid #ccc;
+  height: 50%;
 }
 .token.treeview-part .entry-name {
-  position: relative;
   display: inline-block;
+  position: relative;
   vertical-align: top;
 }
 .token.treeview-part .entry-name.dotfile {
@@ -258,13 +258,15 @@ span.inline-color {
 }
 .token.treeview-part .entry-name:before {
   content: "\ea01";
+  display: inline-block;
+  /* The icon font maps private-use characters; a generic fallback is not useful. */
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: PrismTreeview;
   font-size: inherit;
-  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
   width: 2.5ex;
-  display: inline-block;
 }
 .token.treeview-part .entry-name.dir:before {
   content: "\ea02";
