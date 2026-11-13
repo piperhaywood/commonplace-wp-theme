@@ -10,7 +10,8 @@ function cp_theme_support() {
   add_theme_support('title-tag');
   add_theme_support( 'disable-custom-colors' );
   add_theme_support('editor-styles');
-  add_editor_style('assets/editor.css');
+  add_editor_style('fonts/fonts.css');
+  add_editor_style(cp_vite_origin() ? 'dist/editor-dev.css' : 'dist/editor.css');
   add_theme_support( 'editor-font-sizes', array(
     array(
       'name' => __( 'Small', 'commonplace' ),
