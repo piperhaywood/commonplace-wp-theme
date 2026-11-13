@@ -1,6 +1,6 @@
 # Commonplace WordPress theme
 
-This is a simple, translation-ready WordPress theme that came about after conversations with designer [Bec Worth](http://www.youwouldlovethis.com/) about the usefulness of a Commonplace Book and what it could feel like on the web. Technically, it borrows heavily from my Notebook theme. Most text is set in the variable versions of [Source Serif Pro](https://github.com/adobe-fonts/source-serif-pro) and [Source Sans Pro](https://github.com/adobe-fonts/source-sans-pro) with appropriate fallbacks for Chinese and Japanese characters.
+This is a translation-ready WordPress theme that came about through conversations with designer [Bec Worth](http://www.youwouldlovethis.com/) about the usefulness of a Commonplace Book and what it could feel like on the web. Technically, it borrows heavily from my Notebook theme. Most text is set in the variable versions of [Source Serif Pro](https://github.com/adobe-fonts/source-serif-pro) and [Source Sans Pro](https://github.com/adobe-fonts/source-sans-pro) with appropriate fallbacks for Chinese and Japanese characters.
 
 > ⚠️ **Fair warning:** This is a work in progress! 🚧 It’s currently in use on [piperhaywood.com](https://piperhaywood.com), but there are definitely bugs, particularly when it comes to Gutenberg compatibility. Please feel free to [raise an issue](https://github.com/piperhaywood/commonplace-wp-theme/issues) if you notice anything weird or have suggestions. Unfortunately I do not have the capacity to provide individualized support, so **it is provided as-is** for you to work with as you wish.
 
@@ -44,14 +44,57 @@ This theme integrates the plugin [Related Posts By Taxonomy](https://en-gb.wordp
 
 This theme uses [Prism](https://prismjs.com/) for syntax highlighting.
 
-## Development
+## Build and development
 
-To use this theme in a development environment locally, install WordPress in a separate directory (as in, not within this repo). You can use this [multi-environment `wp-config.php` gist](https://gist.github.com/piperhaywood/2a7217964335e22574784153eab1d38b), or Local by Flywheel can help. Once you have WordPress set up, symlink the theme folder `/commonplace-theme` within this repo in to your new local WordPress site’s `/wp-content/themes` directory.
+The installable theme lives in `commonplace-theme/`. Compiled assets are included in this repository, so Node is only needed if you want to change and rebuild the theme’s styles or JavaScript.
 
-Note that you use the same symlink approach to hook the theme up to multiple WordPress installations. This can be useful for testing your styles against different content. For example, I maintain one site with an environment and content that reflects [piperhaywood.com](https://piperhaywood.com), and another that uses WordPress’s theme testing database.
+Use the Node version specified in `.nvmrc`. With nvm installed, run these commands from the repository root:
 
-At this point, run `npm i` from the root of this repo to install dependencies. Run `gulp` to build the theme or `gulp dev` for development. The command `gulp dev` will compile the files and then use BrowserSync for live reloading. To set a BrowserSync proxy other than the default, run `gulp dev --proxy custom-proxy` (replace `custom-proxy`).
+```sh
+nvm install
+nvm use
+npm ci
+npm run build
+```
 
-## Notes
+The build writes frontend CSS, editor CSS, and JavaScript to `commonplace-theme/dist/`. Rebuild before packaging the `commonplace-theme/` directory for installation.
 
-The build borrows significantly from my Notebook theme. I’ve opted to be pretty opinionated with the base styles, and then individual components like the menu in the header or the archive list are given classes and styled separately. The classes are a little wild currently, an amalgamation of a few different styles. I’m hoping to streamline them soon. WordPress-specific styles are confined to the `wp` namespaced CSS files. These styles cover the craziness that Gutenberg and the classic editor can spit out. I’m 100% sure I haven’t caught every eventuality that can arise, so that’s an ongoing task.
+### My development setup
+
+I use Local by Flywheel for development specific to piperhaywood.com. Note to self: see the README in the private `wordpress-personal-site` repository which includes a script that supplies the development URLs and HTTPS settings automatically.
+
+### Developing locally
+
+If you’re not me and you’re working with this theme, you’ll need a separate local WordPress installation outside of this repository using whatever WordPress development environment setup you prefer. Link this repository’s `commonplace-theme/` directory into your installation’s `wp-content/themes/` directory and activate the theme.
+
+To enable live updates while working with this repository:
+
+1. Copy `.env.example` to `.env.local` and set your WordPress origin and Vite server URL.
+2. Add the following to your local `wp-config.php`, before WordPress loads:
+
+   ```php
+   define('WP_ENVIRONMENT_TYPE', 'local');
+   define('CP_VITE_DEV_SERVER', 'http://localhost:5173');
+   ```
+
+3. Make sure `CP_VITE_DEV_SERVER` matches `VITE_DEV_SERVER` in `.env.local`. If WordPress uses HTTPS, Vite should also use HTTPS; supply trusted certificate and key paths using the settings in `.env.example`.
+4. Run `npm run dev` and browse your local WordPress URL.
+
+Keep WordPress and Vite running while developing. WordPress serves the pages; Vite serves the development styles and JavaScript. Frontend CSS updates automatically, and PHP changes reload the page. Save your work and refresh the WordPress editor to see editor stylesheet changes.
+
+To check the production build locally, stop Vite, remove or comment out `CP_VITE_DEV_SERVER`, and run `npm run build`. Check the frontend and editor before packaging. Restore the setting when returning to development.
+
+### Source files
+
+- Frontend styles: `css/main.scss`
+- Editor styles: `css/editor.scss`
+- JavaScript entry point: `js/main.js`
+- Shared font declarations: `commonplace-theme/fonts/fonts.css`
+
+Edit the source files rather than generated files in `dist/`. Fonts are served directly by WordPress and are not copied by the build.
+
+`npm run lint:css` checks the Sass files. Existing Sass `@import` deprecation warnings are expected.
+
+### Notes
+
+The CSS classes are a little wild currently, an amalgamation of a few different styles. I’m hoping to streamline them soon. WordPress-specific styles are confined to the `wp` namespaced CSS files. These styles cover the craziness that Gutenberg and the classic editor can spit out. I’m 100% sure I haven’t caught every eventuality, so that’s an ongoing task.

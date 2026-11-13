@@ -3,3 +3,5 @@ node_modules
 .sass-cache
 *.map
 deploy
+.env.local
+commonplace-theme/dist/editor-dev.css
