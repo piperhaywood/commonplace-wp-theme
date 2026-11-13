@@ -301,7 +301,7 @@ function cp_archive_str() {
   }
   $paged = get_query_var( 'paged' );
   $page  = $paged > 0 ? _x( 'page ', 'paged', 'commonplace' ) . $paged : false;
-  $page  = $page && ! is_front_page() ? ', ' . $page : $page;
+  $page  = $page && ! is_front_page() && ! is_home() ? ', ' . $page : $page;
   $text  = '';
   if ( is_tax( 'post_format' ) ) {
     $var  = get_post_format();
