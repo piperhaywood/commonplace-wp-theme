@@ -17,6 +17,7 @@
   "devDependencies": {
     "autoprefixer": "^10.6.2",
     "postcss": "^8.5.32",
+    "prismjs": "^1.30.0",
     "sass": "^1.108.2",
     "stylelint": "^18.0.0",
     "stylelint-config-recommended-scss": "^18.0.0",
@@ -26,7 +27,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint:css": "stylelint \"css/**/*.scss\""
+    "lint:css": "stylelint \"css/**/*.scss\"",
+    "build:prism": "node scripts/build-prism.cjs"
   },
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
