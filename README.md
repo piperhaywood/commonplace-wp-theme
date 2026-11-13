@@ -107,3 +107,20 @@ Edit the source files rather than generated files in `dist/`. Fonts are served d
 ### Notes
 
 The CSS classes are a little wild currently, an amalgamation of a few different styles. I’m hoping to streamline them soon. WordPress-specific styles are confined to the `wp` namespaced CSS files. These styles cover the craziness that Gutenberg and the classic editor can spit out. I’m 100% sure I haven’t caught every eventuality, so that’s an ongoing task.
+
+## Continuous integration
+
+The **Theme CI** workflow runs on pull requests and pushes to `main`, and can also be triggered manually.
+It uses the Node version in `.nvmrc` to install locked dependencies with `npm ci`,
+lint Sass, build production assets, and check that the committed
+`commonplace-theme/dist/` files and generated `commonplace-theme/style.css` match
+a fresh build. Run `npm run build` and commit the generated files whenever the
+source assets or theme metadata change.
+
+The editor stylesheet intentionally imports Sass partials after local rules to preserve
+the cascade; its Stylelint override allows that valid Sass pattern.
+
+A separate job checks the syntax of every PHP file in `commonplace-theme/`,
+including the bundled related-posts library, using PHP 8.2. This is a syntax check;
+it does not boot WordPress or verify runtime compatibility. WordPress Coding
+Standards and browser tests are not yet part of this workflow.

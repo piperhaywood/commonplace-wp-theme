@@ -1,0 +1,65 @@
+name: Theme CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: theme-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  assets:
+    name: CSS and production assets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint Sass
+        run: npm run lint:css
+      - name: Build production assets
+        run: npm run build
+      - name: Check committed assets are up to date
+        shell: bash
+        run: |
+          git diff --exit-code -- commonplace-theme/dist/ commonplace-theme/style.css
+          if [[ -n "$(git ls-files --others --exclude-standard -- commonplace-theme/dist/ commonplace-theme/style.css)" ]]; then
+            echo '::error::The build produced untracked assets. Run npm run build and commit the generated theme assets.'
+            git ls-files --others --exclude-standard -- commonplace-theme/dist/ commonplace-theme/style.css
+            exit 1
+          fi
+
+  php:
+    name: PHP syntax
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: none
+      - name: Check all theme PHP files
+        shell: bash
+        run: |
+          failed=0
+          while IFS= read -r -d '' file; do
+            php -l "$file" || failed=1
+          done < <(find commonplace-theme -type f -name '*.php' -print0)
+          exit "$failed"
