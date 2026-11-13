@@ -20,6 +20,7 @@
 .visuallyhidden.button:focus,
 .visuallyhidden.button:active {
   background-color: $black !important;
+  clip-path: none;
   color: $white;
   display: inline-block;
   height: auto;
