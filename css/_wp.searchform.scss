@@ -7,11 +7,11 @@
 
 .prose .searchform {
   @include container;
-  margin-bottom: $my;
+  margin-block-end: $my;
 }
 
 .searchform + .termindex {
-  margin-top: $my-lg;
+  margin-block-start: $my-lg;
 }
 
 .searchform label {
@@ -23,10 +23,10 @@
   border: 1px solid $black;
   border-radius: 0;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
   max-width: calc(100vw - (var(--gutter) * 2));
-  padding: $container-padding 7rem $container-padding $container-padding;
+  padding-block: $container-padding;
+  padding-inline: $container-padding 7rem;
   width: 100%;
   /* stylelint-disable */
   -webkit-appearance: none;
@@ -38,9 +38,9 @@
 
 .searchform input[type="submit"] {
   background-color: transparent;
+  inset-block-start: 0;
+  inset-inline-end: 0;
   position: absolute;
-  right: 0;
-  top: 0;
 }
 
 .searchform input[type="submit"]:hover,
@@ -52,9 +52,9 @@
 .searchform__group {
   border: 1px solid black;
   display: flex;
-  margin-bottom: 0.5rem;
+  margin-block-end: 0.5rem;
 }
 
 .wp-block-search .wp-block-search__button {
-  margin-left: 0;
+  margin-inline-start: 0;
 }

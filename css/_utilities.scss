@@ -59,16 +59,15 @@ img.pixels {
   column-gap: calc(var(--gutter) / 2);
   display: grid;
   grid-template-columns: repeat(auto-fill, 80px);
-  margin-bottom: $my;
+  margin-block-end: $my;
   row-gap: calc(var(--gutter) / 2);
 }
 
 .thumbs img {
   float: none !important;
-  margin-bottom: 0 !important;
-  margin-right: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  margin-block-end: 0 !important;
+  margin-inline-end: 0 !important;
+  padding-inline: 0 !important;
 }
 
 .thumbs--with-borders img {

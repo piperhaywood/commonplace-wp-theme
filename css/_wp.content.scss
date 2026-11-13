@@ -6,7 +6,7 @@
 }
 
 .prose {
-  margin-bottom: $my-xl;
+  margin-block-end: $my-xl;
 }
 
 .prose p,
@@ -38,11 +38,11 @@
 }
 
 .prose ul > li > ul {
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 .prose > p:last-child {
-  margin-bottom: calc(#{$my} + 0.5rem);
+  margin-block-end: calc(#{$my} + 0.5rem);
 }
 
 .prose form p {
@@ -51,16 +51,16 @@
 
 .wp-block-latest-posts.wp-block-latest-posts__list {
   list-style: disc;
-  padding-left: 2.25rem;
+  padding-inline-start: 2.25rem;
   @media (min-width: $md) {
-    padding-left: var(--gutter);
+    padding-inline-start: var(--gutter);
   }
 }
 
 .prose .wp-block-button {
   @include container;
-  margin-bottom: $my;
-  margin-top: $my;
+  margin-block-end: $my;
+  margin-block-start: $my;
 }
 
 .wp-block-button__link {
@@ -132,22 +132,22 @@ hr.is-style-wide {
   display: inline-block;
   &:before {
     content: "— ";
-    margin-left: 0.5em;
+    margin-inline-start: 0.5em;
   }
 }
 
 .has-small-font-size {
   @include style-small;
   @media (min-width: $sm) {
-    padding-left: 5rem;
+    padding-inline-start: 5rem;
   }
 }
 
 .prose > a.more-link {
   display: inline-block;
-  margin-bottom: $my;
-  margin-left: calc((100vw - 39rem) / 2);
-  margin-top: $my;
+  margin-block-end: $my;
+  margin-block-start: $my;
+  margin-inline-start: calc((100vw - 39rem) / 2);
   max-width: 39rem;
   padding: 0 var(--gutter);
 }
@@ -168,11 +168,11 @@ hr.is-style-wide {
 }
 
 p.has-background {
-  margin-bottom: $my-xl;
-  margin-top: $my-xl;
+  margin-block-end: $my-xl;
+  margin-block-start: $my-xl;
   padding: var(--gutter);
   &:first-child {
-    margin-top: $my;
+    margin-block-start: $my;
   }
   @media (min-width: $md) {
     max-width: calc(#{$container-width} + (var(--gutter) * 2));
@@ -187,11 +187,11 @@ p.has-background {
 .post-password-form {
   label {
     display: block;
-    margin-bottom: 1rem;
+    margin-block-end: 1rem;
   }
   input[type="password"] {
     @include input-text;
-    margin-top: 0.25rem; // WordPress puts the input within the label...
+    margin-block-start: 0.25rem; // WordPress puts the input within the label...
     padding: $container-padding 0 $container-padding $container-padding;
   }
   input[type="submit"] {

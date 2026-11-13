@@ -5,7 +5,7 @@
   --grid-col: auto;
   --gutter: #{$container-padding};
   --justify: start;
-  --text-align: left;
+  --text-align: start;
   --vertical-space: 8rem;
 }
 
@@ -47,9 +47,9 @@ footer {
 }
 
 article {
-  margin-bottom: var(--vertical-space);
+  margin-block-end: var(--vertical-space);
   overflow-wrap: break-word;
-  padding-bottom: var(--vertical-space);
+  padding-block-end: var(--vertical-space);
 }
 
 button,
@@ -110,9 +110,9 @@ ul {
   @include style-body;
   @include container;
   margin: $my-lg auto $my-lg auto;
-  padding-left: 2.25rem;
+  padding-inline-start: 2.25rem;
   @media (min-width: $md) {
-    padding-left: var(--gutter);
+    padding-inline-start: var(--gutter);
   }
 }
 
@@ -120,31 +120,31 @@ ol {
   @include style-body;
   @include container;
   margin: $my-lg auto $my-lg auto;
-  padding-left: 2.5rem;
+  padding-inline-start: 2.5rem;
   @media (min-width: $md) {
-    padding-left: var(--gutter);
+    padding-inline-start: var(--gutter);
   }
 }
 
 ol,
 ul {
   li {
-    margin-bottom: 0.75rem;
+    margin-block-end: 0.75rem;
   }
   ol {
-    margin-bottom: 0.75rem;
-    margin-top: 0.75rem;
-    padding-left: 1.25rem;
+    margin-block-end: 0.75rem;
+    margin-block-start: 0.75rem;
+    padding-inline-start: 1.25rem;
   }
   ul {
-    margin-bottom: 0.75rem;
-    margin-top: 0.75rem;
-    padding-left: 1.25rem;
+    margin-block-end: 0.75rem;
+    margin-block-start: 0.75rem;
+    padding-inline-start: 1.25rem;
   }
 }
 
 ol li:last-child {
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 li > p {
@@ -164,7 +164,7 @@ a {
 img {
   display: inline-block;
   height: auto;
-  margin-bottom: $my;
+  margin-block-end: $my;
   max-width: 100%;
   vertical-align: middle;
 }
@@ -188,7 +188,7 @@ svg {
 
 summary {
   cursor: pointer;
-  margin-bottom: $my;
+  margin-block-end: $my;
 }
 
 body:not(.is-tabbing) button:focus,
@@ -209,8 +209,8 @@ hr {
   border: none;
   color: $black;
   height: 1px;
-  margin-bottom: $my-lg;
-  margin-top: $my-lg;
+  margin-block-end: $my-lg;
+  margin-block-start: $my-lg;
 }
 
 form {
@@ -278,8 +278,8 @@ pre {
   margin: $my-lg auto;
   overflow: scroll;
   overflow-wrap: normal;
-  padding-bottom: 1.125rem;
-  padding-top: 1rem;
+  padding-block-end: 1.125rem;
+  padding-block-start: 1rem;
 }
 
 pre code {
@@ -291,7 +291,7 @@ abbr {
 }
 
 details[open] {
-  margin-bottom: $my-lg;
+  margin-block-end: $my-lg;
 }
 
 details p {
@@ -299,17 +299,15 @@ details p {
 }
 
 blockquote {
-  border-left: 1px solid $black;
+  border-inline-start: 1px solid $black;
   color: $grey;
-  margin-bottom: $my;
-  margin-left: var(--gutter);
-  margin-right: var(--gutter);
-  margin-top: $my;
+  margin-block-end: $my;
+  margin-block-start: $my;
+  margin-inline: var(--gutter);
   max-width: calc(#{$container-width} - calc(var(--gutter) * 2));
-  padding-bottom: 0.25rem;
+  padding-block-end: 0.25rem;
   @media (min-width: $container-width-em) {
-    margin-left: auto;
-    margin-right: auto;
+    margin-inline: auto;
   }
 }
 
@@ -318,53 +316,53 @@ blockquote > footer {
   @include style-h6;
   color: $black;
   display: block;
-  padding-left: 1.125rem;
+  padding-inline-start: 1.125rem;
 }
 
 blockquote > * {
-  padding-right: 0;
+  padding-inline-end: 0;
 }
 
 blockquote > *:last-child {
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 blockquote > blockquote {
-  margin-left: $my;
+  margin-inline-start: $my;
 }
 
 blockquote ol {
-  margin-bottom: $my;
-  margin-top: $my;
-  padding-left: 2rem;
+  margin-block-end: $my;
+  margin-block-start: $my;
+  padding-inline-start: 2rem;
   @media (min-width: $sm) {
-    padding-left: 2.25rem;
+    padding-inline-start: 2.25rem;
   }
 }
 
 blockquote ul {
-  padding-left: 2.25rem;
+  padding-inline-start: 2.25rem;
 }
 
 figure {
   @include container;
-  margin-bottom: $my-lg;
-  margin-top: $my-lg;
+  margin-block-end: $my-lg;
+  margin-block-start: $my-lg;
   &:first-child {
-    margin-top: $my;
+    margin-block-start: $my;
   }
 }
 
 figcaption {
   @include container;
   @include style-small;
-  margin-bottom: 0;
-  margin-top: calc($my / 2);
+  margin-block-end: 0;
+  margin-block-start: calc($my / 2);
 }
 
 th {
   font-weight: inherit;
-  text-align: left;
+  text-align: start;
 }
 
 video {

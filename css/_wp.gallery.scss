@@ -5,24 +5,23 @@
   column-gap: var(--gutter);
   display: grid;
   justify-content: center;
-  margin-bottom: $my-lg;
-  margin-top: $my-lg;
+  margin-block-end: $my-lg;
+  margin-block-start: $my-lg;
   max-width: 100%;
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
+  padding-inline: var(--gutter);
   row-gap: var(--gutter);
   &:first-child {
-    margin-top: $my-lg;
+    margin-block-start: $my-lg;
   }
   @media (min-width: $md) {
-    margin-bottom: $my-xl;
-    margin-top: $my-xl;
+    margin-block-end: $my-xl;
+    margin-block-start: $my-xl;
   }
 }
 
 .gallery img {
   border: none !important;
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 .gallery br {
@@ -34,13 +33,12 @@
 }
 
 .gallery dd {
-  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 .gallery-item {
-  margin-bottom: 0;
-  padding-left: 0;
-  padding-right: 0;
+  margin-block-end: 0;
+  padding-inline: 0;
 }
 
 .gallery-columns-2 {
@@ -117,8 +115,8 @@
 }
 
 .gallery .wp-caption-text {
-  margin-bottom: $my;
-  text-align: left;
+  margin-block-end: $my;
+  text-align: start;
 }
 
 // Styles to override default WP gallery blocks styles
@@ -134,7 +132,7 @@
 }
 
 .wp-block-gallery img {
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 .wp-block-gallery .blocks-gallery-grid {
@@ -166,8 +164,8 @@
 
 // .gallery {
 //   @include container($container-width-xl);
-//   margin-bottom: $my-lg !important;
-//   margin-top: $my-lg !important;
+//   margin-block-end: $my-lg !important;
+//   margin-block-start: $my-lg !important;
 // }
 
 // .gallery-columns-2 {
@@ -176,7 +174,7 @@
 
 // .gallery img {
 //   border: none !important;
-//   margin-bottom: 0;
+//   margin-block-end: 0;
 // }
 
 // .gallery-item {
