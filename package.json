@@ -27,6 +27,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "package": "npm run build && sh scripts/package-theme.sh",
     "lint:css": "stylelint \"css/**/*.scss\"",
     "build:prism": "node scripts/build-prism.cjs"
   },

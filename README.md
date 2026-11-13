@@ -75,6 +75,27 @@ npm run build
 
 The build writes frontend CSS, editor CSS, and JavaScript to `commonplace-theme/dist/`. Rebuild before packaging the `commonplace-theme/` directory for installation. The build also generates the theme metadata header in `commonplace-theme/style.css` from `package.json`; edit the package metadata rather than that generated file.
 
+### Package for installation
+
+From the theme repository root, run:
+
+```sh
+nvm use
+npm ci
+npm run package
+```
+
+`npm run package` builds production assets and writes `dist/commonplace-theme.zip`,
+with `commonplace-theme/` at the archive root. It excludes source maps, macOS
+metadata, and the editor development stylesheet. The ZIP packages the current
+working tree, including uncommitted theme edits; review Git status and test the
+production build before uploading it.
+
+The root `dist/` directory is ignored by Git; compiled assets in
+`commonplace-theme/dist/` remain tracked. Attach the ZIP to a GitHub Release tied
+to a version tag when publishing a release. Packaging does not bump the version
+or deploy the theme.
+
 To increment the patch version for a release and regenerate the theme header:
 
 ```sh
