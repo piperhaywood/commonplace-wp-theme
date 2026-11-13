@@ -54,7 +54,7 @@ if ( ! function_exists( 'related_posts_by_taxonomy_init' ) ) {
 	 */
 	function related_posts_by_taxonomy_init() {
 
-		load_plugin_textdomain( 'related-posts-by-taxonomy', '', dirname( plugin_basename( __FILE__ ) ) . '/lang' );
+		load_plugin_textdomain( 'related-posts-by-taxonomy', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 
 		// Deprecated functions and files.
 		require_once RELATED_POSTS_BY_TAXONOMY_PLUGIN_DIR . 'includes/back-compat/deprecated.php';
