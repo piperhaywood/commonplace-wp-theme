@@ -5,7 +5,7 @@
   <nav class="pagination pagination--archive">
     <?php
     echo wp_kses_post(
-      paginate_links(
+      (string) paginate_links(
         array(
           'prev_next' => false,
           'end_size'  => 2,
