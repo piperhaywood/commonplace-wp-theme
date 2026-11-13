@@ -106,6 +106,11 @@ Edit the source files rather than generated files in `dist/`. Fonts are served d
 
 Build and lint tooling require Node 22.22.2+, 24.15.0+, or 26+ (see `package.json` for the supported ranges). The version in `.nvmrc` satisfies these requirements. Run `npm run lint:css` and `npm run build` after dependency updates, and check both the frontend and WordPress editor before releasing.
 
+Prism is a development dependency bundled into `js/prism.js`. After updating
+`prismjs`, run `npm run build:prism` and then `npm run build`. The generator in
+`scripts/build-prism.cjs` preserves the selected languages and plugins; the
+custom theme styles remain in `css/_prism.scss`.
+
 ### Notes
 
 The CSS classes are a little wild currently, an amalgamation of a few different styles. I’m hoping to streamline them soon. WordPress-specific styles are confined to the `wp` namespaced CSS files. These styles cover the craziness that Gutenberg and the classic editor can spit out. I’m 100% sure I haven’t caught every eventuality, so that’s an ongoing task.
