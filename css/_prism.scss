@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 /* http://prismjs.com/download.html?themes=prism-okaidia&languages=markup+css+clike+javascript+php+scss */
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -25,12 +27,12 @@ pre[class*="language-"] {
   direction: ltr;
   hyphens: none;
   line-height: 1.5;
+  overflow-wrap: normal;
   tab-size: 4;
   text-align: left;
   white-space: pre;
   word-break: normal;
   word-spacing: normal;
-  word-wrap: normal;
 }
 
 /* Code blocks */

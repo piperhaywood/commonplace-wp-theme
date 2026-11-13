@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 :root {
   --grid-col: auto;
   --gutter: #{$container-padding};
@@ -246,7 +249,7 @@ mark {
 }
 
 abbr,
-acronym {
+acronym { // stylelint-disable-line selector-no-deprecated -- Support legacy post markup.
   text-decoration-line: none;
 }
 
@@ -254,7 +257,7 @@ address {
   font-style: normal;
 }
 
-tt,
+tt, // stylelint-disable-line selector-no-deprecated -- Support legacy post markup.
 code,
 kbd,
 pre {

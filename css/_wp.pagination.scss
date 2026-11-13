@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 .pagination {
   @include style-h3;
   @include container;

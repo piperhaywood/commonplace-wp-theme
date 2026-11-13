@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 .gallery {
   column-gap: var(--gutter);
   display: grid;

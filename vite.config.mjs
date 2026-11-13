@@ -33,7 +33,7 @@ export default defineConfig(({ mode, command }) => {
     build: {
       outDir: 'commonplace-theme/dist',
       emptyOutDir: true,
-      rollupOptions: {
+      rolldownOptions: {
         input: {
           scripts: resolve('js/main.js'),
           style: resolve('css/main.scss'),

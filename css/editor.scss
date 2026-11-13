@@ -1,5 +1,7 @@
-@import "variables";
-@import "mixins";
+@use "sass:meta";
+@use "variables" as *;
+@use "typography";
+@use "mixins" as *;
 
 .wp-block {
   @include style-body;
@@ -22,19 +24,8 @@
   // max-width: $container-width-lg !important;
 }
 
-// @import "base";
-
-// Some CSS to deal with all the WP craziness. Here be dragons, etc.
-// @import "wp.comments";
-@import "wp.content";
-@import "wp.gallery";
-@import "wp.media";
-// @import "wp.menus";
-// @import "wp.pagination";
-@import "wp.quotes";
-// @import "wp.searchform";
-// @import "wp.widgets";
-
-// @import "components";
-// @import "prism";
-// @import "utilities";
+// Load shared styles here to preserve their position in the editor cascade.
+@include meta.load-css("wp.content");
+@include meta.load-css("wp.gallery");
+@include meta.load-css("wp.media");
+@include meta.load-css("wp.quotes");

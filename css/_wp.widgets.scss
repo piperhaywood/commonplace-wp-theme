@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 .cp-widget--header-1 .widget {
   @include style-h5;
   * {

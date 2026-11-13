@@ -1,19 +1,20 @@
-@import "variables";
-@import "mixins";
-@import "base";
+@use "variables";
+@use "typography";
+@use "mixins";
+@use "base";
 
 // Some CSS to deal with all the WP craziness. Here be dragons, etc.
-@import "wp.comments";
-@import "wp.content";
-@import "wp.gallery";
-@import "wp.media";
-@import "wp.menus";
-@import "wp.pagination";
-@import "wp.quotes";
-@import "wp.searchform";
-@import "wp.widgets";
+@use "wp.comments" as wp-comments;
+@use "wp.content" as wp-content;
+@use "wp.gallery" as wp-gallery;
+@use "wp.media" as wp-media;
+@use "wp.menus" as wp-menus;
+@use "wp.pagination" as wp-pagination;
+@use "wp.quotes" as wp-quotes;
+@use "wp.searchform" as wp-searchform;
+@use "wp.widgets" as wp-widgets;
 
-@import "components";
-@import "prism";
-@import "utilities";
-@import "print";
+@use "components";
+@use "prism";
+@use "utilities";
+@use "print";

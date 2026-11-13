@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 [aria-label="Pinned"] {
   @include style-h5;
 }
