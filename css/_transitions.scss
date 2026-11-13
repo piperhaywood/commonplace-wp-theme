@@ -1,0 +1,26 @@
+// Keep normal navigation for browsers without support and reduced-motion users.
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  .header > .nav {
+    view-transition-name: site-navigation;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 160ms;
+    animation-timing-function: ease-in-out;
+  }
+
+  // Show the incoming navigation immediately, without fading or moving it.
+  ::view-transition-group(site-navigation),
+  ::view-transition-new(site-navigation) {
+    animation: none;
+  }
+
+  ::view-transition-old(site-navigation) {
+    display: none;
+  }
+}
