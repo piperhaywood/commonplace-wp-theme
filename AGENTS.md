@@ -23,6 +23,7 @@
 - For theme PHP changes, run `composer lint:php` and check changed PHP files with `php -l`. If using `composer format:php`, review its diff and rerun the lint check.
 - Before a PR, run the applicable Theme CI checks described in `README.md`. CI checks Sass, production asset freshness, all theme PHP syntax on PHP 8.2, and WordPress coding standards. It does not verify WordPress runtime behavior or browser rendering.
 - For visual or runtime changes, check affected frontend views and the WordPress editor where relevant. Verify production assets with the Vite development override disabled; restore local development settings afterward.
+- Before local browser review, point `/Users/piperhaywood/Sites/wordpress-personal-site/wordpress/app/public/wp-content/themes/commonplace-theme` to the current worktree's `commonplace-theme/` directory. Replace only a symlink; preserve any real directory. Verify that `https://wordpress-personal-site.local/` loads afterward.
 - Report what was verified and any checks that could not run. Documentation-only changes need a diff review, not an asset rebuild.
 
 ## Branches and pull requests
@@ -30,5 +31,6 @@
 - Start new work from the latest `main` using a semantic branch prefix: `feat/`, `fix/`, `refactor/`, `docs/`, `build/`, `ci/`, or `chore/`, followed by a short hyphenated description (for example, `fix/editor-spacing`), unless the user specifies another base or branch.
 - Give the PR a matching semantic title with a readable description (for example, `fix: correct editor spacing`). Set the title explicitly rather than relying on a title generated from the branch name or commits.
 - Before opening a PR, fetch `origin` and merge the latest `origin/main` into the working branch. Resolve conflicts, then rerun checks affected by the merge. Use a merge rather than rebasing unless the user requests otherwise.
+- When the user requests opening a PR for changes that could affect frontend or WordPress editor appearance or behavior, open `https://wordpress-personal-site.local/` in the browser for their review before creating the PR, following the theme-link instructions above. Include affected views and the editor where relevant. Documentation-only and CI-only changes do not require local browser review unless they also affect site behavior. If required local review cannot be opened, report the blocker.
 - Keep changes focused and preserve unrelated work. Review the final diff for generated assets, accidental local configuration, and unrelated formatting.
 - Describe the concrete change and relevant verification in the PR. Do not bump the theme version automatically for routine work; follow the README's versioning procedure when preparing a requested release.
