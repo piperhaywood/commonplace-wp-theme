@@ -1,0 +1,83 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.post-grid {
+  display: grid;
+  gap: calc(var(--gutter) * 4);
+  grid-template-columns: minmax(0, 32rem);
+  justify-content: center;
+  justify-items: center;
+  padding-inline: var(--gutter);
+
+  // Each column needs 16rem plus its share of the 2rem gaps and outer gutters.
+  @each $columns in (2, 3, 4, 6) {
+    @media (min-width: #{$columns * 18rem}) {
+      gap: calc(var(--gutter) * 2);
+      grid-template-columns: repeat($columns, minmax(0, 32rem));
+    }
+  }
+}
+
+.post-grid__card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  max-width: 32rem;
+  min-width: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.post-grid__image {
+  aspect-ratio: 1;
+  flex: none;
+  margin-block-end: $my;
+  order: -1;
+  position: relative;
+  width: 100%;
+}
+
+.post-grid__thumbnail {
+  display: block;
+  height: auto;
+  inset: 0;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  width: auto;
+}
+
+.post-grid .post-header {
+  @include style-h5;
+  text-align: center;
+}
+
+.post-grid .post-time,
+.post-grid .post-title {
+  display: block;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.post-grid__link {
+  inset: 0;
+  position: absolute;
+}
+
+.post-grid__link:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 0.25rem;
+}
+
+.post-grid__card:has(.post-grid__link:hover) .post-header {
+  text-decoration-color: #aaa;
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--underline);
+}
+
+.post-grid__image {
+  border: 1px solid #aaa;
+}

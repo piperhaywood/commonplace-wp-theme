@@ -716,3 +716,31 @@ function cp_comment( $comment, $args, $depth ) {
     <?php
   endif;
 }
+
+/**
+ * Register the opt-in archive layout preview.
+ *
+ * @param string[] $vars Public query variables.
+ * @return string[]
+ */
+function cp_layout_preview_query_vars( $vars ) {
+  $vars[] = 'cp_view';
+  return $vars;
+}
+add_filter( 'query_vars', 'cp_layout_preview_query_vars' );
+
+/**
+ * Keep grid preview batches divisible by every supported column count.
+ *
+ * @param WP_Query $query The current query.
+ */
+function cp_grid_posts_per_page( $query ) {
+  if ( is_admin() || ! $query->is_main_query() || $query->is_feed() ) {
+    return;
+  }
+
+  if ( 'grid' === $query->get( 'cp_view' ) && ( $query->is_home() || $query->is_archive() || $query->is_search() ) ) {
+    $query->set( 'posts_per_page', 24 );
+  }
+}
+add_action( 'pre_get_posts', 'cp_grid_posts_per_page' );
