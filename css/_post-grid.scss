@@ -3,14 +3,14 @@
 
 .post-grid {
   display: grid;
-  gap: calc(var(--gutter) * 4);
-  grid-template-columns: minmax(0, 32rem);
+  gap: calc(var(--gutter) * 2);
+  grid-template-columns: repeat(2, minmax(0, 32rem));
   justify-content: center;
   justify-items: center;
   padding-inline: var(--gutter);
 
-  // Each column needs 16rem plus its share of the 2rem gaps and outer gutters.
-  @each $columns in (2, 3, 4, 6) {
+  // Add columns once each can fit 16rem plus the gaps and outer gutters.
+  @each $columns in (3, 4, 6) {
     @media (min-width: #{$columns * 18rem}) {
       gap: calc(var(--gutter) * 2);
       grid-template-columns: repeat($columns, minmax(0, 32rem));
