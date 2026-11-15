@@ -81,3 +81,35 @@
 .post-grid__image {
   border: 1px solid #aaa;
 }
+
+.grid-loader {
+  margin-block: $my-xl;
+  padding-inline: var(--gutter);
+  text-align: center;
+}
+
+.grid-loader__button {
+  padding: 0.5rem;
+}
+
+// Mouse clicks can retain focus; reserve the persistent focus appearance for keyboards.
+.grid-loader__button:focus:not(:focus-visible):not(:hover) {
+  background-color: $black !important;
+  color: $white;
+}
+
+.grid-loader__button[aria-disabled="true"] {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.grid-loader__status {
+  @include style-h5;
+  margin-block: $my;
+}
+
+.grid-loader[hidden],
+.grid-loader__button[hidden],
+.pagination--archive[hidden] {
+  display: none;
+}
