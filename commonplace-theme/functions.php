@@ -510,7 +510,6 @@ function cp_get_list_item( $post = false ) {
   ?>
   <?php $format = get_post_format( $post ); ?>
   <?php $hsl = cp_get_hsl( $post, 'thumbnail' ); ?>
-  <?php $images = get_attached_media( 'image' ); ?>
   <?php $title = get_the_title( $post ); ?>
   <li class="post-index__post-item" style="--color:<?php echo esc_attr( $hsl ); ?>;">
   <?php if ( has_post_thumbnail() ) : ?>
