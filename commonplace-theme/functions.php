@@ -514,24 +514,15 @@ function cp_get_post_terms( $post_id, $taxonomies ) {
   if ( count( $terms ) < 2 ) {
     return $terms;
   }
-  // Share one ordering query across posts, preserving database collation and
-  // post-format ordering before WordPress replaces their names for display.
-  static $term_order = array();
-  $key               = implode( ',', $taxonomies );
-  if ( ! isset( $term_order[ $key ] ) ) {
-    $ordered_ids        = get_terms(
-      array(
-        'taxonomy' => $taxonomies,
-        'fields'   => 'ids',
-      )
-    );
-    $term_order[ $key ] = is_array( $ordered_ids ) ? array_flip( $ordered_ids ) : array();
-  }
-  $order = $term_order[ $key ];
+  // Sort only this post's terms. Post formats retain their stored-name position
+  // even though WordPress replaces their names with translated display labels.
   usort(
     $terms,
-    static function ( $a, $b ) use ( $order ) {
-      return ( $order[ $a->term_id ] ?? PHP_INT_MAX ) <=> ( $order[ $b->term_id ] ?? PHP_INT_MAX );
+    static function ( $a, $b ) {
+      $a_name = 'post_format' === $a->taxonomy ? $a->slug : $a->name;
+      $b_name = 'post_format' === $b->taxonomy ? $b->slug : $b->name;
+      $result = strcasecmp( remove_accents( $a_name ), remove_accents( $b_name ) );
+      return $result ? $result : $a->term_id <=> $b->term_id;
     }
   );
   return $terms;

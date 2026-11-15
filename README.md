@@ -170,6 +170,20 @@ it does not boot WordPress or verify runtime compatibility. WordPress Coding
 Standards run in a separate job as described below. Browser tests are not yet part
 of this workflow.
 
+### Query regression checks
+
+With the theme active in a local WordPress installation, run
+`wp eval-file /absolute/path/to/commonplace-wp-theme/tests/query-efficiency.php`.
+This read-only check compares aggregate year counts and post-term membership with
+the previous queries, then checks alphabetical ordering, post-format placement,
+empty/error results, and cached lookups without creating database records.
+Ordering fixtures require at least one published post.
+
+Post terms are sorted locally by accent-normalized, case-insensitive name, with
+term ID breaking ties. Post formats use their stored slugs for sorting and retain
+their translated labels for display. This avoids loading all site terms merely to
+sort one post's terms; ordering can differ from the database's locale collation.
+
 ### PHP coding standards
 
 PHP_CodeSniffer checks the theme's own PHP against `WordPress-Extra`, which
