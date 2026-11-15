@@ -19,12 +19,15 @@ The shortcode `[notebookindex]` displays an alphabetical index of terms. The Ind
 The shortcode `[notebooklist]` displays a chronological list of posts.
 
 List images (including related posts) use the theme's `cp-list-thumb` image size,
-which fits within 240 × 240 pixels without cropping. New uploads get this size
-automatically. Existing uploads fall back to `thumbnail` until the new size is
-generated. After updating the theme, you can generate missing list images with
-`wp media regenerate --image_size=cp-list-thumb --only-missing --yes`, or use a
-thumbnail regeneration plugin. Regeneration is optional; the fallback preserves
-the existing list behavior.
+which fits within 240 × 240 pixels without cropping. When installing this theme
+on an existing WordPress site, or updating from a version without this image size,
+regenerate thumbnails for existing uploads:
+
+`wp media regenerate --image_size=cp-list-thumb --only-missing --yes`
+
+Alternatively, use a thumbnail regeneration plugin. Until regeneration is
+complete, list images fall back to the existing `thumbnail` size. New uploads get
+the list size automatically.
 
 ## Utility classes
 
