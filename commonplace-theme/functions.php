@@ -539,7 +539,7 @@ function cp_get_list_item( $post = false ) {
   <li class="post-index__post-item" style="--color:<?php echo esc_attr( $hsl ); ?>;">
   <?php if ( has_post_thumbnail() ) : ?>
     <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WordPress generates and escapes the thumbnail HTML, including theme CSS properties.
-    echo cp_list_thumb( $post, 'thumbnail' );
+    echo cp_list_thumb( $post );
     ?>
   <?php endif; ?>
   <div class="post-item">
@@ -637,11 +637,19 @@ function max_img_width( $img_width, $img_height, $ideal_area ) {
   return $max_width;
 }
 
-function cp_list_thumb( $post, $size = 'thumbnail' ) {
+function cp_list_thumb( $post, $size = 'cp-list-thumb' ) {
+  $attachment_id = get_post_thumbnail_id( $post->ID );
+  // Older uploads may not have the theme's list size until thumbnails are regenerated.
+  if ( 'cp-list-thumb' === $size && ! image_get_intermediate_size( $attachment_id, $size ) ) {
+    $size = 'thumbnail';
+  }
+  $data = wp_get_attachment_image_src( $attachment_id, $size );
+  if ( ! $data ) {
+    return '';
+  }
   add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
   $rotations = array( wp_rand( 10, 20 ), wp_rand( -20, -10 ) );
   $y_offset  = array( wp_rand( 4, 6 ), wp_rand( -6, -4 ) );
-  $data      = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), $size );
   $style     = '--pos-right:' . wp_rand( 5, 95 ) . '%;--trans-y:' . $y_offset[ array_rand( $y_offset ) ] . 'rem;--rotate:' . $rotations[ array_rand( $rotations ) ] . 'deg;--max-width:' . max_img_width( $data[1], $data[2], 8000 ) / 16 . 'rem;';
   $html      = get_the_post_thumbnail(
     $post,
