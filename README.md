@@ -20,7 +20,9 @@ The shortcode `[notebooklist]` displays a chronological list of posts in batches
 of 50. “Load more posts” appends the next batch; without JavaScript, a “Next posts”
 link opens the next batch. Multiple lists on the same page paginate independently.
 Loaded batches and scroll position are saved for the current browser tab’s history
-entry when session storage is available.
+entry when session storage is available. This disposable cache retains at most
+eight list/grid snapshots, uses approximately 2 MiB of text storage, and expires
+snapshots after 30 minutes; browser back/forward caching remains independent.
 
 The posts index, archives, and search results also offer opt-in layout previews:
 add `?cp_view=grid` or `?cp_view=list` to the URL (or `&cp_view=…` when it already
@@ -206,3 +208,8 @@ custom related-post template in `commonplace-theme/related-post-plugin/`.
 Documented inline exceptions cover intentional global-post setup, WordPress or
 theme-rendered HTML, Vite's development scripts, and retained Gutenberg examples.
 The separate PHP syntax job still checks the bundled library as well.
+
+### Post loading regression checks
+
+Run `node --test tests/post-history.test.mjs` to check history-cache size/count
+limits, expiration, storage failures, and position-only updates without WordPress.

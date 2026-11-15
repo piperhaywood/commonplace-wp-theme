@@ -1,3 +1,5 @@
+import { createPostHistoryCache } from './post-history.mjs';
+
 document.querySelectorAll('[data-post-browser]').forEach((root) => {
   const grid = root.querySelector('[data-post-items]');
   const loader = root.querySelector('.post-loader');
@@ -9,19 +11,21 @@ document.querySelectorAll('[data-post-browser]').forEach((root) => {
   const label = button.textContent;
   let next = button.dataset.next;
   let loading = false;
-  let cacheKey;
+  let cache;
+  let contentDirty = true;
 
   // Associate the snapshot with this history entry, not just this archive URL.
   // Failure to access storage must never prevent loading or ordinary navigation.
   try {
     const id = history.state?.cpPostBrowserId || crypto.randomUUID();
     history.replaceState({ ...history.state, cpPostBrowserId: id }, '');
-    cacheKey = `cp-posts-v2:${id}:${root.dataset.postBrowser}`;
-    const saved = JSON.parse(sessionStorage.getItem(cacheKey));
+    cache = createPostHistoryCache(`${id}:${root.dataset.postBrowser}`);
+    const saved = cache.load(location.href);
     if (saved?.url === location.href) {
       const restored = new DOMParser().parseFromString(saved.html, 'text/html');
       grid.replaceChildren(...restored.body.children);
       next = saved.next;
+      contentDirty = false;
       // Restore after fonts settle; preview boxes already reserve image space.
       addEventListener('pageshow', async (event) => {
         if (event.persisted) return;
@@ -36,16 +40,17 @@ document.querySelectorAll('[data-post-browser]').forEach((root) => {
   }
 
   function save() {
-    if (!cacheKey) return;
-    try {
-      sessionStorage.setItem(cacheKey, JSON.stringify({
+    if (!cache) return;
+    if (contentDirty) {
+      cache.saveContent({
         url: location.href,
         html: grid.innerHTML,
         next,
         scroll: window.scrollY,
-      }));
-    } catch {
-      // Storage can be disabled or full. The live grid still works.
+      });
+      contentDirty = false;
+    } else {
+      cache.savePosition(window.scrollY);
     }
   }
 
@@ -89,6 +94,7 @@ document.querySelectorAll('[data-post-browser]').forEach((root) => {
       const nextButton = nextRoot?.querySelector('.post-loader__button');
       if (!cards.length || !nextButton) throw new Error('Invalid posts response');
       grid.append(...cards);
+      contentDirty = true;
       next = nextButton.dataset.next;
       const shouldMoveFocus = document.activeElement === button;
       updateButton();
