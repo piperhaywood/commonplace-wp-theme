@@ -1,10 +1,11 @@
-const grid = document.querySelector('.post-grid');
-const loader = document.querySelector('.grid-loader');
-
-if (grid && loader) {
+document.querySelectorAll('[data-post-browser]').forEach((root) => {
+  const grid = root.querySelector('[data-post-items]');
+  const loader = root.querySelector('.post-loader');
+  if (!grid || !loader) return;
   const button = loader.querySelector('button');
   const status = loader.querySelector('[role="status"]');
-  const pagination = document.querySelector('.pagination--archive');
+  const pagination = root.querySelector('[data-post-pagination]') ||
+    (root.dataset.postBrowser === 'archive' ? document.querySelector('.pagination--archive') : null);
   const label = button.textContent;
   let next = button.dataset.next;
   let loading = false;
@@ -13,15 +14,15 @@ if (grid && loader) {
   // Associate the snapshot with this history entry, not just this archive URL.
   // Failure to access storage must never prevent loading or ordinary navigation.
   try {
-    const id = history.state?.cpGridId || crypto.randomUUID();
-    history.replaceState({ ...history.state, cpGridId: id }, '');
-    cacheKey = `cp-grid-v2:${id}`;
+    const id = history.state?.cpPostBrowserId || crypto.randomUUID();
+    history.replaceState({ ...history.state, cpPostBrowserId: id }, '');
+    cacheKey = `cp-posts-v2:${id}:${root.dataset.postBrowser}`;
     const saved = JSON.parse(sessionStorage.getItem(cacheKey));
     if (saved?.url === location.href) {
       const restored = new DOMParser().parseFromString(saved.html, 'text/html');
-      grid.replaceChildren(...restored.querySelectorAll('.post-grid__card'));
+      grid.replaceChildren(...restored.body.children);
       next = saved.next;
-      // The square image boxes reserve space even before images finish loading.
+      // Restore after fonts settle; preview boxes already reserve image space.
       addEventListener('pageshow', async (event) => {
         if (event.persisted) return;
         await document.fonts.ready;
@@ -82,9 +83,11 @@ if (grid && loader) {
         throw new Error('Page unavailable');
       }
       const page = new DOMParser().parseFromString(await response.text(), 'text/html');
-      const cards = [...page.querySelectorAll('.post-grid > .post-grid__card')];
-      const nextButton = page.querySelector('.grid-loader__button');
-      if (!cards.length || !nextButton) throw new Error('Invalid grid response');
+      const nextRoot = [...page.querySelectorAll('[data-post-browser]')]
+        .find((element) => element.dataset.postBrowser === root.dataset.postBrowser);
+      const cards = [...(nextRoot?.querySelector('[data-post-items]')?.children || [])];
+      const nextButton = nextRoot?.querySelector('.post-loader__button');
+      if (!cards.length || !nextButton) throw new Error('Invalid posts response');
       grid.append(...cards);
       next = nextButton.dataset.next;
       const shouldMoveFocus = document.activeElement === button;
@@ -94,7 +97,9 @@ if (grid && loader) {
       // Keep keyboard users at the start of the newly appended batch.
       // Prevent focus from scrolling the page away from the reading position.
       if (shouldMoveFocus) {
-        cards[0].querySelector('.post-grid__link').focus({ preventScroll: true });
+        const firstLink = cards[0].querySelector('.post-item__text')?.closest('a') ||
+          cards[0].querySelector('a');
+        firstLink?.focus({ preventScroll: true });
       }
       save();
     } catch {
@@ -106,4 +111,4 @@ if (grid && loader) {
       grid.removeAttribute('aria-busy');
     }
   });
-}
+});

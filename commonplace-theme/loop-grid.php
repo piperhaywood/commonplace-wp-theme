@@ -1,5 +1,5 @@
-<main id="main" class="main" role="main">
-  <section class="post-grid" aria-label="<?php esc_attr_e( 'Posts', 'commonplace' ); ?>">
+<main id="main" class="main" role="main" data-post-browser="archive">
+  <section class="post-grid" data-post-items aria-label="<?php esc_attr_e( 'Posts', 'commonplace' ); ?>">
     <?php while ( have_posts() ) : ?>
       <?php
       the_post();
@@ -48,15 +48,5 @@
   global $wp_query;
   $next_grid_page = get_next_posts_page_link( $wp_query->max_num_pages );
   ?>
-  <div class="grid-loader" hidden>
-    <button class="button grid-loader__button" type="button"
-      data-next="<?php echo $next_grid_page ? esc_url( add_query_arg( 'cp_view', 'grid', $next_grid_page ) ) : ''; ?>"
-      data-loading="<?php esc_attr_e( 'Loading posts…', 'commonplace' ); ?>"
-      data-error="<?php esc_attr_e( 'Could not load posts. Please try again or use the page links below.', 'commonplace' ); ?>"
-      data-loaded="<?php esc_attr_e( 'More posts loaded.', 'commonplace' ); ?>"
-      data-end="<?php esc_attr_e( 'All posts loaded.', 'commonplace' ); ?>">
-      <?php esc_html_e( 'Load more posts', 'commonplace' ); ?>
-    </button>
-    <p class="grid-loader__status visuallyhidden" role="status" aria-live="polite"></p>
-  </div>
+  <?php get_template_part( 'load-more', null, array( 'next' => $next_grid_page ? add_query_arg( 'cp_view', 'grid', $next_grid_page ) : '' ) ); ?>
 </main>

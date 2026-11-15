@@ -16,7 +16,16 @@ The shortcode `[notebooksearch]` displays a search form.
 
 The shortcode `[notebookindex]` displays an alphabetical index of terms. The Index shortcode can be passed attributes that modify the included taxonomies, the post count threshold, and whether or not year archive links are displayed. For example, `[notebookindex taxonomy="category" years="false" count="2"]` will pull through only categories with a post count of at least 2 and no year archive links. If no attributes are passed to the `notebookindex` shortcode, then these default attributes will be used: `[notebookindex taxonomy="post_tag, category, post_format" years="true" count="1"]`.
 
-The shortcode `[notebooklist]` displays a chronological list of posts.
+The shortcode `[notebooklist]` displays a chronological list of posts in batches
+of 50. “Load more posts” appends the next batch; without JavaScript, a “Next posts”
+link opens the next batch. Multiple lists on the same page paginate independently.
+Loaded batches and scroll position are saved for the current browser tab’s history
+entry when session storage is available.
+
+The posts index, archives, and search results also offer opt-in layout previews:
+add `?cp_view=grid` or `?cp_view=list` to the URL (or `&cp_view=…` when it already
+has a query string). The grid loads 24 posts per batch and the list loads 50, with
+ordinary archive pagination as the fallback. The view switcher is still in progress.
 
 ## Utility classes
 

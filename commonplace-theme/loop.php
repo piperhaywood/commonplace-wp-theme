@@ -1,6 +1,6 @@
 <?php
-if ( ( is_home() || is_archive() || is_search() ) && have_posts() && 'grid' === get_query_var( 'cp_view' ) ) {
-  get_template_part( 'loop', 'grid' );
+if ( ( is_home() || is_archive() || is_search() ) && have_posts() && in_array( get_query_var( 'cp_view' ), array( 'grid', 'list' ), true ) ) {
+  get_template_part( 'loop', get_query_var( 'cp_view' ) );
   return;
 }
 ?>

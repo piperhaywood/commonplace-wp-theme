@@ -54,7 +54,40 @@ function notebook_index( $attr ) {
 
 add_shortcode( 'notebooklist', 'notebook_list' );
 function notebook_list() {
-  return cp_get_list();
+  static $instance = 0;
+  ++$instance;
+  $pages = get_query_var( 'cp_list_page', array() );
+  $pages = is_array( $pages ) ? $pages : array();
+  $page  = isset( $pages[ $instance ] ) && is_scalar( $pages[ $instance ] ) ? max( 1, absint( $pages[ $instance ] ) ) : 1;
+  $posts = new WP_Query(
+    array(
+      'post_type'           => 'post',
+      'posts_per_page'      => 50,
+      'paged'               => $page,
+      'ignore_sticky_posts' => true,
+    )
+  );
+  $next  = '';
+  if ( $page < $posts->max_num_pages ) {
+    $pages[ $instance ] = $page + 1;
+    $next               = add_query_arg( 'cp_list_page', $pages, get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ), false ) );
+  }
+  ob_start();
+  ?>
+  <div data-post-browser="<?php echo esc_attr( 'notebook-list-' . $instance ); ?>">
+    <?php
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme-rendered list HTML is escaped by its row renderer.
+    echo cp_get_list( $posts );
+    get_template_part( 'load-more', null, array( 'next' => $next ) );
+    ?>
+    <?php if ( $next ) : ?>
+      <nav class="post-browser__pagination" data-post-pagination aria-label="<?php esc_attr_e( 'More posts', 'commonplace' ); ?>">
+        <a class="button" href="<?php echo esc_url( $next ); ?>"><?php esc_html_e( 'Next posts', 'commonplace' ); ?></a>
+      </nav>
+    <?php endif; ?>
+  </div>
+  <?php
+  return ob_get_clean();
 }
 
 function get_notebook_index( $taxonomy, $show_years, $count ) {
@@ -135,7 +168,8 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
     }
   }
 
-  ob_start(); ?>
+  ob_start();
+  ?>
   <?php if ( ! empty( $groups ) ) : ?>
     <div class="termindex">
     <?php foreach ( $groups as $char => $terms ) : ?>
@@ -595,7 +629,7 @@ function cp_get_list( $posts = false ) {
     $posts = new WP_Query(
       array(
         'post_type'      => 'post',
-        'posts_per_page' => -1,
+        'posts_per_page' => 50,
       )
     );
   }
@@ -603,7 +637,7 @@ function cp_get_list( $posts = false ) {
     add_filter( 'excerpt_length', 'cp_excerpt_as_title' );
     ob_start();
     ?>
-  <ul class="post-index">
+  <ul class="post-index" data-post-items>
     <?php $orig = $post; ?>
     <?php if ( $posts->have_posts() ) : ?>
       <?php while ( $posts->have_posts() ) : ?>
@@ -613,6 +647,7 @@ function cp_get_list( $posts = false ) {
     <?php endif; ?>
     <?php // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Restore the original global post after the custom loop.
     $post = $orig;
+    wp_reset_postdata();
     ?>
   </ul>
     <?php
@@ -725,22 +760,23 @@ function cp_comment( $comment, $args, $depth ) {
  */
 function cp_layout_preview_query_vars( $vars ) {
   $vars[] = 'cp_view';
+  $vars[] = 'cp_list_page';
   return $vars;
 }
 add_filter( 'query_vars', 'cp_layout_preview_query_vars' );
 
 /**
- * Keep grid preview batches divisible by every supported column count.
+ * Set the batch sizes for the grid and list archive previews.
  *
  * @param WP_Query $query The current query.
  */
-function cp_grid_posts_per_page( $query ) {
+function cp_loop_posts_per_page( $query ) {
   if ( is_admin() || ! $query->is_main_query() || $query->is_feed() ) {
     return;
   }
 
-  if ( 'grid' === $query->get( 'cp_view' ) && ( $query->is_home() || $query->is_archive() || $query->is_search() ) ) {
-    $query->set( 'posts_per_page', 24 );
+  if ( in_array( $query->get( 'cp_view' ), array( 'grid', 'list' ), true ) && ( $query->is_home() || $query->is_archive() || $query->is_search() ) ) {
+    $query->set( 'posts_per_page', 'list' === $query->get( 'cp_view' ) ? 50 : 24 );
   }
 }
-add_action( 'pre_get_posts', 'cp_grid_posts_per_page' );
+add_action( 'pre_get_posts', 'cp_loop_posts_per_page' );
