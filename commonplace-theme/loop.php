@@ -59,12 +59,7 @@
         <div class="post-meta meta">
         <p>
           <?php
-          $post_terms = get_terms(
-            array(
-              'taxonomy'   => array( 'post_tag', 'category', 'post_format' ),
-              'object_ids' => get_the_id(),
-            )
-          );
+          $post_terms = cp_get_post_terms( get_the_ID(), array( 'post_tag', 'category', 'post_format' ) );
           ?>
           <?php if ( $post_terms ) : ?>
             <?php foreach ( $post_terms as $slug => $post_term ) : ?>

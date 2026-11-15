@@ -503,6 +503,40 @@ function cp_add_to_index( $groups, $args ) {
   return $groups;
 }
 
+function cp_get_post_terms( $post_id, $taxonomies ) {
+  $terms = array();
+  foreach ( $taxonomies as $taxonomy ) {
+    $post_terms = get_the_terms( $post_id, $taxonomy );
+    if ( is_array( $post_terms ) ) {
+      $terms = array_merge( $terms, $post_terms );
+    }
+  }
+  if ( count( $terms ) < 2 ) {
+    return $terms;
+  }
+  // Share one ordering query across posts, preserving database collation and
+  // post-format ordering before WordPress replaces their names for display.
+  static $term_order = array();
+  $key               = implode( ',', $taxonomies );
+  if ( ! isset( $term_order[ $key ] ) ) {
+    $ordered_ids        = get_terms(
+      array(
+        'taxonomy' => $taxonomies,
+        'fields'   => 'ids',
+      )
+    );
+    $term_order[ $key ] = is_array( $ordered_ids ) ? array_flip( $ordered_ids ) : array();
+  }
+  $order = $term_order[ $key ];
+  usort(
+    $terms,
+    static function ( $a, $b ) use ( $order ) {
+      return ( $order[ $a->term_id ] ?? PHP_INT_MAX ) <=> ( $order[ $b->term_id ] ?? PHP_INT_MAX );
+    }
+  );
+  return $terms;
+}
+
 function cp_get_list_item( $post = false ) {
   if ( ! $post ) {
     global $post;
@@ -529,12 +563,7 @@ function cp_get_list_item( $post = false ) {
     <span class="post-item__text"><?php echo wp_kses_post( '' === $title ? get_the_excerpt() : $title ); ?></span>
     </a>
     <?php
-    $terms = get_terms(
-      array(
-        'taxonomy'   => array( 'post_tag' ),
-        'object_ids' => get_the_id(),
-      )
-    );
+    $terms = cp_get_post_terms( get_the_ID(), array( 'post_tag' ) );
     ?>
     <?php if ( $terms ) : ?>
     <ul class="post-item__terms">
