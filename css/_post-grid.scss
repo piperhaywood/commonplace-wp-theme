@@ -81,17 +81,24 @@
 
 
 .post-loader {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gutter);
+  justify-content: center;
   margin-block: $my-xl;
   padding-inline: var(--gutter);
   text-align: center;
 }
 
-.post-loader__button {
+.post-loader__button,
+.post-loader__top {
   padding: 0.5rem;
 }
 
 // Mouse clicks can retain focus; reserve the persistent focus appearance for keyboards.
-.post-loader__button:focus:not(:focus-visible):not(:hover) {
+.post-loader__button:focus:not(:focus-visible):not(:hover),
+.post-loader__top:focus:not(:focus-visible):not(:hover) {
   background-color: $black !important;
   color: $white;
 }

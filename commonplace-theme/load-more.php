@@ -7,5 +7,6 @@
       data-end="<?php esc_attr_e( 'All posts loaded.', 'commonplace' ); ?>">
       <?php esc_html_e( 'Load more posts', 'commonplace' ); ?>
     </button>
+    <a class="button post-loader__top" href="#top"><?php esc_html_e( 'Back to top', 'commonplace' ); ?></a>
     <p class="post-loader__status visuallyhidden" role="status" aria-live="polite"></p>
   </div>
