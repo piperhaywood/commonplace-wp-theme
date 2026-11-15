@@ -63,33 +63,21 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
 
   // Add the year archives to the index
   if ( $show_years ) {
-    $years = cp_get_years_array();
-    if ( $years ) {
-      $args = array(
-        'posts_per_page' => -1,
-        'post_type'      => 'post',
-        'fields'         => 'ids',
-      );
-      foreach ( $years as $year ) {
-        $args['date_query'] = array(
-          array( 'year' => $year ),
+    $years = cp_get_year_counts();
+    foreach ( $years as $year => $year_count ) {
+      if ( $year_count >= $count ) {
+        $groups = cp_add_to_index(
+          $groups,
+          array(
+            'name'  => (string) $year,
+            'url'   => get_year_link( $year ),
+            'count' => $year_count,
+            'slug'  => $year,
+            'type'  => 'year',
+            /* translators: 1: Archive year, 2: Number of posts. */
+            'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
+          )
         );
-        $posts              = get_posts( $args );
-        $year_count         = count( $posts );
-        if ( $year_count >= $count ) {
-          $groups = cp_add_to_index(
-            $groups,
-            array(
-              'name'  => $year,
-              'url'   => get_year_link( $year ),
-              'count' => $year_count,
-              'slug'  => $year,
-              'type'  => 'year',
-              /* translators: 1: Archive year, 2: Number of posts. */
-              'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
-            )
-          );
-        }
       }
     }
   }
@@ -482,22 +470,26 @@ function cp_group_posts_by_year() {
   return $years;
 }
 
-function cp_get_years_array() {
+function cp_get_year_counts() {
   global $wpdb;
   $result = array();
   $years  = $wpdb->get_results(
     $wpdb->prepare(
-      "SELECT YEAR(post_date) FROM {$wpdb->posts} WHERE post_status = %s GROUP BY YEAR(post_date) ORDER BY YEAR(post_date) DESC",
-      array( 'publish' )
-    ),
-    ARRAY_N
+      "SELECT YEAR(post_date) AS year, COUNT(*) AS post_count FROM {$wpdb->posts} WHERE post_status = %s AND post_type = %s GROUP BY YEAR(post_date) ORDER BY YEAR(post_date) DESC",
+      'publish',
+      'post'
+    )
   );
-  if ( is_array( $years ) && count( $years ) > 0 ) {
+  if ( is_array( $years ) ) {
     foreach ( $years as $year ) {
-      $result[] = $year[0];
+      $result[ $year->year ] = (int) $year->post_count;
     }
   }
   return $result;
+}
+
+function cp_get_years_array() {
+  return array_map( 'strval', array_keys( cp_get_year_counts() ) );
 }
 
 function cp_add_to_index( $groups, $args ) {
