@@ -1,4 +1,5 @@
 import { createPostHistoryCache } from './post-history.mjs';
+import { fetchPostPage } from './post-request.mjs';
 
 document.querySelectorAll('[data-post-browser]').forEach((root) => {
   const grid = root.querySelector('[data-post-items]');
@@ -83,11 +84,8 @@ document.querySelectorAll('[data-post-browser]').forEach((root) => {
     try {
       const url = new URL(next, location.href);
       if (url.origin !== location.origin) throw new Error('Unexpected origin');
-      const response = await fetch(url);
-      if (!response.ok || new URL(response.url).origin !== location.origin) {
-        throw new Error('Page unavailable');
-      }
-      const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+      const html = await fetchPostPage(url);
+      const page = new DOMParser().parseFromString(html, 'text/html');
       const nextRoot = [...page.querySelectorAll('[data-post-browser]')]
         .find((element) => element.dataset.postBrowser === root.dataset.postBrowser);
       const cards = [...(nextRoot?.querySelector('[data-post-items]')?.children || [])];

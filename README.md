@@ -211,5 +211,7 @@ The separate PHP syntax job still checks the bundled library as well.
 
 ### Post loading regression checks
 
-Run `node --test tests/post-history.test.mjs` to check history-cache size/count
-limits, expiration, storage failures, and position-only updates without WordPress.
+Run `node --test tests/post-history.test.mjs tests/post-request.test.mjs` to check history-cache size/count
+limits, expiration, storage failures, position-only updates, and request deadlines
+without WordPress. Post requests time out after 15 seconds and allow retry through
+the existing load-more button.
