@@ -15,7 +15,7 @@ if (grid && loader) {
   try {
     const id = history.state?.cpGridId || crypto.randomUUID();
     history.replaceState({ ...history.state, cpGridId: id }, '');
-    cacheKey = `cp-grid-v1:${id}`;
+    cacheKey = `cp-grid-v2:${id}`;
     const saved = JSON.parse(sessionStorage.getItem(cacheKey));
     if (saved?.url === location.href) {
       const restored = new DOMParser().parseFromString(saved.html, 'text/html');

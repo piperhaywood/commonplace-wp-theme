@@ -22,6 +22,15 @@
         <div class="post-grid__image">
           <?php if ( has_post_thumbnail() ) : ?>
             <?php the_post_thumbnail( 'large', array( 'class' => 'post-grid__thumbnail' ) ); ?>
+          <?php elseif ( ! post_password_required() ) : ?>
+            <?php
+            // A visual crop of the post, without executing blocks, embeds, or shortcodes.
+            $preview_text = wp_strip_all_tags( strip_shortcodes( get_post_field( 'post_content', get_the_ID() ) ) );
+            $preview_text = wp_html_excerpt( $preview_text, 4000, '' );
+            ?>
+            <div class="post-grid__text" aria-hidden="true">
+              <?php echo wp_kses_post( wpautop( esc_html( $preview_text ) ) ); ?>
+            </div>
           <?php endif; ?>
         </div>
         <a class="post-grid__link" href="<?php the_permalink(); ?>">
