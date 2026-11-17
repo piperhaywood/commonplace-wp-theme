@@ -150,7 +150,7 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
       <ol>
       <?php foreach ( $terms as $slug => $term ) : ?>
         <li>
-        <a aria-label="<?php echo esc_attr( $term['aria'] ); ?>" href="<?php echo esc_url( $term['url'] ); ?>"><span class="term term--<?php echo esc_attr( $term['type'] ); ?>"><?php echo esc_html( $term['name'] ); ?></span>&nbsp;<span class="term__count"><?php echo esc_html( $term['count'] ); ?></span></a>
+        <a aria-label="<?php echo esc_attr( $term['aria'] ); ?>" href="<?php echo esc_url( $term['url'] ); ?>"><span class="term term--<?php echo esc_attr( $term['type'] ); ?>"><?php echo esc_html( $term['name'] ); ?></span><span class="term__count"><?php echo esc_html( $term['count'] ); ?></span></a>
         </li>
       <?php endforeach; ?>
       </ol>

@@ -73,7 +73,7 @@
               /* translators: 1: Term name, 2: Number of posts. */
               $term_label = sprintf( _n( '%1$s, %2$s post', '%1$s, %2$s posts', $post_term->count, 'commonplace' ), $post_term->name, $post_term->count );
               ?>
-            <a class="term-link" aria-label="<?php echo esc_attr( $term_label ); ?>" href="<?php echo esc_url( get_tag_link( $post_term->term_id ) ); ?>"><?php echo esc_html( $post_term->name ); ?></a><span class="separator" aria-hidden="true">,</span>
+            <a class="term-link" aria-label="<?php echo esc_attr( $term_label ); ?>" href="<?php echo esc_url( get_tag_link( $post_term->term_id ) ); ?>"><?php echo esc_html( $post_term->name ); ?><span class="term__count"><?php echo esc_html( $post_term->count ); ?></span></a><span class="separator" aria-hidden="true">,</span>
             </span>
           <?php endforeach; ?>
           <?php endif; ?>
