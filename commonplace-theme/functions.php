@@ -151,7 +151,7 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
       <ol>
       <?php foreach ( $terms as $slug => $term ) : ?>
         <li>
-        <a aria-label="<?php echo esc_attr( $term['aria'] ); ?>" href="<?php echo esc_url( $term['url'] ); ?>"><span class="term term--<?php echo esc_attr( $term['type'] ); ?>"><?php echo esc_html( $term['name'] ); ?></span><span class="term__count"><?php echo esc_html( $term['count'] ); ?></span></a>
+        <?php echo wp_kses_post( cp_term_pill( $term['name'], $term['count'], $term['url'], $term['aria'] ) ); ?>
         </li>
       <?php endforeach; ?>
       </ol>
@@ -250,6 +250,28 @@ function cp_author( $display = true ) {
   } else {
     return $return;
   }
+}
+
+/**
+ * Render a term pill with a localized count and accessible link label.
+ *
+ * @param string $name  Term name.
+ * @param int    $count Post count.
+ * @param string $url   Optional destination; empty produces a heading pill.
+ * @param string $label Optional accessible link label.
+ * @return string Escaped pill HTML.
+ */
+function cp_term_pill( $name, $count, $url = '', $label = '' ) {
+  $number = number_format_i18n( $count );
+  $text   = esc_html( $name ) . '<span class="term__count" aria-hidden="true">' . esc_html( $number ) . '</span>';
+  if ( ! $url ) {
+    return '<span class="archive-heading__term">' . $text . '</span>';
+  }
+  if ( ! $label ) {
+    /* translators: 1: Term name, 2: Number of posts. */
+    $label = sprintf( _n( '%1$s, %2$s post', '%1$s, %2$s posts', $count, 'commonplace' ), $name, $number );
+  }
+  return '<a class="term-link" aria-label="' . esc_attr( $label ) . '" href="' . esc_url( $url ) . '">' . $text . '</a>';
 }
 
 /**
