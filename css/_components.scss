@@ -1,23 +1,6 @@
 @use "variables" as *;
 @use "mixins" as *;
 
-.nav {
-  @include container($container-width-xl);
-  align-items: baseline;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-block-end: $my;
-  margin-block-start: $my;
-  @media (min-width: $md) {
-    margin-block-end: var(--vertical-space);
-  }
-}
-
-.nav .menu {
-  margin-block-end: 0.5rem;
-}
-
 .header-intro {
   @include container;
   display: block;
