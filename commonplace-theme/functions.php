@@ -269,28 +269,38 @@ function cp_related_archive_terms() {
 
   global $wpdb;
 
-  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Aggregate published-post relationships across taxonomies.
-  $term_ids = $wpdb->get_col(
-    $wpdb->prepare(
-      "SELECT related.term_id
-      FROM {$wpdb->term_relationships} AS source
-      INNER JOIN {$wpdb->posts} AS posts ON posts.ID = source.object_id
-      INNER JOIN {$wpdb->term_relationships} AS relationships ON relationships.object_id = posts.ID
-      INNER JOIN {$wpdb->term_taxonomy} AS related ON related.term_taxonomy_id = relationships.term_taxonomy_id
-      INNER JOIN {$wpdb->terms} AS terms ON terms.term_id = related.term_id
-      WHERE source.term_taxonomy_id = %d
-        AND posts.post_type = 'post'
-        AND posts.post_status = 'publish'
-        AND related.taxonomy = 'post_tag'
-        AND related.count >= 3
-        AND related.term_taxonomy_id != %d
-      GROUP BY related.term_id, terms.name
-      ORDER BY COUNT(DISTINCT posts.ID) DESC, terms.name ASC, related.term_id ASC
-      LIMIT 17",
-      $current_term->term_taxonomy_id,
-      $current_term->term_taxonomy_id
-    )
-  );
+  $cache_key = 'cp_related_tags_' . $current_term->term_taxonomy_id;
+  $version   = wp_cache_get_last_changed( 'posts' ) . ':' . wp_cache_get_last_changed( 'terms' );
+  $cached    = get_transient( $cache_key );
+  if ( is_array( $cached ) && $cached['version'] === $version ) {
+    $term_ids = $cached['ids'];
+  } else {
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Aggregate query cached below and invalidated by post and term changes.
+    $term_ids = $wpdb->get_col(
+      $wpdb->prepare(
+        "SELECT related.term_id
+        FROM {$wpdb->term_relationships} AS source
+        INNER JOIN {$wpdb->posts} AS posts ON posts.ID = source.object_id
+        INNER JOIN {$wpdb->term_relationships} AS relationships ON relationships.object_id = posts.ID
+        INNER JOIN {$wpdb->term_taxonomy} AS related ON related.term_taxonomy_id = relationships.term_taxonomy_id
+        INNER JOIN {$wpdb->terms} AS terms ON terms.term_id = related.term_id
+        WHERE source.term_taxonomy_id = %d
+          AND posts.post_type = 'post'
+          AND posts.post_status = 'publish'
+          AND related.taxonomy = 'post_tag'
+          AND related.count >= 3
+          AND related.term_taxonomy_id != %d
+        GROUP BY related.term_id, terms.name
+        ORDER BY COUNT(DISTINCT posts.ID) DESC, terms.name ASC, related.term_id ASC
+        LIMIT 17",
+        $current_term->term_taxonomy_id,
+        $current_term->term_taxonomy_id
+      )
+    );
+    if ( ! $wpdb->last_error ) {
+      set_transient( $cache_key, array( 'version' => $version, 'ids' => $term_ids ), DAY_IN_SECONDS );
+    }
+  }
 
   if ( ! $term_ids ) {
     return array();
