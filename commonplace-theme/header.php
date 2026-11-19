@@ -38,21 +38,25 @@
         }
         ?>
       <div class="archive-heading">
-        <h1 class="archive-heading__title"><?php
+        <h1 class="archive-heading__title">
+        <?php
         $archive_term_pill = cp_term_pill( $archive_term->name, $archive_term->count );
         /* translators: 1: Term pill HTML, 2: Taxonomy type (tag, category, or format). */
         echo wp_kses_post( sprintf( __( 'You are viewing the %1$s %2$s archive.', 'commonplace' ), $archive_term_pill, esc_html( $archive_type ) ) );
-        ?></h1>
+        ?>
+        </h1>
       </div>
       <?php elseif ( $archive_title ) : ?>
       <h1 class="archive-heading__title"><?php echo esc_html( cp_context_heading() ); ?></h1>
       <?php endif; ?>
 
       <?php if ( get_query_var( 'paged' ) > 1 ) : ?>
-      <p class="meta"><?php
+      <p class="meta">
+        <?php
         /* translators: %s: Archive page number. */
         echo esc_html( sprintf( __( 'Page %s', 'commonplace' ), number_format_i18n( get_query_var( 'paged' ) ) ) );
-      ?></p>
+        ?>
+      </p>
       <?php endif; ?>
 
       <?php if ( $archive_description ) : ?>

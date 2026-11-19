@@ -292,8 +292,12 @@ function cp_related_archive_terms() {
   global $wpdb;
 
   $cache_key = 'cp_related_tags_' . $current_term->term_taxonomy_id;
-  $version   = wp_cache_get_last_changed( 'posts' ) . ':' . wp_cache_get_last_changed( 'terms' );
-  $cached    = get_transient( $cache_key );
+  $version   = get_transient( 'cp_related_tags_generation' );
+  if ( false === $version ) {
+    $version = wp_generate_uuid4();
+    set_transient( 'cp_related_tags_generation', $version, YEAR_IN_SECONDS );
+  }
+  $cached = get_transient( $cache_key );
   if ( is_array( $cached ) && $cached['version'] === $version ) {
     $term_ids = $cached['ids'];
   } else {
@@ -320,7 +324,14 @@ function cp_related_archive_terms() {
       )
     );
     if ( ! $wpdb->last_error ) {
-      set_transient( $cache_key, array( 'version' => $version, 'ids' => $term_ids ), DAY_IN_SECONDS );
+      set_transient(
+        $cache_key,
+        array(
+          'version' => $version,
+          'ids'     => $term_ids,
+        ),
+        DAY_IN_SECONDS
+      );
     }
   }
 
@@ -340,6 +351,17 @@ function cp_related_archive_terms() {
 
   return is_wp_error( $terms ) ? array() : $terms;
 }
+
+/**
+ * Invalidate related-tag results when posts or taxonomy relationships change.
+ */
+function cp_invalidate_related_tags() {
+  delete_transient( 'cp_related_tags_generation' );
+}
+add_action( 'clean_post_cache', 'cp_invalidate_related_tags' );
+add_action( 'clean_term_cache', 'cp_invalidate_related_tags' );
+add_action( 'set_object_terms', 'cp_invalidate_related_tags' );
+add_action( 'deleted_term_relationships', 'cp_invalidate_related_tags' );
 
 function cp_archivedesc( $display = true, $prefix = '', $suffix = '' ) {
   global $wp_query;
