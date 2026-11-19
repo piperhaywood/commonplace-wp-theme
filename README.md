@@ -36,8 +36,18 @@ Paragraph block or Text widget works well. The theme displays this content above
 the page or archive header, using serif text aligned with post content.
 Apply italics within the widget content when desired.
 Links remain underlined. Multiple paragraphs and widgets are supported; leaving
-Header Area empty hides the introduction and its spacing. Existing Header Area
+Header Area empty hides the introduction while retaining page-top spacing. Existing Header Area
 widgets retain their content when updating the theme.
+
+The former Header Menu location is no longer rendered. Before deploying, add
+links to important destinations (home, Notes, search, follow, contact) in Header
+Area or another visible navigation area. Keep the widget title empty for a plain
+introduction. The footer remains available when the header is empty.
+
+Check Paragraph blocks and legacy Text widgets in the Widgets editor, including
+multiple paragraphs, italic emphasis, links, and the empty state. The frontend
+owns layout and responsive spacing; the editor is a content preview rather than
+an exact page-layout preview.
 
 ## Utility classes
 
