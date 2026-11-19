@@ -21,13 +21,7 @@
     <?php endif; ?>
 
     <?php $archive_term = ( is_tag() || is_category() || is_tax() ) ? get_queried_object() : null; ?>
-    <?php if ( is_archive() && ! $archive_term instanceof WP_Term ) : ?>
-    <h1 class="visuallyhidden">
-      <?php the_archive_title(); ?>
-    </h1>
-    <?php endif; ?>
-
-    <?php $archive_title = cp_archive_str( false ); ?>
+    <?php $archive_title = ( is_archive() || is_search() || is_404() || is_home() ) ? cp_context_heading() : ''; ?>
     <?php $archive_description = cp_archivedesc( false ); ?>
     <?php if ( $archive_title || $archive_description ) : ?>
     <div class="page-context">
@@ -51,11 +45,7 @@
         ?></h1>
       </div>
       <?php elseif ( $archive_title ) : ?>
-      <div class="breadcrumb">
-        <p>
-        <a href="<?php bloginfo( 'url' ); ?>" aria-label="Return home">..</a> / <?php echo wp_kses_post( $archive_title ); ?>
-        </p>
-      </div>
+      <h1 class="archive-heading__title"><?php echo esc_html( cp_context_heading() ); ?></h1>
       <?php endif; ?>
 
       <?php $archive_description = cp_archivedesc( false ); ?>

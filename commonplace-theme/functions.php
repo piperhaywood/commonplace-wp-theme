@@ -345,6 +345,33 @@ function cp_get_theme_version() {
   return $version;
 }
 
+/**
+ * Return a readable heading for non-term archive and utility pages.
+ *
+ * @return string Context heading.
+ */
+function cp_context_heading() {
+  if ( is_404() ) {
+    return __( 'Page not found.', 'commonplace' );
+  }
+  if ( is_search() ) {
+    /* translators: %s: Search query. */
+    return sprintf( __( 'Search results for “%s”.', 'commonplace' ), get_search_query( false ) );
+  }
+  if ( is_author() ) {
+    /* translators: %s: Author name. */
+    return sprintf( __( 'You are viewing posts by %s.', 'commonplace' ), get_queried_object()->display_name );
+  }
+  if ( is_year() || is_month() || is_day() ) {
+    /* translators: %s: Archive date. */
+    return sprintf( __( 'You are viewing the %s archive.', 'commonplace' ), get_the_archive_title() );
+  }
+  if ( is_home() ) {
+    return __( 'You are viewing the notes archive.', 'commonplace' );
+  }
+  return wp_strip_all_tags( get_the_archive_title() );
+}
+
 function cp_archive_str() {
   global $wp_query;
   $paged = get_query_var( 'paged' );
