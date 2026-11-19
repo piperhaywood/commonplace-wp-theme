@@ -659,6 +659,8 @@ function cp_get_list_item( $post = false ) {
       array(
         'taxonomy'   => array( 'post_tag' ),
         'object_ids' => get_the_id(),
+        'orderby'    => 'count',
+        'order'      => 'DESC',
       )
     );
     ?>
@@ -667,11 +669,7 @@ function cp_get_list_item( $post = false ) {
       <?php foreach ( $terms as $slug => $term ) : ?>
         <?php if ( (int) get_option( 'default_category' ) !== (int) $term->term_id ) : ?>
         <li class="term term--<?php echo esc_attr( $term->taxonomy ); ?>">
-          <?php
-          /* translators: 1: Term name, 2: Number of posts. */
-          $term_label = sprintf( _n( '%1$s, %2$s post', '%1$s, %2$s posts', $term->count, 'commonplace' ), $term->name, $term->count );
-          ?>
-        <a class="term-link" aria-label="<?php echo esc_attr( $term_label ); ?>" href="<?php echo esc_url( get_tag_link( $term->term_id ) ); ?>"><?php echo esc_html( $term->name ); ?></a><span class="separator" aria-hidden="true">,</span>
+          <?php echo wp_kses_post( cp_term_pill( $term->name, $term->count, get_term_link( $term ) ) ); ?>
         </li>
       <?php endif; ?>
       <?php endforeach; ?>
