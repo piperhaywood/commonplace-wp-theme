@@ -228,3 +228,18 @@ custom related-post template in `commonplace-theme/related-post-plugin/`.
 Documented inline exceptions cover intentional global-post setup, WordPress or
 theme-rendered HTML, Vite's development scripts, and retained Gutenberg examples.
 The separate PHP syntax job still checks the bundled library as well.
+
+
+### Archive and header regression checks
+
+With this theme active in a local WordPress installation, run
+`wp eval-file /absolute/path/to/commonplace-wp-theme/tests/archive-context.php`.
+The check covers utility headings, archive pagination, related-tag filtering,
+sorting and cache invalidation, index list semantics, escaped pills, and populated
+and empty header widgets. It needs at least one published tag. It refreshes
+disposable caches but does not edit posts, users, or saved widgets.
+
+For manual accessibility review, verify the Index letter headings and lists in
+VoiceOver, follow pill links with the keyboard, and check long names and wrapping
+at mobile widths and zoom. Review Header Area in the Widgets editor while logged
+in; the automated checks do not verify the editor or spoken screen-reader output.
