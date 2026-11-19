@@ -48,6 +48,13 @@
       <h1 class="archive-heading__title"><?php echo esc_html( cp_context_heading() ); ?></h1>
       <?php endif; ?>
 
+      <?php if ( get_query_var( 'paged' ) > 1 ) : ?>
+      <p class="meta"><?php
+        /* translators: %s: Archive page number. */
+        echo esc_html( sprintf( __( 'Page %s', 'commonplace' ), number_format_i18n( get_query_var( 'paged' ) ) ) );
+      ?></p>
+      <?php endif; ?>
+
       <?php $archive_description = cp_archivedesc( false ); ?>
       <?php if ( $archive_description ) : ?>
       <div class="page-description prose">
