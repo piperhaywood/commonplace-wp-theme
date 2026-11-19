@@ -40,7 +40,7 @@ add_shortcode( 'notebookindex', 'notebook_index' );
 function notebook_index( $attr ) {
   $a          = shortcode_atts(
     array(
-      'taxonomy' => 'post_tag, category, post_format',
+      'taxonomy' => 'post_tag, category',
       'years'    => 'true',
       'count'    => '1',
     ),
@@ -58,6 +58,7 @@ function notebook_list() {
 }
 
 function get_notebook_index( $taxonomy, $show_years, $count ) {
+  $taxonomy = array_values( array_diff( $taxonomy, array( 'post_format' ) ) );
   // Set up the index groups
   $groups = array();
 
@@ -95,11 +96,11 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
   }
 
   // Add the terms to the index
-  $terms = get_terms(
+  $terms = $taxonomy ? get_terms(
     array(
       'taxonomy' => $taxonomy,
     )
-  );
+  ) : array();
   if ( $terms && is_array( $terms ) ) {
     foreach ( $terms as $term ) {
       if ( $term->count >= $count ) {
@@ -249,6 +250,63 @@ function cp_author( $display = true ) {
   } else {
     return $return;
   }
+}
+
+/**
+ * Find terms sharing the most published posts with the current archive term.
+ *
+ * @return WP_Term[] Related tags.
+ */
+function cp_related_archive_terms() {
+  if ( ! is_tag() && ! is_category() && ! is_tax( 'post_format' ) ) {
+    return array();
+  }
+
+  $current_term = get_queried_object();
+  if ( ! $current_term instanceof WP_Term ) {
+    return array();
+  }
+
+  global $wpdb;
+
+  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Aggregate published-post relationships across taxonomies.
+  $term_ids = $wpdb->get_col(
+    $wpdb->prepare(
+      "SELECT related.term_id
+      FROM {$wpdb->term_relationships} AS source
+      INNER JOIN {$wpdb->posts} AS posts ON posts.ID = source.object_id
+      INNER JOIN {$wpdb->term_relationships} AS relationships ON relationships.object_id = posts.ID
+      INNER JOIN {$wpdb->term_taxonomy} AS related ON related.term_taxonomy_id = relationships.term_taxonomy_id
+      INNER JOIN {$wpdb->terms} AS terms ON terms.term_id = related.term_id
+      WHERE source.term_taxonomy_id = %d
+        AND posts.post_type = 'post'
+        AND posts.post_status = 'publish'
+        AND related.taxonomy = 'post_tag'
+        AND related.count >= 3
+        AND related.term_taxonomy_id != %d
+      GROUP BY related.term_id, terms.name
+      ORDER BY COUNT(DISTINCT posts.ID) DESC, terms.name ASC, related.term_id ASC
+      LIMIT 17",
+      $current_term->term_taxonomy_id,
+      $current_term->term_taxonomy_id
+    )
+  );
+
+  if ( ! $term_ids ) {
+    return array();
+  }
+
+  $terms = get_terms(
+    array(
+      'taxonomy'   => 'post_tag',
+      'include'    => array_map( 'intval', $term_ids ),
+      'orderby'    => 'count',
+      'order'      => 'DESC',
+      'hide_empty' => true,
+    )
+  );
+
+  return is_wp_error( $terms ) ? array() : $terms;
 }
 
 function cp_archivedesc( $display = true, $prefix = '', $suffix = '' ) {

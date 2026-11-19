@@ -1,20 +1,6 @@
 @use "variables" as *;
 @use "mixins" as *;
 
-.cp-widget--header-1 .widget {
-  @include style-h5;
-  * {
-    margin: 0;
-    padding: 0;
-  }
-  a {
-    text-decoration-line: none;
-  }
-  a:hover {
-    text-decoration-line: underline;
-  }
-}
-
 .footer-widgets {
   @include style-h3;
   @include container($container-width);

@@ -61,8 +61,10 @@
           <?php
           $post_terms = get_terms(
             array(
-              'taxonomy'   => array( 'post_tag', 'category', 'post_format' ),
+              'taxonomy'   => array( 'post_tag', 'category' ),
               'object_ids' => get_the_id(),
+              'orderby'    => 'count',
+              'order'      => 'DESC',
             )
           );
           ?>

@@ -3,11 +3,11 @@
 function cp_widgets_init() {
   register_sidebar(
     array(
-      'name'          => 'Header Area',
+      'name'          => __( 'Header Area', 'commonplace' ),
       'id'            => 'header-area-1',
-      'description'   => 'Appears in the header area, best for short text like an email address',
-      'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-      'after_widget'  => '</aside>',
+      'description'   => __( 'Introductory content above the page or archive header. Add a paragraph with links; leave empty to hide this area.', 'commonplace' ),
+      'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</div>',
       'before_title'  => '<h3 class="widget-title">',
       'after_title'   => '</h3>',
     )

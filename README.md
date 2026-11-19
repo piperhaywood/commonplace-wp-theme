@@ -14,7 +14,7 @@ To install the theme, compress the compiled theme folder `/commonplace-theme` an
 
 The shortcode `[notebooksearch]` displays a search form.
 
-The shortcode `[notebookindex]` displays an alphabetical index of terms. The Index shortcode can be passed attributes that modify the included taxonomies, the post count threshold, and whether or not year archive links are displayed. For example, `[notebookindex taxonomy="category" years="false" count="2"]` will pull through only categories with a post count of at least 2 and no year archive links. If no attributes are passed to the `notebookindex` shortcode, then these default attributes will be used: `[notebookindex taxonomy="post_tag, category, post_format" years="true" count="1"]`.
+The shortcode `[notebookindex]` displays an alphabetical index of terms. The Index shortcode can be passed attributes that modify the included taxonomies, the post count threshold, and whether or not year archive links are displayed. For example, `[notebookindex taxonomy="category" years="false" count="2"]` will pull through only categories with a post count of at least 2 and no year archive links. If no attributes are passed to the `notebookindex` shortcode, then these default attributes will be used: `[notebookindex taxonomy="post_tag, category" years="true" count="1"]`.
 
 The shortcode `[notebooklist]` displays a chronological list of posts.
 
@@ -28,6 +28,16 @@ regenerate thumbnails for existing uploads:
 Alternatively, use a thumbnail regeneration plugin. Until regeneration is
 complete, list images fall back to the existing `thumbnail` size. New uploads get
 the list size automatically.
+
+## Header introduction
+
+Add introductory text and links in **Appearance → Widgets → Header Area**. A
+Paragraph block or Text widget works well. The theme displays this content above
+the page or archive header, using serif text aligned with post content.
+Apply italics within the widget content when desired.
+Links remain underlined. Multiple paragraphs and widgets are supported; leaving
+Header Area empty hides the introduction and its spacing. Existing Header Area
+widgets retain their content when updating the theme.
 
 ## Utility classes
 
