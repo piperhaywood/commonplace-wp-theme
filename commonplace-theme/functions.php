@@ -148,7 +148,7 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
       ?>
       <div class="termgroup">
       <h2 aria-label="<?php echo esc_attr( $label ); ?>"><?php echo wp_kses_post( apply_filters( 'the_title', $char ) ); ?></h2>
-      <ol>
+      <ol role="list">
       <?php foreach ( $terms as $slug => $term ) : ?>
         <li>
         <?php echo wp_kses_post( cp_term_pill( $term['name'], $term['count'], $term['url'], $term['aria'] ) ); ?>
