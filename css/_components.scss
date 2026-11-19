@@ -157,7 +157,6 @@
   overflow-wrap: anywhere;
   padding: 0.15em 0.65em;
   text-decoration: none;
-  transition: background-color 150ms, color 150ms;
 }
 
 .archive-heading__term {
@@ -352,7 +351,6 @@
   @include style-h5;
   color: #6c6c6c;
   margin-inline-start: 0.5rem;
-  transition: color 150ms;
 }
 
 .post-meta .term-link:hover .term__count,
