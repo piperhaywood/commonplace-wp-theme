@@ -2,7 +2,6 @@
 <ruleset name="Commonplace">
   <description>WordPress coding standards for the theme's own PHP.</description>
   <file>commonplace-theme</file>
-  <exclude-pattern>commonplace-theme/func/related-posts-by-taxonomy/*</exclude-pattern>
   <arg name="extensions" value="php"/>
   <arg value="sp"/>
   <rule ref="WordPress-Extra">

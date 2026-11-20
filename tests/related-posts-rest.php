@@ -4,7 +4,7 @@
  * Requires WordPress with this theme active. Does not write users or posts.
  */
 
-if ( ! defined( 'ABSPATH' ) || ! function_exists( 'km_rpbt_plugin_supports' ) ) {
+if ( ! defined( 'ABSPATH' ) || ! function_exists( 'cp_get_related_posts' ) ) {
   throw new RuntimeException( 'Load WordPress with the Commonplace theme active.' );
 }
 
@@ -38,7 +38,7 @@ foreach ( array( 'anonymous', 'subscriber' ) as $role ) {
 
 wp_set_current_user( 0 );
 remove_filter( 'related_posts_by_taxonomy_wp_rest_api', '__return_true' );
-if ( ! shortcode_exists( 'related_posts_by_tax' ) || ! class_exists( 'Related_Posts_By_Taxonomy' ) ) {
-  throw new RuntimeException( 'Related-posts shortcode or widget is unavailable.' );
+if ( ! shortcode_exists( 'related_posts_by_tax' ) ) {
+  throw new RuntimeException( 'Related-posts shortcode is unavailable.' );
 }
-echo "PASS: related-posts shortcode and widget remain registered.\n";
+echo "PASS: related-posts shortcode remains registered.\n";
