@@ -27,6 +27,10 @@ try {
   $wp_query = new WP_Query();
   $wp_query->set_404();
   $html = $render_header();
+  ob_start();
+  include get_template_directory() . '/loop.php';
+  $html .= ob_get_clean();
+  $check( false !== strpos( $html, '<h1 class="post-title">Page not found</h1>' ), '404 page title missing.' );
   $check( 1 === substr_count( $html, '<h1 ' ), '404 needs exactly one H1.' );
   $check( false === strpos( $html, 'class="breadcrumb"' ), '404 still uses breadcrumb.' );
 

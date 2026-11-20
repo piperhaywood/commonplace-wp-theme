@@ -96,8 +96,15 @@ if ( ( is_home() || is_archive() || is_search() ) && have_posts() && in_array( g
   <?php else : ?>
     <article class="post article type-<?php echo esc_attr( get_post_type() ); ?>" style="--color:<?php echo esc_attr( cp_get_hsl() ); ?>;">
 
+      <?php if ( is_404() ) : ?>
+      <header class="post-header">
+        <h1 class="post-title"><?php esc_html_e( 'Page not found', 'commonplace' ); ?></h1>
+      </header>
+      <?php endif; ?>
       <section class="prose e-content">
+      <?php if ( ! is_404() ) : ?>
       <p><?php esc_html_e( 'Nothing found!', 'commonplace' ); ?></p>
+      <?php endif; ?>
       <?php get_search_form(); ?>
       <?php echo do_shortcode( '[notebookindex count="2"]' ); ?>
       </section>

@@ -21,7 +21,7 @@
     <?php endif; ?>
 
     <?php $archive_term = ( is_tag() || is_category() || is_tax() ) ? get_queried_object() : null; ?>
-    <?php $archive_title = ( is_archive() || is_search() || is_404() || is_home() ) ? cp_context_heading() : ''; ?>
+    <?php $archive_title = ( is_archive() || is_search() || is_home() ) ? cp_context_heading() : ''; ?>
     <?php $archive_description = cp_archivedesc( false ); ?>
     <?php if ( $archive_title || $archive_description ) : ?>
     <div class="page-context">
