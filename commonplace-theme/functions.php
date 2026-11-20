@@ -7,7 +7,7 @@ require_once 'func/enqueue.php';
 require_once 'func/navigation.php';
 require_once 'func/theme-support.php';
 require_once 'func/widgets.php';
-require_once 'func/related-posts-by-taxonomy/related-posts-by-taxonomy.php';
+require_once 'func/related-posts.php';
 
 add_shortcode( 'notebooksearch', 'get_search_form' );
 
@@ -96,33 +96,21 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
 
   // Add the year archives to the index
   if ( $show_years ) {
-    $years = cp_get_years_array();
-    if ( $years ) {
-      $args = array(
-        'posts_per_page' => -1,
-        'post_type'      => 'post',
-        'fields'         => 'ids',
-      );
-      foreach ( $years as $year ) {
-        $args['date_query'] = array(
-          array( 'year' => $year ),
+    $years = cp_get_year_counts();
+    foreach ( $years as $year => $year_count ) {
+      if ( $year_count >= $count ) {
+        $groups = cp_add_to_index(
+          $groups,
+          array(
+            'name'  => (string) $year,
+            'url'   => get_year_link( $year ),
+            'count' => $year_count,
+            'slug'  => $year,
+            'type'  => 'year',
+            /* translators: 1: Archive year, 2: Number of posts. */
+            'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
+          )
         );
-        $posts              = get_posts( $args );
-        $year_count         = count( $posts );
-        if ( $year_count >= $count ) {
-          $groups = cp_add_to_index(
-            $groups,
-            array(
-              'name'  => $year,
-              'url'   => get_year_link( $year ),
-              'count' => $year_count,
-              'slug'  => $year,
-              'type'  => 'year',
-              /* translators: 1: Archive year, 2: Number of posts. */
-              'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
-            )
-          );
-        }
       }
     }
   }
@@ -516,22 +504,26 @@ function cp_group_posts_by_year() {
   return $years;
 }
 
-function cp_get_years_array() {
+function cp_get_year_counts() {
   global $wpdb;
   $result = array();
   $years  = $wpdb->get_results(
     $wpdb->prepare(
-      "SELECT YEAR(post_date) FROM {$wpdb->posts} WHERE post_status = %s GROUP BY YEAR(post_date) ORDER BY YEAR(post_date) DESC",
-      array( 'publish' )
-    ),
-    ARRAY_N
+      "SELECT YEAR(post_date) AS year, COUNT(*) AS post_count FROM {$wpdb->posts} WHERE post_status = %s AND post_type = %s GROUP BY YEAR(post_date) ORDER BY YEAR(post_date) DESC",
+      'publish',
+      'post'
+    )
   );
-  if ( is_array( $years ) && count( $years ) > 0 ) {
+  if ( is_array( $years ) ) {
     foreach ( $years as $year ) {
-      $result[] = $year[0];
+      $result[ $year->year ] = (int) $year->post_count;
     }
   }
   return $result;
+}
+
+function cp_get_years_array() {
+  return array_map( 'strval', array_keys( cp_get_year_counts() ) );
 }
 
 function cp_add_to_index( $groups, $args ) {
@@ -545,6 +537,31 @@ function cp_add_to_index( $groups, $args ) {
   return $groups;
 }
 
+function cp_get_post_terms( $post_id, $taxonomies ) {
+  $terms = array();
+  foreach ( $taxonomies as $taxonomy ) {
+    $post_terms = get_the_terms( $post_id, $taxonomy );
+    if ( is_array( $post_terms ) ) {
+      $terms = array_merge( $terms, $post_terms );
+    }
+  }
+  if ( count( $terms ) < 2 ) {
+    return $terms;
+  }
+  // Sort only this post's terms. Post formats retain their stored-name position
+  // even though WordPress replaces their names with translated display labels.
+  usort(
+    $terms,
+    static function ( $a, $b ) {
+      $a_name = 'post_format' === $a->taxonomy ? $a->slug : $a->name;
+      $b_name = 'post_format' === $b->taxonomy ? $b->slug : $b->name;
+      $result = strcasecmp( remove_accents( $a_name ), remove_accents( $b_name ) );
+      return $result ? $result : $a->term_id <=> $b->term_id;
+    }
+  );
+  return $terms;
+}
+
 function cp_get_list_item( $post = false ) {
   if ( ! $post ) {
     global $post;
@@ -552,12 +569,11 @@ function cp_get_list_item( $post = false ) {
   ?>
   <?php $format = get_post_format( $post ); ?>
   <?php $hsl = cp_get_hsl( $post, 'thumbnail' ); ?>
-  <?php $images = get_attached_media( 'image' ); ?>
   <?php $title = get_the_title( $post ); ?>
   <li class="post-index__post-item" style="--color:<?php echo esc_attr( $hsl ); ?>;">
   <?php if ( has_post_thumbnail() ) : ?>
     <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WordPress generates and escapes the thumbnail HTML, including theme CSS properties.
-    echo cp_list_thumb( $post, 'thumbnail' );
+    echo cp_list_thumb( $post );
     ?>
   <?php endif; ?>
   <div class="post-item">
@@ -572,12 +588,7 @@ function cp_get_list_item( $post = false ) {
     <span class="post-item__text"><?php echo wp_kses_post( '' === $title ? get_the_excerpt() : $title ); ?></span>
     </a>
     <?php
-    $terms = get_terms(
-      array(
-        'taxonomy'   => array( 'post_tag' ),
-        'object_ids' => get_the_id(),
-      )
-    );
+    $terms = cp_get_post_terms( get_the_ID(), array( 'post_tag' ) );
     ?>
     <?php if ( $terms ) : ?>
     <ul class="post-item__terms">
@@ -661,11 +672,19 @@ function max_img_width( $img_width, $img_height, $ideal_area ) {
   return $max_width;
 }
 
-function cp_list_thumb( $post, $size = 'thumbnail' ) {
+function cp_list_thumb( $post, $size = 'cp-list-thumb' ) {
+  $attachment_id = get_post_thumbnail_id( $post->ID );
+  // Older uploads may not have the theme's list size until thumbnails are regenerated.
+  if ( 'cp-list-thumb' === $size && ! image_get_intermediate_size( $attachment_id, $size ) ) {
+    $size = 'thumbnail';
+  }
+  $data = wp_get_attachment_image_src( $attachment_id, $size );
+  if ( ! $data ) {
+    return '';
+  }
   add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
   $rotations = array( wp_rand( 10, 20 ), wp_rand( -20, -10 ) );
   $y_offset  = array( wp_rand( 4, 6 ), wp_rand( -6, -4 ) );
-  $data      = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), $size );
   $style     = '--pos-right:' . wp_rand( 5, 95 ) . '%;--trans-y:' . $y_offset[ array_rand( $y_offset ) ] . 'rem;--rotate:' . $rotations[ array_rand( $rotations ) ] . 'deg;--max-width:' . max_img_width( $data[1], $data[2], 8000 ) / 16 . 'rem;';
   $html      = get_the_post_thumbnail(
     $post,
