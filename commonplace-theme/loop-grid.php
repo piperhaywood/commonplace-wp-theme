@@ -21,7 +21,16 @@
         </header>
         <div class="post-grid__image">
           <?php if ( has_post_thumbnail() ) : ?>
-            <?php the_post_thumbnail( 'large', array( 'class' => 'post-grid__thumbnail' ) ); ?>
+            <?php
+            the_post_thumbnail(
+              'large',
+              array(
+                'class' => 'post-grid__thumbnail',
+                // Match the grid's 2/3/4/6 columns, 2rem gaps, and 32rem maximum.
+                'sizes' => '(min-width: 204rem) 32rem, (min-width: 108rem) calc((100vw - 12rem) / 6), (min-width: 72rem) calc((100vw - 8rem) / 4), (min-width: 54rem) calc((100vw - 6rem) / 3), calc((100vw - 4rem) / 2)',
+              )
+            );
+            ?>
           <?php elseif ( ! post_password_required() ) : ?>
             <?php
             // A visual crop of the post, without executing blocks, embeds, or shortcodes.
