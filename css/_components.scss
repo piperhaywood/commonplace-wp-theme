@@ -38,7 +38,7 @@
 }
 
 .page-context {
-  border-block-end: 1px solid $black;
+  border-block: 1px solid $black;
   margin-inline: auto;
   max-width: $container-width;
   padding-block: $my;
@@ -276,7 +276,7 @@
 // Index
 
 .termindex {
-  @include container($container-width-xl);
+  @include container($container-width);
   display: block;
   margin-block-end: 6rem;
   margin-block-start: 6rem;
@@ -288,40 +288,21 @@
   }
 }
 
-.termindex .termgroup {
-  display: inline;
-}
-
-.termindex h2 {
-  @include style-body;
-  display: inline;
-  margin-block-end: 0;
-  margin-block-start: 0;
-  margin-inline: 0;
-  max-width: none;
-  padding: 0;
-}
-
-.termindex .termgroup:not(:last-child) li:last-child {
-  margin-inline-end: 0.75rem;
-}
-
-.termindex ol {
+.termindex ul {
   @include style-h5;
-  display: inline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-start;
   list-style-type: none;
-  margin-block-end: $my-lg;
-  margin-block-start: 0;
-  margin-inline: 0;
+  margin: 0;
   max-width: none;
   padding: 0;
 }
 
 .termindex li {
-  display: inline-block;
-  margin-block-end: 0.4rem;
-  margin-inline-end: 0.4rem;
-  margin-inline-start: 0;
+  margin: 0;
+  max-width: 100%;
   text-indent: 0;
 }
 

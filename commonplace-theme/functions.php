@@ -41,7 +41,7 @@ function notebook_index( $attr ) {
   $a          = shortcode_atts(
     array(
       'taxonomy' => 'post_tag, category',
-      'years'    => 'true',
+      'years'    => 'false',
       'count'    => '1',
     ),
     $attr
@@ -91,96 +91,63 @@ function notebook_list() {
 }
 
 function get_notebook_index( $taxonomy, $show_years, $count ) {
+  // Retain the legacy years argument for callers; the cloud contains terms only.
   $taxonomy = array_values( array_diff( $taxonomy, array( 'post_format' ) ) );
-  // Set up the index groups
-  $groups = array();
-
-  // Add the year archives to the index
-  if ( $show_years ) {
-    $years = cp_get_year_counts();
-    foreach ( $years as $year => $year_count ) {
-      if ( $year_count >= $count ) {
-        $groups = cp_add_to_index(
-          $groups,
-          array(
-            'name'  => (string) $year,
-            'url'   => get_year_link( $year ),
-            'count' => $year_count,
-            'slug'  => $year,
-            'type'  => 'year',
-            /* translators: 1: Archive year, 2: Number of posts. */
-            'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
-          )
-        );
-      }
-    }
-  }
-
-  // Add the terms to the index
-  $terms = $taxonomy ? get_terms(
+  $terms    = $taxonomy ? get_terms(
     array(
       'taxonomy' => $taxonomy,
+      'orderby'  => 'name',
+      'order'    => 'ASC',
     )
   ) : array();
-  if ( $terms && is_array( $terms ) ) {
-    foreach ( $terms as $term ) {
-      if ( $term->count >= $count ) {
-        // NOTE strip "post-format-" from slug, for some reason this gets included
-        $slug   = str_replace( 'post-format-', '', $term->slug );
-        $tax    = get_taxonomy( $term->taxonomy );
-        $groups = cp_add_to_index(
-          $groups,
-          array(
-            'name'  => $term->name,
-            'url'   => get_tag_link( $term->term_id ),
-            'count' => $term->count,
-            'slug'  => $slug,
-            'type'  => $term->taxonomy,
-            /* translators: 1: Taxonomy label, 2: Term name, 3: Number of posts. */
-            'aria'  => sprintf( esc_html__( '%1$s: %2$s, %3$s posts', 'notebook-ph' ), $tax->labels->singular_name, $term->name, $term->count ),
-          )
-        );
-      }
-    }
+  if ( is_wp_error( $terms ) || ! $terms ) {
+    return '';
   }
 
-  // Move # and ? items to end of index
-  if ( ! empty( $groups ) ) {
-    ksort( $groups );
-    $end_keys = array( '#', '?' );
-    foreach ( $end_keys as $key ) {
-      if ( array_key_exists( $key, $groups ) ) {
-        $unset_group = $groups[ $key ];
-        unset( $groups[ $key ] );
-        $groups[ $key ] = $unset_group;
+  $terms = array_values(
+    array_filter(
+      $terms,
+      static function ( $term ) use ( $count ) {
+          return $term->count >= $count;
       }
+    )
+  );
+  if ( ! $terms ) {
+    return '';
+  }
+
+  // Partition without re-sorting, preserving alphabetical order within each group.
+  $text_terms  = array();
+  $emoji_terms = array();
+  foreach ( $terms as $term ) {
+    if ( preg_match( '/^\s*(?:\p{Extended_Pictographic}|[\x{1F1E6}-\x{1F1FF}]|[#*0-9]\x{FE0F}?\x{20E3})/u', html_entity_decode( $term->name, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) ) ) {
+      $emoji_terms[] = $term;
+    } else {
+      $text_terms[] = $term;
     }
   }
+  $terms = array_merge( $text_terms, $emoji_terms );
 
   ob_start();
   ?>
-  <?php if ( ! empty( $groups ) ) : ?>
-    <div class="termindex">
-    <?php foreach ( $groups as $char => $terms ) : ?>
-      <?php ksort( $terms ); ?>
-      <?php $label = '#' === $char ? esc_attr__( 'a number', 'notebook-ph' ) : $char; ?>
+  <div class="termindex">
+    <ul role="list">
+    <?php foreach ( $terms as $term ) : ?>
       <?php
-      /* translators: %s: First character of the grouped terms. */
-      $label = sprintf( esc_attr__( 'Terms beginning with %s', 'notebook-ph' ), $label );
+      $url = get_term_link( $term );
+      if ( is_wp_error( $url ) ) {
+        continue;
+      }
       ?>
-      <div class="termgroup">
-      <h2 aria-label="<?php echo esc_attr( $label ); ?>"><?php echo wp_kses_post( apply_filters( 'the_title', $char ) ); ?></h2>
-      <ol role="list">
-      <?php foreach ( $terms as $slug => $term ) : ?>
-        <li>
-        <?php echo wp_kses_post( cp_term_pill( $term['name'], $term['count'], $term['url'], $term['aria'] ) ); ?>
-        </li>
-      <?php endforeach; ?>
-      </ol>
-      </div>
+      <?php
+      $tax = get_taxonomy( $term->taxonomy );
+      /* translators: 1: Taxonomy label, 2: Term name, 3: Number of posts. */
+      $label = sprintf( _n( '%1$s: %2$s, %3$s post', '%1$s: %2$s, %3$s posts', $term->count, 'commonplace' ), $tax->labels->singular_name, $term->name, number_format_i18n( $term->count ) );
+      ?>
+      <li><?php echo wp_kses_post( cp_term_pill( $term->name, $term->count, $url, $label ) ); ?></li>
     <?php endforeach; ?>
-    </div>
-  <?php endif; ?>
+    </ul>
+  </div>
   <?php
   return ob_get_clean();
 }
@@ -663,17 +630,6 @@ function cp_get_year_counts() {
 
 function cp_get_years_array() {
   return array_map( 'strval', array_keys( cp_get_year_counts() ) );
-}
-
-function cp_add_to_index( $groups, $args ) {
-  $first_char = strtoupper( $args['name'][0] );
-  if ( is_numeric( $first_char ) ) {
-    $first_char = '#';
-  } elseif ( '&' === $first_char || 'UTF-8' === mb_detect_encoding( $first_char ) ) {
-    $first_char = '?';
-  }
-  $groups[ $first_char ][ $args['slug'] ] = $args;
-  return $groups;
 }
 
 function cp_get_post_terms( $post_id, $taxonomies ) {

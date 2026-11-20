@@ -14,7 +14,7 @@ To install the theme, compress the compiled theme folder `/commonplace-theme` an
 
 The shortcode `[notebooksearch]` displays a search form.
 
-The shortcode `[notebookindex]` displays an alphabetical index of terms. The Index shortcode can be passed attributes that modify the included taxonomies, the post count threshold, and whether or not year archive links are displayed. For example, `[notebookindex taxonomy="category" years="false" count="2"]` will pull through only categories with a post count of at least 2 and no year archive links. If no attributes are passed to the `notebookindex` shortcode, then these default attributes will be used: `[notebookindex taxonomy="post_tag, category" years="true" count="1"]`.
+The shortcode `[notebookindex]` displays a left-aligned, paragraph-width wrapping cloud of tag and category pills with post counts, ordered alphabetically with emoji-led terms grouped at the end. Use `taxonomy` to select other taxonomies and `count` to set the minimum post count, for example `[notebookindex taxonomy="category" count="2"]`. Defaults are `taxonomy="post_tag, category" count="1"`. Post formats and year links are omitted; the legacy `years` attribute is accepted but has no effect.
 
 The shortcode `[notebooklist]` displays a chronological list of posts in batches
 of 50. “Load more posts” appends the next batch; without JavaScript, a “Next posts”
@@ -280,7 +280,7 @@ sorting and cache invalidation, index list semantics, escaped pills, and populat
 and empty header widgets. It needs at least one published tag. It refreshes
 disposable caches but does not edit posts, users, or saved widgets.
 
-For manual accessibility review, verify the Index letter headings and lists in
+For manual accessibility review, verify the Index cloud list and taxonomy labels in
 VoiceOver, follow pill links with the keyboard, and check long names and wrapping
 at mobile widths and zoom. Review Header Area in the Widgets editor while logged
 in; the automated checks do not verify the editor or spoken screen-reader output.

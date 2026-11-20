@@ -74,12 +74,46 @@ try {
   }
 
   $index = get_notebook_index( array( 'post_tag', 'category', 'post_format' ), false, 1 );
-  $check( false !== strpos( $index, '<ol role="list">' ), 'Explicit index list semantics missing.' );
+  $check( false !== strpos( $index, '<ul role="list">' ), 'Explicit index list semantics missing.' );
+  $emoji_seen = false;
+  preg_match_all( '/<a[^>]*>(.*?)<span class="term__count"/s', $index, $cloud_names );
+  foreach ( $cloud_names[1] as $cloud_name ) {
+    $name = html_entity_decode( wp_strip_all_tags( $cloud_name ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+    $emoji = preg_match( '/^\s*(?:\p{Extended_Pictographic}|[\x{1F1E6}-\x{1F1FF}]|[#*0-9]\x{FE0F}?\x{20E3})/u', $name );
+    $check( ! $emoji_seen || $emoji, 'Text term follows an emoji term in the cloud.' );
+    $emoji_seen = $emoji_seen || $emoji;
+  }
+  $check( false === strpos( $index, '<h2' ), 'Index should not include letter headings.' );
+  $check( false === strpos( get_notebook_index( array( 'post_tag' ), true, 1 ), 'termgroup' ), 'Index should remain a flat cloud with legacy years enabled.' );
   $document = new DOMDocument();
   @$document->loadHTML( '<?xml encoding="utf-8" ?>' . $index );
   foreach ( $document->getElementsByTagName( 'a' ) as $link ) {
     $path = wp_parse_url( $link->getAttribute( 'href' ), PHP_URL_PATH );
     $check( 0 !== strpos( $path, '/type/' ), 'Index must omit formats.' );
+  }
+  // Inject explicit fixtures without saving terms or depending on site content.
+  $seed = get_terms( array( 'taxonomy' => 'post_tag', 'number' => 1 ) )[0];
+  $fixtures = array();
+  foreach ( array( '🐚', '&#x1f331;', '&#11088;', 'Alpha fixture', 'Zulu fixture' ) as $name ) {
+    $fixture = clone $seed;
+    $fixture->name = $name;
+    $fixture->count = 5;
+    $fixtures[] = $fixture;
+  }
+  $fixture_filter = static function ( $terms ) use ( &$fixtures ) { return $fixtures; };
+  add_filter( 'get_terms', $fixture_filter );
+  try {
+    $fixture_html = get_notebook_index( array( 'post_tag' ), true, 1 );
+    $check( strpos( $fixture_html, 'Alpha fixture' ) < strpos( $fixture_html, 'Zulu fixture' ), 'Text order changed.' );
+    foreach ( array( '🐚', '&#x1f331;', '&#11088;' ) as $emoji_name ) {
+      $check( strpos( $fixture_html, 'Zulu fixture' ) < strpos( $fixture_html, $emoji_name ), 'Literal or encoded emoji did not move to the end.' );
+    }
+    $check( false !== strpos( $fixture_html, 'Tag: Alpha fixture, 5 posts' ), 'Cloud taxonomy label missing.' );
+    $check( '' === get_notebook_index( array( 'post_tag' ), false, 6 ), 'Count threshold should produce no empty cloud.' );
+    $fixtures = array();
+    $check( '' === get_notebook_index( array( 'post_tag' ), false, 1 ), 'Empty terms should produce no cloud.' );
+  } finally {
+    remove_filter( 'get_terms', $fixture_filter );
   }
   $pill = cp_term_pill( '<unsafe>', 3, '/notes/' );
   $check( false !== strpos( $pill, '&lt;unsafe&gt;' ), 'Pill name escaping failed.' );
