@@ -1,6 +1,15 @@
+<?php
+if ( ( is_home() || is_archive() || is_search() ) && have_posts() && in_array( get_query_var( 'cp_view' ), array( 'grid', 'list' ), true ) ) {
+  get_template_part( 'loop', get_query_var( 'cp_view' ) );
+  return;
+}
+?>
 <main id="main" class="main" role="main">
-  <section class="articles"<?php if ( ! is_singular() ) :
-    ?> role="feed"<?php endif; ?>>
+  <section class="articles"
+  <?php
+  if ( ! is_singular() ) :
+    ?>
+    role="feed"<?php endif; ?>>
   <?php if ( have_posts() ) : ?>
     <?php
     while ( have_posts() ) :
@@ -59,14 +68,7 @@
         <div class="post-meta meta">
         <p>
           <?php
-          $post_terms = get_terms(
-            array(
-              'taxonomy'   => array( 'post_tag', 'category' ),
-              'object_ids' => get_the_id(),
-              'orderby'    => 'count',
-              'order'      => 'DESC',
-            )
-          );
+          $post_terms = cp_get_post_terms( get_the_ID(), array( 'post_tag', 'category' ) );
           ?>
           <?php if ( $post_terms ) : ?>
             <?php foreach ( $post_terms as $slug => $post_term ) : ?>

@@ -15,7 +15,7 @@
 - Use Sass modules (`@use`). Preserve stylesheet cascade order, including the editor's use of `meta.load-css()` after local rules.
 - Follow `.phpcs.xml.dist`: WordPress-Extra with two-space indentation instead of tabs. Use the Composer scripts, which supply the required tab width.
 - Preserve WordPress escaping, sanitization, translation, and accessibility conventions. Keep existing public shortcodes and theme behavior compatible unless the task calls for a change.
-- The bundled `commonplace-theme/func/related-posts-by-taxonomy/` library is excluded from coding standards checks. Avoid incidental reformatting there; PHP syntax checks still cover it. The custom template in `commonplace-theme/related-post-plugin/` is checked.
+- Related posts live in `commonplace-theme/func/related-posts.php` and are covered by coding standards checks. Preserve shared-term ranking, published-only results, and the documented legacy shortcode attributes.
 
 ## Verification
 

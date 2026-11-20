@@ -7,7 +7,7 @@ require_once 'func/enqueue.php';
 require_once 'func/navigation.php';
 require_once 'func/theme-support.php';
 require_once 'func/widgets.php';
-require_once 'func/related-posts-by-taxonomy/related-posts-by-taxonomy.php';
+require_once 'func/related-posts.php';
 
 add_shortcode( 'notebooksearch', 'get_search_form' );
 
@@ -54,7 +54,40 @@ function notebook_index( $attr ) {
 
 add_shortcode( 'notebooklist', 'notebook_list' );
 function notebook_list() {
-  return cp_get_list();
+  static $instance = 0;
+  ++$instance;
+  $pages = get_query_var( 'cp_list_page', array() );
+  $pages = is_array( $pages ) ? $pages : array();
+  $page  = isset( $pages[ $instance ] ) && is_scalar( $pages[ $instance ] ) ? max( 1, absint( $pages[ $instance ] ) ) : 1;
+  $posts = new WP_Query(
+    array(
+      'post_type'           => 'post',
+      'posts_per_page'      => 50,
+      'paged'               => $page,
+      'ignore_sticky_posts' => true,
+    )
+  );
+  $next  = '';
+  if ( $page < $posts->max_num_pages ) {
+    $pages[ $instance ] = $page + 1;
+    $next               = add_query_arg( 'cp_list_page', $pages, get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ), false ) );
+  }
+  ob_start();
+  ?>
+  <div data-post-browser="<?php echo esc_attr( 'notebook-list-' . $instance ); ?>">
+    <?php
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme-rendered list HTML is escaped by its row renderer.
+    echo cp_get_list( $posts );
+    get_template_part( 'load-more', null, array( 'next' => $next ) );
+    ?>
+    <?php if ( $next ) : ?>
+      <nav class="post-browser__pagination" data-post-pagination aria-label="<?php esc_attr_e( 'More posts', 'commonplace' ); ?>">
+        <a class="button" href="<?php echo esc_url( $next ); ?>"><?php esc_html_e( 'Next posts', 'commonplace' ); ?></a>
+      </nav>
+    <?php endif; ?>
+  </div>
+  <?php
+  return ob_get_clean();
 }
 
 function get_notebook_index( $taxonomy, $show_years, $count ) {
@@ -64,33 +97,21 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
 
   // Add the year archives to the index
   if ( $show_years ) {
-    $years = cp_get_years_array();
-    if ( $years ) {
-      $args = array(
-        'posts_per_page' => -1,
-        'post_type'      => 'post',
-        'fields'         => 'ids',
-      );
-      foreach ( $years as $year ) {
-        $args['date_query'] = array(
-          array( 'year' => $year ),
+    $years = cp_get_year_counts();
+    foreach ( $years as $year => $year_count ) {
+      if ( $year_count >= $count ) {
+        $groups = cp_add_to_index(
+          $groups,
+          array(
+            'name'  => (string) $year,
+            'url'   => get_year_link( $year ),
+            'count' => $year_count,
+            'slug'  => $year,
+            'type'  => 'year',
+            /* translators: 1: Archive year, 2: Number of posts. */
+            'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
+          )
         );
-        $posts              = get_posts( $args );
-        $year_count         = count( $posts );
-        if ( $year_count >= $count ) {
-          $groups = cp_add_to_index(
-            $groups,
-            array(
-              'name'  => $year,
-              'url'   => get_year_link( $year ),
-              'count' => $year_count,
-              'slug'  => $year,
-              'type'  => 'year',
-              /* translators: 1: Archive year, 2: Number of posts. */
-              'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
-            )
-          );
-        }
       }
     }
   }
@@ -136,7 +157,8 @@ function get_notebook_index( $taxonomy, $show_years, $count ) {
     }
   }
 
-  ob_start(); ?>
+  ob_start();
+  ?>
   <?php if ( ! empty( $groups ) ) : ?>
     <div class="termindex">
     <?php foreach ( $groups as $char => $terms ) : ?>
@@ -621,22 +643,26 @@ function cp_group_posts_by_year() {
   return $years;
 }
 
-function cp_get_years_array() {
+function cp_get_year_counts() {
   global $wpdb;
   $result = array();
   $years  = $wpdb->get_results(
     $wpdb->prepare(
-      "SELECT YEAR(post_date) FROM {$wpdb->posts} WHERE post_status = %s GROUP BY YEAR(post_date) ORDER BY YEAR(post_date) DESC",
-      array( 'publish' )
-    ),
-    ARRAY_N
+      "SELECT YEAR(post_date) AS year, COUNT(*) AS post_count FROM {$wpdb->posts} WHERE post_status = %s AND post_type = %s GROUP BY YEAR(post_date) ORDER BY YEAR(post_date) DESC",
+      'publish',
+      'post'
+    )
   );
-  if ( is_array( $years ) && count( $years ) > 0 ) {
+  if ( is_array( $years ) ) {
     foreach ( $years as $year ) {
-      $result[] = $year[0];
+      $result[ $year->year ] = (int) $year->post_count;
     }
   }
   return $result;
+}
+
+function cp_get_years_array() {
+  return array_map( 'strval', array_keys( cp_get_year_counts() ) );
 }
 
 function cp_add_to_index( $groups, $args ) {
@@ -650,6 +676,33 @@ function cp_add_to_index( $groups, $args ) {
   return $groups;
 }
 
+function cp_get_post_terms( $post_id, $taxonomies ) {
+  $terms = array();
+  foreach ( $taxonomies as $taxonomy ) {
+    $post_terms = get_the_terms( $post_id, $taxonomy );
+    if ( is_array( $post_terms ) ) {
+      $terms = array_merge( $terms, $post_terms );
+    }
+  }
+  if ( count( $terms ) < 2 ) {
+    return $terms;
+  }
+  // Sort this post's cached terms by count, with a stable name fallback.
+  usort(
+    $terms,
+    static function ( $a, $b ) {
+      $a_name = 'post_format' === $a->taxonomy ? $a->slug : $a->name;
+      $b_name = 'post_format' === $b->taxonomy ? $b->slug : $b->name;
+      $result = $b->count <=> $a->count;
+      if ( ! $result ) {
+        $result = strcasecmp( remove_accents( $a_name ), remove_accents( $b_name ) );
+      }
+      return $result ? $result : $a->term_id <=> $b->term_id;
+    }
+  );
+  return $terms;
+}
+
 function cp_get_list_item( $post = false ) {
   if ( ! $post ) {
     global $post;
@@ -657,7 +710,6 @@ function cp_get_list_item( $post = false ) {
   ?>
   <?php $format = get_post_format( $post ); ?>
   <?php $hsl = cp_get_hsl( $post, 'thumbnail' ); ?>
-  <?php $images = get_attached_media( 'image' ); ?>
   <?php $title = get_the_title( $post ); ?>
   <li class="post-index__post-item" style="--color:<?php echo esc_attr( $hsl ); ?>;">
   <?php if ( has_post_thumbnail() ) : ?>
@@ -677,14 +729,7 @@ function cp_get_list_item( $post = false ) {
     <span class="post-item__text"><?php echo wp_kses_post( '' === $title ? get_the_excerpt() : $title ); ?></span>
     </a>
     <?php
-    $terms = get_terms(
-      array(
-        'taxonomy'   => array( 'post_tag' ),
-        'object_ids' => get_the_id(),
-        'orderby'    => 'count',
-        'order'      => 'DESC',
-      )
-    );
+    $terms = cp_get_post_terms( get_the_ID(), array( 'post_tag' ) );
     ?>
     <?php if ( $terms ) : ?>
     <ul class="post-item__terms">
@@ -732,7 +777,7 @@ function cp_get_list( $posts = false ) {
     $posts = new WP_Query(
       array(
         'post_type'      => 'post',
-        'posts_per_page' => -1,
+        'posts_per_page' => 50,
       )
     );
   }
@@ -740,7 +785,7 @@ function cp_get_list( $posts = false ) {
     add_filter( 'excerpt_length', 'cp_excerpt_as_title' );
     ob_start();
     ?>
-  <ul class="post-index">
+  <ul class="post-index" data-post-items>
     <?php $orig = $post; ?>
     <?php if ( $posts->have_posts() ) : ?>
       <?php while ( $posts->have_posts() ) : ?>
@@ -750,6 +795,7 @@ function cp_get_list( $posts = false ) {
     <?php endif; ?>
     <?php // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Restore the original global post after the custom loop.
     $post = $orig;
+    wp_reset_postdata();
     ?>
   </ul>
     <?php
@@ -861,3 +907,32 @@ function cp_comment( $comment, $args, $depth ) {
     <?php
   endif;
 }
+
+/**
+ * Register the opt-in archive layout preview.
+ *
+ * @param string[] $vars Public query variables.
+ * @return string[]
+ */
+function cp_layout_preview_query_vars( $vars ) {
+  $vars[] = 'cp_view';
+  $vars[] = 'cp_list_page';
+  return $vars;
+}
+add_filter( 'query_vars', 'cp_layout_preview_query_vars' );
+
+/**
+ * Set the batch sizes for the grid and list archive previews.
+ *
+ * @param WP_Query $query The current query.
+ */
+function cp_loop_posts_per_page( $query ) {
+  if ( is_admin() || ! $query->is_main_query() || $query->is_feed() ) {
+    return;
+  }
+
+  if ( in_array( $query->get( 'cp_view' ), array( 'grid', 'list' ), true ) && ( $query->is_home() || $query->is_archive() || $query->is_search() ) ) {
+    $query->set( 'posts_per_page', 'list' === $query->get( 'cp_view' ) ? 50 : 24 );
+  }
+}
+add_action( 'pre_get_posts', 'cp_loop_posts_per_page' );
