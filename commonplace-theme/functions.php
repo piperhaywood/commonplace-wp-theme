@@ -4,7 +4,6 @@ require_once 'func/cleanup.php';
 require_once 'func/customizer.php';
 require_once 'func/enqueue.php';
 // Gutenberg block experiments in func/gutenberg.php are not loaded.
-require_once 'func/navigation.php';
 require_once 'func/theme-support.php';
 require_once 'func/widgets.php';
 require_once 'func/related-posts.php';
@@ -40,8 +39,8 @@ add_shortcode( 'notebookindex', 'notebook_index' );
 function notebook_index( $attr ) {
   $a          = shortcode_atts(
     array(
-      'taxonomy' => 'post_tag, category, post_format',
-      'years'    => 'true',
+      'taxonomy' => 'post_tag, category',
+      'years'    => 'false',
       'count'    => '1',
     ),
     $attr
@@ -91,95 +90,63 @@ function notebook_list() {
 }
 
 function get_notebook_index( $taxonomy, $show_years, $count ) {
-  // Set up the index groups
-  $groups = array();
-
-  // Add the year archives to the index
-  if ( $show_years ) {
-    $years = cp_get_year_counts();
-    foreach ( $years as $year => $year_count ) {
-      if ( $year_count >= $count ) {
-        $groups = cp_add_to_index(
-          $groups,
-          array(
-            'name'  => (string) $year,
-            'url'   => get_year_link( $year ),
-            'count' => $year_count,
-            'slug'  => $year,
-            'type'  => 'year',
-            /* translators: 1: Archive year, 2: Number of posts. */
-            'aria'  => sprintf( esc_html__( 'Year: %1$s, %2$s posts', 'notebook-ph' ), $year, $year_count ),
-          )
-        );
-      }
-    }
-  }
-
-  // Add the terms to the index
-  $terms = get_terms(
+  // Retain the legacy years argument for callers; the cloud contains terms only.
+  $taxonomy = array_values( array_diff( $taxonomy, array( 'post_format' ) ) );
+  $terms    = $taxonomy ? get_terms(
     array(
       'taxonomy' => $taxonomy,
+      'orderby'  => 'name',
+      'order'    => 'ASC',
     )
-  );
-  if ( $terms && is_array( $terms ) ) {
-    foreach ( $terms as $term ) {
-      if ( $term->count >= $count ) {
-        // NOTE strip "post-format-" from slug, for some reason this gets included
-        $slug   = str_replace( 'post-format-', '', $term->slug );
-        $tax    = get_taxonomy( $term->taxonomy );
-        $groups = cp_add_to_index(
-          $groups,
-          array(
-            'name'  => $term->name,
-            'url'   => get_tag_link( $term->term_id ),
-            'count' => $term->count,
-            'slug'  => $slug,
-            'type'  => $term->taxonomy,
-            /* translators: 1: Taxonomy label, 2: Term name, 3: Number of posts. */
-            'aria'  => sprintf( esc_html__( '%1$s: %2$s, %3$s posts', 'notebook-ph' ), $tax->labels->singular_name, $term->name, $term->count ),
-          )
-        );
-      }
-    }
+  ) : array();
+  if ( is_wp_error( $terms ) || ! $terms ) {
+    return '';
   }
 
-  // Move # and ? items to end of index
-  if ( ! empty( $groups ) ) {
-    ksort( $groups );
-    $end_keys = array( '#', '?' );
-    foreach ( $end_keys as $key ) {
-      if ( array_key_exists( $key, $groups ) ) {
-        $unset_group = $groups[ $key ];
-        unset( $groups[ $key ] );
-        $groups[ $key ] = $unset_group;
+  $terms = array_values(
+    array_filter(
+      $terms,
+      static function ( $term ) use ( $count ) {
+          return $term->count >= $count;
       }
+    )
+  );
+  if ( ! $terms ) {
+    return '';
+  }
+
+  // Partition without re-sorting, preserving alphabetical order within each group.
+  $text_terms  = array();
+  $emoji_terms = array();
+  foreach ( $terms as $term ) {
+    if ( preg_match( '/^\s*(?:\p{Extended_Pictographic}|[\x{1F1E6}-\x{1F1FF}]|[#*0-9]\x{FE0F}?\x{20E3})/u', html_entity_decode( $term->name, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) ) ) {
+      $emoji_terms[] = $term;
+    } else {
+      $text_terms[] = $term;
     }
   }
+  $terms = array_merge( $text_terms, $emoji_terms );
 
   ob_start();
   ?>
-  <?php if ( ! empty( $groups ) ) : ?>
-    <div class="termindex">
-    <?php foreach ( $groups as $char => $terms ) : ?>
-      <?php ksort( $terms ); ?>
-      <?php $label = '#' === $char ? esc_attr__( 'a number', 'notebook-ph' ) : $char; ?>
+  <div class="termindex">
+    <ul role="list">
+    <?php foreach ( $terms as $term ) : ?>
       <?php
-      /* translators: %s: First character of the grouped terms. */
-      $label = sprintf( esc_attr__( 'Terms beginning with %s', 'notebook-ph' ), $label );
+      $url = get_term_link( $term );
+      if ( is_wp_error( $url ) ) {
+        continue;
+      }
       ?>
-      <div class="termgroup">
-      <h2 aria-label="<?php echo esc_attr( $label ); ?>"><?php echo wp_kses_post( apply_filters( 'the_title', $char ) ); ?></h2>
-      <ol>
-      <?php foreach ( $terms as $slug => $term ) : ?>
-        <li>
-        <a aria-label="<?php echo esc_attr( $term['aria'] ); ?>" href="<?php echo esc_url( $term['url'] ); ?>"><span class="term term--<?php echo esc_attr( $term['type'] ); ?>"><?php echo esc_html( $term['name'] ); ?></span>&nbsp;<span class="term__count"><?php echo esc_html( $term['count'] ); ?></span></a>
-        </li>
-      <?php endforeach; ?>
-      </ol>
-      </div>
+      <?php
+      $tax = get_taxonomy( $term->taxonomy );
+      /* translators: 1: Taxonomy label, 2: Term name, 3: Number of posts. */
+      $label = sprintf( _n( '%1$s: %2$s, %3$s post', '%1$s: %2$s, %3$s posts', $term->count, 'commonplace' ), $tax->labels->singular_name, $term->name, number_format_i18n( $term->count ) );
+      ?>
+      <li><?php echo wp_kses_post( cp_term_pill( $term->name, $term->count, $url, $label ) ); ?></li>
     <?php endforeach; ?>
-    </div>
-  <?php endif; ?>
+    </ul>
+  </div>
   <?php
   return ob_get_clean();
 }
@@ -273,6 +240,117 @@ function cp_author( $display = true ) {
   }
 }
 
+/**
+ * Render a term pill with a localized count and accessible link label.
+ *
+ * @param string $name  Term name.
+ * @param int    $count Post count.
+ * @param string $url   Optional destination; empty produces a heading pill.
+ * @param string $label Optional accessible link label.
+ * @return string Escaped pill HTML.
+ */
+function cp_term_pill( $name, $count, $url = '', $label = '' ) {
+  $number = number_format_i18n( $count );
+  $text   = esc_html( $name ) . '<span class="term__count" aria-hidden="true">' . esc_html( $number ) . '</span>';
+  if ( ! $url ) {
+    return '<span class="archive-heading__term">' . $text . '</span>';
+  }
+  if ( ! $label ) {
+    /* translators: 1: Term name, 2: Number of posts. */
+    $label = sprintf( _n( '%1$s, %2$s post', '%1$s, %2$s posts', $count, 'commonplace' ), $name, $number );
+  }
+  return '<a class="term-link" aria-label="' . esc_attr( $label ) . '" href="' . esc_url( $url ) . '">' . $text . '</a>';
+}
+
+/**
+ * Find terms sharing the most published posts with the current archive term.
+ *
+ * @return WP_Term[] Related tags.
+ */
+function cp_related_archive_terms() {
+  if ( ! is_tag() && ! is_category() && ! is_tax( 'post_format' ) ) {
+    return array();
+  }
+
+  $current_term = get_queried_object();
+  if ( ! $current_term instanceof WP_Term ) {
+    return array();
+  }
+
+  global $wpdb;
+
+  $cache_key = 'cp_related_tags_13_' . $current_term->term_taxonomy_id;
+  $version   = get_transient( 'cp_related_tags_generation' );
+  if ( false === $version ) {
+    $version = wp_generate_uuid4();
+    set_transient( 'cp_related_tags_generation', $version, YEAR_IN_SECONDS );
+  }
+  $cached = get_transient( $cache_key );
+  if ( is_array( $cached ) && $cached['version'] === $version ) {
+    $term_ids = $cached['ids'];
+  } else {
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Aggregate query cached below and invalidated by post and term changes.
+    $term_ids = $wpdb->get_col(
+      $wpdb->prepare(
+        "SELECT related.term_id
+        FROM {$wpdb->term_relationships} AS source
+        INNER JOIN {$wpdb->posts} AS posts ON posts.ID = source.object_id
+        INNER JOIN {$wpdb->term_relationships} AS relationships ON relationships.object_id = posts.ID
+        INNER JOIN {$wpdb->term_taxonomy} AS related ON related.term_taxonomy_id = relationships.term_taxonomy_id
+        INNER JOIN {$wpdb->terms} AS terms ON terms.term_id = related.term_id
+        WHERE source.term_taxonomy_id = %d
+          AND posts.post_type = 'post'
+          AND posts.post_status = 'publish'
+          AND related.taxonomy = 'post_tag'
+          AND related.count >= 3
+          AND related.term_taxonomy_id != %d
+        GROUP BY related.term_id, terms.name
+        ORDER BY COUNT(DISTINCT posts.ID) DESC, terms.name ASC, related.term_id ASC
+        LIMIT 13",
+        $current_term->term_taxonomy_id,
+        $current_term->term_taxonomy_id
+      )
+    );
+    if ( ! $wpdb->last_error ) {
+      set_transient(
+        $cache_key,
+        array(
+          'version' => $version,
+          'ids'     => $term_ids,
+        ),
+        DAY_IN_SECONDS
+      );
+    }
+  }
+
+  if ( ! $term_ids ) {
+    return array();
+  }
+
+  $terms = get_terms(
+    array(
+      'taxonomy'   => 'post_tag',
+      'include'    => array_map( 'intval', $term_ids ),
+      'orderby'    => 'count',
+      'order'      => 'DESC',
+      'hide_empty' => true,
+    )
+  );
+
+  return is_wp_error( $terms ) ? array() : $terms;
+}
+
+/**
+ * Invalidate related-tag results when posts or taxonomy relationships change.
+ */
+function cp_invalidate_related_tags() {
+  delete_transient( 'cp_related_tags_generation' );
+}
+add_action( 'clean_post_cache', 'cp_invalidate_related_tags' );
+add_action( 'clean_term_cache', 'cp_invalidate_related_tags' );
+add_action( 'set_object_terms', 'cp_invalidate_related_tags' );
+add_action( 'deleted_term_relationships', 'cp_invalidate_related_tags' );
+
 function cp_archivedesc( $display = true, $prefix = '', $suffix = '' ) {
   global $wp_query;
   $total  = $wp_query->found_posts;
@@ -309,49 +387,36 @@ function cp_get_theme_version() {
   return $version;
 }
 
-function cp_archive_str() {
-  global $wp_query;
-  $paged = get_query_var( 'paged' );
-  if ( is_page() || ( is_front_page() && 0 === (int) $paged ) ) {
-    return false;
-  }
-  if ( is_singular() ) {
-    return false;
-  }
+/**
+ * Return a readable heading for non-term archive and utility pages.
+ *
+ * @return string Context heading.
+ */
+function cp_context_heading() {
   if ( is_404() ) {
-    return __( 'Page not found [404 error]', 'commonplace' );
+    return __( 'Page not found.', 'commonplace' );
   }
-  $paged = get_query_var( 'paged' );
-  $page  = $paged > 0 ? _x( 'page ', 'paged', 'commonplace' ) . $paged : false;
-  $page  = $page && ! is_front_page() && ! is_home() ? ', ' . $page : $page;
-  $text  = '';
-  if ( is_tax( 'post_format' ) ) {
-    $var  = get_post_format();
-    $text = __( 'format', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_tag() ) {
-    $var  = single_tag_title( '', false );
-    $text = __( 'tag', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_category() ) {
-    $var  = single_cat_title( '', false );
-    $text = __( 'category', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_search() ) {
-    $query = get_query_var( 's' );
+  if ( is_search() ) {
     /* translators: %s: Search query. */
-    $text = sprintf( __( 'results / &ldquo;%s&rdquo;', 'commonplace' ), $query );
-  } elseif ( is_author() ) {
-    $var  = get_the_author_meta( 'display_name', get_query_var( 'author' ) );
-    $text = __( 'author', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_month() ) {
-    $var  = get_the_date( 'F Y' );
-    $text = $var;
-  } elseif ( is_year() ) {
-    $var  = get_the_date( 'Y' );
-    $text = $var;
+    return sprintf( __( 'Search results for “%s”.', 'commonplace' ), get_search_query( false ) );
   }
-
-  $title = $text . $page;
-
-  return $title;
+  if ( is_author() ) {
+    /* translators: %s: Author name. */
+    return sprintf( __( 'You are viewing posts by %s.', 'commonplace' ), get_queried_object()->display_name );
+  }
+  if ( is_year() || is_month() || is_day() ) {
+    $year   = (int) get_query_var( 'year' );
+    $month  = is_year() ? 1 : (int) get_query_var( 'monthnum' );
+    $day    = is_day() ? (int) get_query_var( 'day' ) : 1;
+    $format = is_year() ? 'Y' : ( is_month() ? _x( 'F Y', 'monthly archive date format', 'commonplace' ) : get_option( 'date_format' ) );
+    $date   = wp_date( $format, ( new DateTimeImmutable( sprintf( '%04d-%02d-%02d 12:00:00', $year, $month, $day ), wp_timezone() ) )->getTimestamp() );
+    /* translators: %s: Archive date. */
+    return sprintf( __( 'You are viewing the %s archive.', 'commonplace' ), $date );
+  }
+  if ( is_home() ) {
+    return __( 'You are viewing the notes archive.', 'commonplace' );
+  }
+  return wp_strip_all_tags( get_the_archive_title() );
 }
 
 function cp_archive_label() {
@@ -522,21 +587,6 @@ function cp_get_year_counts() {
   return $result;
 }
 
-function cp_get_years_array() {
-  return array_map( 'strval', array_keys( cp_get_year_counts() ) );
-}
-
-function cp_add_to_index( $groups, $args ) {
-  $first_char = strtoupper( $args['name'][0] );
-  if ( is_numeric( $first_char ) ) {
-    $first_char = '#';
-  } elseif ( '&' === $first_char || 'UTF-8' === mb_detect_encoding( $first_char ) ) {
-    $first_char = '?';
-  }
-  $groups[ $first_char ][ $args['slug'] ] = $args;
-  return $groups;
-}
-
 function cp_get_post_terms( $post_id, $taxonomies ) {
   $terms = array();
   foreach ( $taxonomies as $taxonomy ) {
@@ -548,14 +598,16 @@ function cp_get_post_terms( $post_id, $taxonomies ) {
   if ( count( $terms ) < 2 ) {
     return $terms;
   }
-  // Sort only this post's terms. Post formats retain their stored-name position
-  // even though WordPress replaces their names with translated display labels.
+  // Sort this post's cached terms by count, with a stable name fallback.
   usort(
     $terms,
     static function ( $a, $b ) {
       $a_name = 'post_format' === $a->taxonomy ? $a->slug : $a->name;
       $b_name = 'post_format' === $b->taxonomy ? $b->slug : $b->name;
-      $result = strcasecmp( remove_accents( $a_name ), remove_accents( $b_name ) );
+      $result = $b->count <=> $a->count;
+      if ( ! $result ) {
+        $result = strcasecmp( remove_accents( $a_name ), remove_accents( $b_name ) );
+      }
       return $result ? $result : $a->term_id <=> $b->term_id;
     }
   );
@@ -595,11 +647,7 @@ function cp_get_list_item( $post = false ) {
       <?php foreach ( $terms as $slug => $term ) : ?>
         <?php if ( (int) get_option( 'default_category' ) !== (int) $term->term_id ) : ?>
         <li class="term term--<?php echo esc_attr( $term->taxonomy ); ?>">
-          <?php
-          /* translators: 1: Term name, 2: Number of posts. */
-          $term_label = sprintf( _n( '%1$s, %2$s post', '%1$s, %2$s posts', $term->count, 'commonplace' ), $term->name, $term->count );
-          ?>
-        <a class="term-link" aria-label="<?php echo esc_attr( $term_label ); ?>" href="<?php echo esc_url( get_tag_link( $term->term_id ) ); ?>"><?php echo esc_html( $term->name ); ?></a><span class="separator" aria-hidden="true">,</span>
+          <?php echo wp_kses_post( cp_term_pill( $term->name, $term->count, get_term_link( $term ) ) ); ?>
         </li>
       <?php endif; ?>
       <?php endforeach; ?>

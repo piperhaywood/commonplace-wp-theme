@@ -68,16 +68,12 @@ if ( ( is_home() || is_archive() || is_search() ) && have_posts() && in_array( g
         <div class="post-meta meta">
         <p>
           <?php
-          $post_terms = cp_get_post_terms( get_the_ID(), array( 'post_tag', 'category', 'post_format' ) );
+          $post_terms = cp_get_post_terms( get_the_ID(), array( 'post_tag', 'category' ) );
           ?>
           <?php if ( $post_terms ) : ?>
             <?php foreach ( $post_terms as $slug => $post_term ) : ?>
             <span class="term<?php echo (int) get_option( 'default_category' ) === (int) $post_term->term_id ? ' term--default' : ''; ?> term--<?php echo esc_attr( $post_term->taxonomy ); ?>">
-              <?php
-              /* translators: 1: Term name, 2: Number of posts. */
-              $term_label = sprintf( _n( '%1$s, %2$s post', '%1$s, %2$s posts', $post_term->count, 'commonplace' ), $post_term->name, $post_term->count );
-              ?>
-            <a class="term-link" aria-label="<?php echo esc_attr( $term_label ); ?>" href="<?php echo esc_url( get_tag_link( $post_term->term_id ) ); ?>"><?php echo esc_html( $post_term->name ); ?></a><span class="separator" aria-hidden="true">,</span>
+              <?php echo wp_kses_post( cp_term_pill( $post_term->name, $post_term->count, get_term_link( $post_term ) ) ); ?>
             </span>
           <?php endforeach; ?>
           <?php endif; ?>
@@ -100,8 +96,15 @@ if ( ( is_home() || is_archive() || is_search() ) && have_posts() && in_array( g
   <?php else : ?>
     <article class="post article type-<?php echo esc_attr( get_post_type() ); ?>" style="--color:<?php echo esc_attr( cp_get_hsl() ); ?>;">
 
+      <?php if ( is_404() ) : ?>
+      <header class="post-header">
+        <h1 class="post-title"><?php esc_html_e( 'Page not found', 'commonplace' ); ?></h1>
+      </header>
+      <?php endif; ?>
       <section class="prose e-content">
+      <?php if ( ! is_404() ) : ?>
       <p><?php esc_html_e( 'Nothing found!', 'commonplace' ); ?></p>
+      <?php endif; ?>
       <?php get_search_form(); ?>
       <?php echo do_shortcode( '[notebookindex count="2"]' ); ?>
       </section>

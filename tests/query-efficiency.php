@@ -39,13 +39,13 @@ $post_id = $posts ? $posts[0]->ID : 0;
 if ( $post_id ) {
   $fixtures = array(
     'post_tag' => array(
-      (object) array( 'term_id' => 4, 'taxonomy' => 'post_tag', 'name' => 'zebra', 'slug' => 'zebra' ),
-      (object) array( 'term_id' => 2, 'taxonomy' => 'post_tag', 'name' => 'Apple', 'slug' => 'apple' ),
-      (object) array( 'term_id' => 1, 'taxonomy' => 'post_tag', 'name' => 'apple', 'slug' => 'apple-2' ),
-      (object) array( 'term_id' => 5, 'taxonomy' => 'post_tag', 'name' => 'Éclair', 'slug' => 'eclair' ),
+      (object) array( 'term_id' => 4, 'count' => 8, 'taxonomy' => 'post_tag', 'name' => 'zebra', 'slug' => 'zebra' ),
+      (object) array( 'term_id' => 2, 'count' => 3, 'taxonomy' => 'post_tag', 'name' => 'Apple', 'slug' => 'apple' ),
+      (object) array( 'term_id' => 1, 'count' => 3, 'taxonomy' => 'post_tag', 'name' => 'apple', 'slug' => 'apple-2' ),
+      (object) array( 'term_id' => 5, 'count' => 3, 'taxonomy' => 'post_tag', 'name' => 'Éclair', 'slug' => 'eclair' ),
     ),
     'post_format' => array(
-      (object) array( 'term_id' => 3, 'taxonomy' => 'post_format', 'name' => 'Image translated', 'slug' => 'post-format-image' ),
+      (object) array( 'term_id' => 3, 'count' => 3, 'taxonomy' => 'post_format', 'name' => 'Image translated', 'slug' => 'post-format-image' ),
     ),
     'category' => false,
   );
@@ -60,8 +60,8 @@ if ( $post_id ) {
     }
     $before = $wpdb->num_queries;
     $terms  = cp_get_post_terms( $post_id, array_keys( $fixtures ) );
-    if ( array( 1, 2, 5, 3, 4 ) !== wp_list_pluck( $terms, 'term_id' ) ) {
-      throw new RuntimeException( 'Incorrect alphabetical, tie, or post-format ordering.' );
+    if ( array( 4, 1, 2, 5, 3 ) !== wp_list_pluck( $terms, 'term_id' ) ) {
+      throw new RuntimeException( 'Incorrect count, name tie, or post-format ordering.' );
     }
     if ( $wpdb->num_queries !== $before ) {
       throw new RuntimeException( 'Cached term rendering issued a query.' );
