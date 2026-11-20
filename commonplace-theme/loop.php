@@ -1,6 +1,15 @@
+<?php
+if ( ( is_home() || is_archive() || is_search() ) && have_posts() && in_array( get_query_var( 'cp_view' ), array( 'grid', 'list' ), true ) ) {
+  get_template_part( 'loop', get_query_var( 'cp_view' ) );
+  return;
+}
+?>
 <main id="main" class="main" role="main">
-  <section class="articles"<?php if ( ! is_singular() ) :
-    ?> role="feed"<?php endif; ?>>
+  <section class="articles"
+  <?php
+  if ( ! is_singular() ) :
+    ?>
+    role="feed"<?php endif; ?>>
   <?php if ( have_posts() ) : ?>
     <?php
     while ( have_posts() ) :

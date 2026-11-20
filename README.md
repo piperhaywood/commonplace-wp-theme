@@ -16,7 +16,18 @@ The shortcode `[notebooksearch]` displays a search form.
 
 The shortcode `[notebookindex]` displays an alphabetical index of terms. The Index shortcode can be passed attributes that modify the included taxonomies, the post count threshold, and whether or not year archive links are displayed. For example, `[notebookindex taxonomy="category" years="false" count="2"]` will pull through only categories with a post count of at least 2 and no year archive links. If no attributes are passed to the `notebookindex` shortcode, then these default attributes will be used: `[notebookindex taxonomy="post_tag, category, post_format" years="true" count="1"]`.
 
-The shortcode `[notebooklist]` displays a chronological list of posts.
+The shortcode `[notebooklist]` displays a chronological list of posts in batches
+of 50. “Load more posts” appends the next batch; without JavaScript, a “Next posts”
+link opens the next batch. Multiple lists on the same page paginate independently.
+Loaded batches and scroll position are saved for the current browser tab’s history
+entry when session storage is available. This disposable cache retains at most
+eight list/grid snapshots, uses approximately 2 MiB of text storage, and expires
+snapshots after 30 minutes; browser back/forward caching remains independent.
+
+The posts index, archives, and search results also offer opt-in layout previews:
+add `?cp_view=grid` or `?cp_view=list` to the URL (or `&cp_view=…` when it already
+has a query string). The grid loads 24 posts per batch and the list loads 50, with
+ordinary archive pagination as the fallback. The view switcher is still in progress.
 
 List images (including related posts) use the theme's `cp-list-thumb` image size,
 which fits within 240 × 240 pixels without cropping. When installing this theme
@@ -232,3 +243,10 @@ The ruleset lives in `.phpcs.xml.dist` and covers all theme PHP, including relat
 posts. Documented inline exceptions cover intentional global-post setup,
 WordPress or theme-rendered HTML, Vite's development scripts, and retained
 Gutenberg examples. The separate PHP syntax job checks all theme PHP as well.
+
+### Post loading regression checks
+
+Run `node --test tests/post-history.test.mjs tests/post-request.test.mjs` to check history-cache size/count
+limits, expiration, storage failures, position-only updates, and request deadlines
+without WordPress. Post requests time out after 15 seconds and allow retry through
+the existing load-more button.
