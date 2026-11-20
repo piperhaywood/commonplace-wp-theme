@@ -14,7 +14,6 @@
     <a class="visuallyhidden button" href="#main"><?php esc_html_e( 'Skip to main content', 'commonplace' ); ?></a>
     </div>
 
-    <?php $items = wp_get_nav_menu_items( 'header' ); ?>
     <nav class="nav">
     <?php
     wp_nav_menu(
