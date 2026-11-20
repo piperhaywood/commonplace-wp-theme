@@ -25,22 +25,31 @@ function cp_get_related_posts( $post_id, $taxonomies = 'post_tag', $limit = 5 ) 
     return array();
   }
 
-  $terms = wp_get_object_terms( $post_id, $taxonomies, array( 'fields' => 'tt_ids' ) );
-  if ( is_wp_error( $terms ) || ! $terms ) {
+  $term_ids = array();
+  foreach ( array_unique( $taxonomies ) as $taxonomy ) {
+    $terms = get_the_terms( $post_id, $taxonomy );
+    if ( is_wp_error( $terms ) ) {
+      return array();
+    }
+    if ( $terms ) {
+      $term_ids = array_merge( $term_ids, wp_list_pluck( $terms, 'term_taxonomy_id' ) );
+    }
+  }
+  if ( ! $term_ids ) {
     return array();
   }
 
-  // Term-taxonomy IDs are integers obtained from WordPress, never raw input.
-  $term_ids = implode( ',', array_map( 'absint', $terms ) );
+  // Use cached relationships; term order has no bearing on the shared-term score.
+  $term_ids = implode( ',', array_unique( array_map( 'absint', $term_ids ) ) );
   $query    = new WP_Query();
   $rank     = static function ( $clauses, $current_query ) use ( $query, $term_ids ) {
     if ( $current_query !== $query ) {
       return $clauses;
     }
     global $wpdb;
-    $score              = "(SELECT COUNT(*) FROM {$wpdb->term_relationships} AS cp_terms WHERE cp_terms.object_id = {$wpdb->posts}.ID AND cp_terms.term_taxonomy_id IN ($term_ids))";
-    $clauses['where']  .= " AND $score > 0";
-    $clauses['orderby'] = "$score DESC, {$wpdb->posts}.post_date DESC, {$wpdb->posts}.ID DESC";
+    // Aggregate only matching relationships, once, instead of counting per post.
+    $clauses['join']   .= " INNER JOIN (SELECT object_id, COUNT(*) AS score FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN ($term_ids) GROUP BY object_id) AS cp_related_matches ON cp_related_matches.object_id = {$wpdb->posts}.ID";
+    $clauses['orderby'] = "cp_related_matches.score DESC, {$wpdb->posts}.post_date DESC, {$wpdb->posts}.ID DESC";
     return $clauses;
   };
 

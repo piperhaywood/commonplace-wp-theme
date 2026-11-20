@@ -55,7 +55,9 @@ Related posts are implemented in `commonplace-theme/func/related-posts.php`.
 On individual posts, “See also” shows up to five published posts ranked by shared
 tags, then newest publication date (with post ID as a final tie breaker). The
 current post is excluded; posts without matching tags have no related list.
-The existing theme list renderer supplies the markup.
+The existing theme list renderer supplies the markup. Source terms reuse
+WordPress relationship caches, and ranking aggregates matching relationships once
+before selecting the requested posts.
 
 The legacy `[related_posts_by_tax]` shortcode remains available. Supported
 attributes are `post_id`, `taxonomies` (comma-separated public taxonomy names;
@@ -65,6 +67,10 @@ Results are always published posts, including when viewed by an administrator.
 Other plugin attributes, hooks, widgets, and display formats are no longer
 provided. The local content audit found no saved uses of the shortcode or widget;
 sites using those plugin features should review them before updating.
+
+The read-only efficiency check compares rankings against the previous correlated
+query for every published post and verifies cached source-term reuse:
+`wp eval-file /absolute/path/to/commonplace-wp-theme/tests/related-posts-efficiency.php`.
 
 The former bundled Related Posts By Taxonomy library has been removed. No
 related-posts REST endpoint, debug output, or lazy-loading endpoint is registered.
