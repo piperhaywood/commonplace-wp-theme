@@ -44,7 +44,7 @@ try {
   $check( false !== strpos( $html, 'Page 2' ), 'Archive page number missing.' );
   $check( 1 === substr_count( $html, '<h1 ' ), 'Term archive needs exactly one H1.' );
 
-  delete_transient( 'cp_related_tags_' . $tag->term_taxonomy_id );
+  delete_transient( 'cp_related_tags_13_' . $tag->term_taxonomy_id );
   $aggregations = 0;
   $track_query = static function ( $sql ) use ( &$aggregations ) {
     if ( false !== strpos( $sql, 'SELECT related.term_id' ) ) {
@@ -64,7 +64,7 @@ try {
   cp_related_archive_terms();
   $check( 3 === $aggregations, 'Post changes must invalidate related tags.' );
   remove_filter( 'query', $track_query );
-  $check( count( $terms ) <= 17, 'Too many related tags.' );
+  $check( count( $terms ) <= 13, 'Too many related tags.' );
   $previous = PHP_INT_MAX;
   foreach ( $terms as $term ) {
     $check( 'post_tag' === $term->taxonomy && $term->count >= 3, 'Related tag eligibility failed.' );

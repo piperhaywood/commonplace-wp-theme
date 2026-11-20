@@ -280,7 +280,7 @@ function cp_related_archive_terms() {
 
   global $wpdb;
 
-  $cache_key = 'cp_related_tags_' . $current_term->term_taxonomy_id;
+  $cache_key = 'cp_related_tags_13_' . $current_term->term_taxonomy_id;
   $version   = get_transient( 'cp_related_tags_generation' );
   if ( false === $version ) {
     $version = wp_generate_uuid4();
@@ -307,7 +307,7 @@ function cp_related_archive_terms() {
           AND related.term_taxonomy_id != %d
         GROUP BY related.term_id, terms.name
         ORDER BY COUNT(DISTINCT posts.ID) DESC, terms.name ASC, related.term_id ASC
-        LIMIT 17",
+        LIMIT 13",
         $current_term->term_taxonomy_id,
         $current_term->term_taxonomy_id
       )

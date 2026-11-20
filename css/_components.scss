@@ -4,11 +4,8 @@
 .header-intro {
   @include container;
   display: block;
-  margin-block-end: 5rem;
+  margin-block-end: var(--archive-context-gap);
   margin-block-start: $my;
-  @media (min-width: $md) {
-    margin-block-end: var(--vertical-space);
-  }
 }
 
 .header-intro .widget {
@@ -27,7 +24,15 @@
 }
 
 .header {
+  --archive-context-gap: 5rem;
   margin-block-end: calc(var(--vertical-space) * 1.25);
+  @media (min-width: $md) {
+    --archive-context-gap: var(--vertical-space);
+  }
+}
+
+.header:has(.page-context) {
+  margin-block-end: var(--archive-context-gap);
 }
 
 .header--without-intro {
