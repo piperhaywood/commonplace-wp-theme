@@ -39,6 +39,9 @@ try {
   $check( false !== strpos( $html, 'Search results for' ), 'Search heading missing.' );
   $check( 1 === substr_count( $html, '<h1 ' ), 'Search needs exactly one H1.' );
 
+  $wp_query = new WP_Query( array( 'year' => 2026, 'monthnum' => 10 ) );
+  $check( 'You are viewing the October 2026 archive.' === cp_context_heading(), 'Month heading must contain only the formatted date.' );
+
   $tags = get_terms( array( 'taxonomy' => 'post_tag', 'number' => 1, 'orderby' => 'count', 'order' => 'DESC' ) );
   $check( ! is_wp_error( $tags ) && ! empty( $tags ), 'Need a published tag for related-tag checks.' );
   $tag = $tags[0];

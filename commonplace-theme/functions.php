@@ -405,58 +405,18 @@ function cp_context_heading() {
     return sprintf( __( 'You are viewing posts by %s.', 'commonplace' ), get_queried_object()->display_name );
   }
   if ( is_year() || is_month() || is_day() ) {
+    $year   = (int) get_query_var( 'year' );
+    $month  = is_year() ? 1 : (int) get_query_var( 'monthnum' );
+    $day    = is_day() ? (int) get_query_var( 'day' ) : 1;
+    $format = is_year() ? 'Y' : ( is_month() ? _x( 'F Y', 'monthly archive date format', 'commonplace' ) : get_option( 'date_format' ) );
+    $date   = wp_date( $format, ( new DateTimeImmutable( sprintf( '%04d-%02d-%02d 12:00:00', $year, $month, $day ), wp_timezone() ) )->getTimestamp() );
     /* translators: %s: Archive date. */
-    return sprintf( __( 'You are viewing the %s archive.', 'commonplace' ), get_the_archive_title() );
+    return sprintf( __( 'You are viewing the %s archive.', 'commonplace' ), $date );
   }
   if ( is_home() ) {
     return __( 'You are viewing the notes archive.', 'commonplace' );
   }
   return wp_strip_all_tags( get_the_archive_title() );
-}
-
-function cp_archive_str() {
-  global $wp_query;
-  $paged = get_query_var( 'paged' );
-  if ( is_page() || ( is_front_page() && 0 === (int) $paged ) ) {
-    return false;
-  }
-  if ( is_singular() ) {
-    return false;
-  }
-  if ( is_404() ) {
-    return __( 'Page not found [404 error]', 'commonplace' );
-  }
-  $paged = get_query_var( 'paged' );
-  $page  = $paged > 0 ? _x( 'page ', 'paged', 'commonplace' ) . $paged : false;
-  $page  = $page && ! is_front_page() && ! is_home() ? ', ' . $page : $page;
-  $text  = '';
-  if ( is_tax( 'post_format' ) ) {
-    $var  = get_post_format();
-    $text = __( 'format', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_tag() ) {
-    $var  = single_tag_title( '', false );
-    $text = __( 'tag', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_category() ) {
-    $var  = single_cat_title( '', false );
-    $text = __( 'category', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_search() ) {
-    $query = get_query_var( 's' );
-    /* translators: %s: Search query. */
-    $text = sprintf( __( 'results / &ldquo;%s&rdquo;', 'commonplace' ), $query );
-  } elseif ( is_author() ) {
-    $var  = get_the_author_meta( 'display_name', get_query_var( 'author' ) );
-    $text = __( 'author', 'commonplace' ) . ' / ' . $var;
-  } elseif ( is_month() ) {
-    $var  = get_the_date( 'F Y' );
-    $text = $var;
-  } elseif ( is_year() ) {
-    $var  = get_the_date( 'Y' );
-    $text = $var;
-  }
-
-  $title = $text . $page;
-
-  return $title;
 }
 
 function cp_archive_label() {
@@ -625,10 +585,6 @@ function cp_get_year_counts() {
     }
   }
   return $result;
-}
-
-function cp_get_years_array() {
-  return array_map( 'strval', array_keys( cp_get_year_counts() ) );
 }
 
 function cp_get_post_terms( $post_id, $taxonomies ) {
