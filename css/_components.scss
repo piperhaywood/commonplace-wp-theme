@@ -49,16 +49,6 @@
   padding-block: $my;
 }
 
-.breadcrumb {
-  margin: 0;
-  padding: 0;
-}
-
-.breadcrumb p {
-  @include style-h5;
-  margin-block-end: 0.5rem;
-}
-
 .archive-related__eyebrow {
   @include style-h5;
 }

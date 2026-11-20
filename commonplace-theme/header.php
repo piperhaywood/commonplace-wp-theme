@@ -47,7 +47,7 @@
         </h1>
       </div>
       <?php elseif ( $archive_title ) : ?>
-      <h1 class="archive-heading__title"><?php echo esc_html( cp_context_heading() ); ?></h1>
+      <h1 class="archive-heading__title"><?php echo esc_html( $archive_title ); ?></h1>
       <?php endif; ?>
 
       <?php if ( get_query_var( 'paged' ) > 1 ) : ?>

@@ -4,7 +4,6 @@ require_once 'func/cleanup.php';
 require_once 'func/customizer.php';
 require_once 'func/enqueue.php';
 // Gutenberg block experiments in func/gutenberg.php are not loaded.
-require_once 'func/navigation.php';
 require_once 'func/theme-support.php';
 require_once 'func/widgets.php';
 require_once 'func/related-posts.php';
