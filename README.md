@@ -18,6 +18,17 @@ The shortcode `[notebookindex]` displays an alphabetical index of terms. The Ind
 
 The shortcode `[notebooklist]` displays a chronological list of posts.
 
+List images (including related posts) use the theme's `cp-list-thumb` image size,
+which fits within 240 × 240 pixels without cropping. When installing this theme
+on an existing WordPress site, or updating from a version without this image size,
+regenerate thumbnails for existing uploads:
+
+`wp media regenerate --image_size=cp-list-thumb --only-missing --yes`
+
+Alternatively, use a thumbnail regeneration plugin. Until regeneration is
+complete, list images fall back to the existing `thumbnail` size. New uploads get
+the list size automatically.
+
 ## Utility classes
 
 See the `/css/_utility.scss` styles for utility classes. The classes that can be useful for content editing are described below.
@@ -175,6 +186,20 @@ using PHP 8.2. This is a syntax check;
 it does not boot WordPress or verify runtime compatibility. WordPress Coding
 Standards run in a separate job as described below. Browser tests are not yet part
 of this workflow.
+
+### Query regression checks
+
+With the theme active in a local WordPress installation, run
+`wp eval-file /absolute/path/to/commonplace-wp-theme/tests/query-efficiency.php`.
+This read-only check compares aggregate year counts and post-term membership with
+the previous queries, then checks alphabetical ordering, post-format placement,
+empty/error results, and cached lookups without creating database records.
+Ordering fixtures require at least one published post.
+
+Post terms are sorted locally by accent-normalized, case-insensitive name, with
+term ID breaking ties. Post formats use their stored slugs for sorting and retain
+their translated labels for display. This avoids loading all site terms merely to
+sort one post's terms; ordering can differ from the database's locale collation.
 
 ### PHP coding standards
 
